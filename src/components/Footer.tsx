@@ -1,4 +1,4 @@
-import { Mail, Instagram, Facebook } from "lucide-react"
+import { Instagram, Facebook } from "lucide-react"
 import { Link } from "react-router-dom"
 import { useI18n } from "../i18n/i18nContext"
 
