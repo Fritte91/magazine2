@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "home": "หน้าแรก",
+    "shop": "ร้าน",
+    "contact": "ติดต่อ"
+  },
+  "hero": {
+    "title": "Now or Never",
+    "subtitle": "The Magazine",
+    "description": "ค้นหาเรื่องราวจากเสียงของโลก นิตยสารพิมพ์จำนวนจำกัด",
+    "cta": "สั่งซื้อนิตยสาร"
+  },
+  "about_author": {
+    "title": "The Author",
+    "name": "Phonotype_247",
+    "subtitle": "Cannabis Culture Journalist & Advocate",
+    "my_journey": {
+      "title": "My Journey",
+      "text": "Hello, I'm Phonotype_247, the author of Now or Never magazine. For a long time, I've always been in love with cannabis and the cultures surrounding it. Ever since I got to know and use it, many things in my life changed. It has helped me connect more deeply with myself and others, and expand myself to be more in tune with the surroundings."
+    },
+    "creative_insights": {
+      "title": "ความสร้างสรรค์ทีเกิดขึ้น",
+      "text": "ส่วนตัวผม พืชชนิดนี้ช่วยให้เราเปิดรับสิ่งต่างๆในชีวิต ทั้งดนตรีศิลปะ และความคิดสร้างสรรค์ พืช ชนิดนี้เปิดประตูของการรับรู้ในมุมมองที่แตกต่างออกไป และช่วยกระตุ้นบันดาลใจใหม่ๆ ที่ผมไม่ เคยรู้สึกมาก่อน"
+    },
+    "the_mission": {
+      "title": "The Mission",
+      "text": "With my background in photography, cannabis media design, and personal experience as a grower, I created the Now or Never magazine to share this journey-in hopes that others will be able to learn more about cannabis and come to appreciate it like I have."
+    },
+    "magazine_perspective": {
+      "title": "มุมมองของหนังสือ",
+      "text": "ในฐานะผู้จัดท่า หนังสือ Now or neverist ผมรวบรวมความสวยงามของกัญชาในมิติต่างๆ ผ่าน เรื่องราวที่เชื่อมโยงกับการต่อของผู้คนในเส้นทางสายนี้ เพื่อเป็นการน่าเสนอให้เห็นถึงสิ่งที่เกิด"
+    }
+  },
+  "topics": {
+    "title": "เรื่องราวเกี่ยวกับ",
+    "items": [
+      { 
+        "title": "Growing Cultures", 
+        "description": "Discover the rich traditions and modern techniques of cannabis cultivation in Thailand. From traditional farming methods to contemporary grow operations, explore how Thai cultivators are shaping the future of cannabis.",
+        "icon": "8.webp"
+      },
+      { 
+        "title": "Revolution", 
+        "description": "Learn about the people that helped to shape Thailand's evolving cannabis culture. Their gentle efforts and open-minded vision continue to nurture growth and understanding.",
+        "icon": "6.webp"
+      },
+      { 
+        "title": "Spiritual Art", 
+        "description": "Journey through the intersection of cannabis and Thai spirituality. Explore diverse collection of artworks from both Thai and international artists, featuring spiritual artworks, glass arts, cannabis-inspired artworks and more.",
+        "icon": "7.webp"
+      },
+      { 
+        "title": "The Understanding", 
+        "description": "Delve deep into cannabis science, culture, and society. Understand the plant's role in Thai history and its impact on contemporary culture and lifestyle.",
+        "icon": "5.webp"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "ความเห็นของผู้คน",
+    "items": [
+      { "quote": "ผลงานชิ้นเอกของการออกแบบบรรณาธิการ", "author": "Design Magazine" },
+      { "quote": "อ่านจำเป็นสำหรับใครที่สนใจวัฒนธรรม", "author": "Culture Today" },
+      { "quote": "นิตยสารที่เรารอคอยมา", "author": "Arts Weekly" }
+    ]
+  },
+  "legends": {
+    "title": "ปรากฏในฉบับนี้"
+  },
+  "newsletter": {
+    "title": "เข้าร่วมชุมชนของเรา",
+    "description": "รับข้อมูลอัปเดตเกี่ยวกับฉบับถัดไปและเนื้อหาเฉพาะบุคคล",
+    "placeholder_name": "ชื่อของคุณ",
+    "placeholder_email": "your@email.com",
+    "submit": "สมัครสมาชิก"
+  },
+  "shop": {
+    "title": "Now or Never Magazine",
+    "price": "฿499",
+    "description": "ฉบับพิมพ์แรกจำนวนจำกัด ลักษณะเด่น: บทสัมภาษณ์เฉพาะบุคคล ภาพถ่ายที่สวยงาม และบทความที่กระตุ้นความคิด",
+    "features": ["120 หน้าของเนื้อหาระดับพรีเมียม", "พิมพ์คุณภาพสูงบนกระดาษพิเศษ", "ภาพถ่ายเฉพาะบุคคล", "ฉบับจำนวนจำกัด: 1000 สำเนา"],
+    "order_button": "สั่งซื้อเลย"
+  },
+  "checkout": {
+    "title": "สรุปคำสั่งซื้อ",
+    "customer_info": "ข้อมูลการจัดส่ง",
+    "payment": "การชำระเงิน",
+    "full_name": "ชื่อเต็ม",
+    "email": "อีเมล",
+    "phone": "หมายเลขโทรศัพท์ (ไทย)",
+    "province": "จังหวัด",
+    "district": "อำเภอ",
+    "postal_code": "รหัสไปรษณีย์",
+    "address": "ที่อยู่เต็ม",
+    "notes": "หมายเหตุพิเศษ (ไม่บังคับ)",
+    "upload_slip": "อัปโหลดใบเสร็จการชำระเงิน",
+    "submit_order": "ส่งคำสั่งซื้อ",
+    "total": "รวม"
+  },
+  "thank_you": {
+    "title": "ขอบคุณสำหรับคำสั่งซื้อของคุณ!",
+    "order_number": "หมายเลขคำสั่งซื้อ",
+    "confirmation_message": "คำสั่งซื้อของคุณได้รับการยืนยันแล้ว เราจะติดต่อคุณในไม่ช้า",
+    "back_home": "กลับไปหน้าแรก"
+  },
+  "footer": {
+    "about": "เกี่ยวกับ",
+    "contact": "ติดต่อ",
+    "instagram": "Instagram",
+    "email": "ติดต่อเรา",
+    "copy": "© 2025 Now or Never Magazine. สงวนลิขสิทธิ์"
+  }
+}

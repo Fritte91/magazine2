@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 20 20 20;
+    --cream: 252 250 248;
+    --charcoal: 30 30 30;
+    --stone: 120 120 120;
+    --accent: 180 80 60;
+    --green-primary: 34 85 68;
+    --green-light: 76 175 80;
+    --dark-bg: 30 30 30;
+    --dark-section: 40 40 40;
+    --orange-accent: 255 152 0;
+    --yellow-accent: 255 193 7;
+    --gold-accent: 212 175 55;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    background-color: #ffffff !important;
+    width: 100%;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #1a1a1a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+      "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  #root {
+    background-color: #ffffff !important;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  *:focus {
+    outline: none !important;
+  }
+
+  *:focus-visible {
+    outline: 2px solid hsl(34, 85%, 68%);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl md:text-6xl lg:text-7xl font-serif font-normal leading-tight;
+  }
+
+  h2 {
+    @apply text-3xl md:text-5xl lg:text-6xl font-serif font-normal leading-tight;
+  }
+
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+  }
+
+  input,
+  textarea,
+  select {
+    @apply transition-all duration-200;
+  }
+
+  button {
+    @apply transition-all duration-300;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .container-padding {
+    @apply px-4 md:px-6 lg:px-8;
+  }
+
+  .section-spacing {
+    @apply py-12 md:py-20 lg:py-28;
+  }
+
+  .transition-smooth {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
