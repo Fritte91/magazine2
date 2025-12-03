@@ -35,22 +35,61 @@ export default function TopicsSection() {
           {topics.map((topic: any, idx: number) => (
             <div
               key={idx}
-              className="flex flex-col items-center bg-white rounded-xl border-2 border-gray-100 p-8 md:p-10 lg:p-12 hover:border-[#d4af37] hover:shadow-lg transition-all duration-300 group cursor-pointer"
+              className="group relative flex flex-col items-center rounded-2xl p-8 md:p-10 lg:p-12 cursor-pointer overflow-hidden transition-all duration-500"
+              style={{
+                background: "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(252, 250, 248, 0.98) 100%)",
+                border: "1px solid rgba(34, 85, 68, 0.1)",
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "rgba(34, 85, 68, 0.3)"
+                e.currentTarget.style.boxShadow = "0 20px 40px rgba(34, 85, 68, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9)"
+                e.currentTarget.style.transform = "translateY(-8px)"
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(34, 85, 68, 0.1)"
+                e.currentTarget.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)"
+                e.currentTarget.style.transform = "translateY(0)"
+              }}
             >
+              {/* Decorative gradient overlay on hover */}
+              <div 
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background: "linear-gradient(135deg, rgba(34, 85, 68, 0.05) 0%, rgba(76, 175, 80, 0.03) 100%)",
+                }}
+              ></div>
+
+              {/* Accent line */}
+              <div 
+                className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-primary/0 via-green-primary/0 to-green-primary/0 group-hover:from-green-primary group-hover:via-green-light group-hover:to-green-primary transition-all duration-500"
+              ></div>
+
               {/* Icon */}
-              <div className="mb-6 group-hover:scale-105 transition-transform duration-300">
-                <TopicIcon iconPath={topic.icon || ""} />
+              <div className="relative mb-6 group-hover:scale-110 transition-transform duration-500">
+                <div className="absolute inset-0 bg-green-primary/0 group-hover:bg-green-primary/10 rounded-full blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                <div className="relative">
+                  <TopicIcon iconPath={topic.icon || ""} />
+                </div>
               </div>
               
               {/* Title */}
-              <h3 className="text-xl md:text-2xl lg:text-3xl font-serif font-bold text-charcoal mb-5 md:mb-6 text-center group-hover:text-[#d4af37] transition-colors duration-300">
+              <h3 className="relative text-xl md:text-2xl lg:text-3xl font-serif font-bold text-charcoal mb-5 md:mb-6 text-center group-hover:text-green-primary transition-colors duration-300">
                 {topic.title}
               </h3>
               
               {/* Description */}
-              <p className="text-base md:text-lg text-charcoal/90 leading-relaxed font-sans text-center">
+              <p className="relative text-base md:text-lg text-charcoal/80 leading-relaxed font-sans text-center group-hover:text-charcoal/90 transition-colors duration-300">
                 {topic.description}
               </p>
+
+              {/* Decorative corner elements */}
+              <div className="absolute top-4 right-4 w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-green-primary rounded-tr-lg"></div>
+              </div>
+              <div className="absolute bottom-4 left-4 w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-green-primary rounded-bl-lg"></div>
+              </div>
             </div>
           ))}
         </div>

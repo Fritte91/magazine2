@@ -12,27 +12,37 @@ function TestimonialCard({ item, index, setKey }: TestimonialCardProps) {
   return (
     <div key={`${setKey}-${index}`} className="flex-shrink-0 w-72 md:w-80 lg:w-96">
       <div
-        className="h-full rounded-xl p-5 md:p-6 lg:p-7"
+        className="h-full rounded-xl p-5 md:p-6 lg:p-7 group hover:scale-[1.02] transition-all duration-300"
         style={{
-          backgroundColor: "rgba(0, 0, 0, 0.4)",
+          backgroundColor: "rgba(34, 85, 68, 0.15)",
           backdropFilter: "blur(12px)",
           WebkitBackdropFilter: "blur(12px)",
-          border: "1px solid rgba(255, 255, 255, 0.1)",
-          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+          border: "1px solid rgba(76, 175, 80, 0.2)",
+          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(76, 175, 80, 0.1)",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = "rgba(76, 175, 80, 0.4)"
+          e.currentTarget.style.backgroundColor = "rgba(34, 85, 68, 0.25)"
+          e.currentTarget.style.boxShadow = "0 12px 32px rgba(34, 85, 68, 0.3), inset 0 1px 0 rgba(76, 175, 80, 0.15)"
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = "rgba(76, 175, 80, 0.2)"
+          e.currentTarget.style.backgroundColor = "rgba(34, 85, 68, 0.15)"
+          e.currentTarget.style.boxShadow = "0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(76, 175, 80, 0.1)"
         }}
       >
         <div className="flex items-start mb-3 md:mb-4">
           <Quote
-            className="text-green-light opacity-70"
+            className="text-green-light opacity-80 group-hover:opacity-100 transition-opacity"
             size={32}
             strokeWidth={1.5}
             style={{
-              filter: "drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3))",
+              filter: "drop-shadow(0 2px 8px rgba(76, 175, 80, 0.5))",
             }}
           />
         </div>
         <p
-          className="text-sm md:text-base lg:text-lg leading-relaxed mb-4 md:mb-5 font-serif text-white"
+          className="text-sm md:text-base lg:text-lg leading-relaxed mb-4 md:mb-5 font-serif text-white/95"
           style={{
             textShadow: "0 1px 4px rgba(0, 0, 0, 0.5)",
             lineHeight: "1.6",
@@ -42,7 +52,7 @@ function TestimonialCard({ item, index, setKey }: TestimonialCardProps) {
         >
           {item.quote}
         </p>
-        <div className="pt-3 md:pt-4 border-t border-white/10">
+        <div className="pt-3 md:pt-4 border-t border-green-light/20">
           <p
             className="text-xs md:text-sm font-sans font-semibold text-green-light tracking-wide"
             style={{
@@ -247,7 +257,7 @@ export default function TestimonialsSlider() {
     <section
       className="py-8 md:py-10 relative overflow-hidden"
       style={{
-        backgroundColor: "#3d2f1f",
+        backgroundColor: "#1a2e1f",
       }}
       onMouseEnter={() => {
         if (!isDragging) setIsPaused(true)
@@ -256,11 +266,17 @@ export default function TestimonialsSlider() {
         if (!isDragging) setIsPaused(false)
       }}
     >
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-green-primary/30 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-green-light/20 rounded-full blur-3xl"></div>
+      </div>
+
       {/* Gradient fade edges */}
       <div
         className="absolute inset-0 pointer-events-none z-10"
         style={{
-          background: "linear-gradient(to right, #3d2f1f 0%, transparent 8%, transparent 92%, #3d2f1f 100%)",
+          background: "linear-gradient(to right, #1a2e1f 0%, transparent 8%, transparent 92%, #1a2e1f 100%)",
         }}
       />
 

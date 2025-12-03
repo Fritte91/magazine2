@@ -70,9 +70,9 @@
   "newsletter": {
     "title": "Join Our Community",
     "description": "Get updates on future issues and exclusive content",
-    "placeholder_name": "Your Name",
     "placeholder_email": "your@email.com",
-    "submit": "Subscribe"
+    "submit": "Join",
+    "success": "Thank you! We'll be in touch soon."
   },
   "shop": {
     "title": "Now or Never Magazine",

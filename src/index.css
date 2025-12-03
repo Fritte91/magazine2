@@ -10,8 +10,8 @@
     --charcoal: 30 30 30;
     --stone: 120 120 120;
     --accent: 180 80 60;
-    --green-primary: 34 85 68;
-    --green-light: 76 175 80;
+    --green-primary: 140 60 45;
+    --green-light: 140 50 60;
     --dark-bg: 30 30 30;
     --dark-section: 40 40 40;
     --orange-accent: 255 152 0;
@@ -57,7 +57,7 @@
   }
 
   *:focus-visible {
-    outline: 2px solid hsl(34, 85%, 68%);
+    outline: 2px solid hsl(140, 60%, 45%);
     outline-offset: 2px;
   }
 

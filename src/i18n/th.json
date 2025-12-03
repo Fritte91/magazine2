@@ -70,9 +70,9 @@
   "newsletter": {
     "title": "เข้าร่วมชุมชนของเรา",
     "description": "รับข้อมูลอัปเดตเกี่ยวกับฉบับถัดไปและเนื้อหาเฉพาะบุคคล",
-    "placeholder_name": "ชื่อของคุณ",
     "placeholder_email": "your@email.com",
-    "submit": "สมัครสมาชิก"
+    "submit": "เข้าร่วม",
+    "success": "ขอบคุณ! เราจะติดต่อคุณในไม่ช้า"
   },
   "shop": {
     "title": "Now or Never Magazine",

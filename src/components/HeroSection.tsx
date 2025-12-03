@@ -76,26 +76,26 @@ export default function HeroSection() {
               photography that captures the essence of Thailand's emerging cannabis renaissance.
             </p>
 
-            {/* CTA Button - Premium Styling */}
+            {/* CTA Button - Premium Green Styling */}
             <div className="flex justify-center lg:justify-start pt-2">
               <Link
                 to="/shop"
                 className="inline-block px-10 py-4 md:py-5 font-sans font-bold text-base md:text-lg tracking-wider transition-all duration-300 rounded-lg uppercase"
                 style={{
-                  backgroundColor: "#ff9800",
+                  backgroundColor: "#225544",
                   color: "#ffffff",
                   letterSpacing: "0.1em",
-                  boxShadow: "0 10px 30px rgba(255, 152, 0, 0.4)",
+                  boxShadow: "0 10px 30px rgba(34, 85, 68, 0.5)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#ffa726"
+                  e.currentTarget.style.backgroundColor = "#2d6b52"
                   e.currentTarget.style.transform = "translateY(-2px)"
-                  e.currentTarget.style.boxShadow = "0 15px 40px rgba(255, 152, 0, 0.6)"
+                  e.currentTarget.style.boxShadow = "0 15px 40px rgba(34, 85, 68, 0.7)"
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#ff9800"
+                  e.currentTarget.style.backgroundColor = "#225544"
                   e.currentTarget.style.transform = "translateY(0)"
-                  e.currentTarget.style.boxShadow = "0 10px 30px rgba(255, 152, 0, 0.4)"
+                  e.currentTarget.style.boxShadow = "0 10px 30px rgba(34, 85, 68, 0.5)"
                 }}
               >
                 BUY MAGAZINE (฿1420)
@@ -175,7 +175,7 @@ export default function HeroSection() {
                   <div
                     className="absolute -inset-6 rounded-3xl opacity-25 blur-3xl -z-10"
                     style={{
-                      background: "linear-gradient(135deg, #ff9800 0%, #4caf50 100%)",
+                      background: "linear-gradient(135deg, #225544 0%, #4caf50 100%)",
                     }}
                   />
                 </div>
