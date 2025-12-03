@@ -17,7 +17,8 @@ export default function ProductCard({ image, title, features }: ProductCardProps
         <img 
           src={image || "/placeholder.svg"} 
           alt={title} 
-          className="w-full h-auto object-contain" 
+          className="w-full h-auto object-contain"
+          loading="lazy"
         />
       </div>
 
@@ -41,15 +42,15 @@ export default function ProductCard({ image, title, features }: ProductCardProps
               <div className="absolute inset-0 bg-gradient-to-r from-stone/5 via-white to-stone/5 rounded-lg border border-stone/15 group-hover:border-charcoal/20 group-hover:shadow-lg group-hover:bg-white transition-all duration-300"></div>
               
               {/* Accent line on hover */}
-              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-green-primary/0 group-hover:bg-green-primary transition-all duration-300 rounded-l-lg"></div>
+              <div className="feature-accent absolute left-0 top-0 bottom-0 w-1.5 transition-all duration-300 rounded-l-lg" style={{ backgroundColor: 'transparent' }}></div>
               
               {/* Content */}
               <div className="relative flex items-center gap-4 md:gap-5 p-5 md:p-6 lg:p-7">
                 {/* Icon with smooth animation */}
                 <div className="flex-shrink-0 relative">
-                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-charcoal/8 flex items-center justify-center group-hover:bg-green-primary/15 transition-all duration-300 group-hover:scale-110 shadow-sm group-hover:shadow-lg border border-stone/10 group-hover:border-green-primary/20">
+                  <div className="feature-icon w-11 h-11 md:w-12 md:h-12 rounded-full bg-charcoal/8 flex items-center justify-center transition-all duration-300 shadow-sm border border-stone/10">
                     <Check 
-                      className="w-5 h-5 md:w-6 md:h-6 text-charcoal/70 group-hover:text-green-primary transition-all duration-300" 
+                      className="feature-check w-5 h-5 md:w-6 md:h-6 text-charcoal/70 transition-all duration-300" 
                       strokeWidth={2.5}
                     />
                   </div>
@@ -57,7 +58,7 @@ export default function ProductCard({ image, title, features }: ProductCardProps
                 
                 {/* Text with smooth transitions - improved contrast */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-base md:text-lg lg:text-xl text-charcoal font-semibold leading-relaxed group-hover:text-green-primary/90 transition-colors duration-300">
+                  <p className="feature-text text-base md:text-lg lg:text-xl text-charcoal font-semibold leading-relaxed transition-colors duration-300">
                     {feature}
                   </p>
                 </div>
@@ -65,10 +66,11 @@ export default function ProductCard({ image, title, features }: ProductCardProps
                 {/* Elegant arrow indicator */}
                 <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300 ease-out">
                   <svg 
-                    className="w-5 h-5 text-green-primary" 
+                    className="w-5 h-5" 
                     fill="none" 
                     viewBox="0 0 24 24" 
                     stroke="currentColor"
+                    style={{ color: 'rgb(212, 175, 55)' }}
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                   </svg>
@@ -78,6 +80,23 @@ export default function ProductCard({ image, title, features }: ProductCardProps
           ))}
         </div>
       </div>
+      <style>{`
+        .group:hover .feature-accent {
+          background-color: rgb(212, 175, 55) !important;
+        }
+        .group:hover .feature-icon {
+          background-color: rgba(212, 175, 55, 0.15) !important;
+          transform: scale(1.1);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+          border-color: rgba(212, 175, 55, 0.2) !important;
+        }
+        .group:hover .feature-check {
+          color: rgb(212, 175, 55) !important;
+        }
+        .group:hover .feature-text {
+          color: rgba(212, 175, 55, 0.9) !important;
+        }
+      `}</style>
     </div>
   )
 }

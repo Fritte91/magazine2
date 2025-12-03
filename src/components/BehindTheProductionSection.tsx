@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom"
 import { articles } from "../data/articles"
+import { useI18n } from "../i18n/i18nContext"
 
 // Show only first 3 articles on homepage
 const featuredArticles = articles.slice(0, 3)
 
 export default function BehindTheProductionSection() {
+  const { language } = useI18n()
   return (
     <section className="py-16 md:py-20 lg:py-28 relative overflow-hidden" style={{ backgroundColor: "#0a0a0a" }}>
       {/* Premium dark background with subtle gradient */}
@@ -133,7 +135,7 @@ export default function BehindTheProductionSection() {
               <div className="p-6 md:p-8 lg:p-10 relative z-10">
                 {/* Title */}
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-serif font-bold mb-3 transition-colors duration-300 group-hover:text-white" style={{ color: "#F5F5F5" }}>
-                  {article.title}
+                  {language === "th" && article.titleTh ? article.titleTh : article.title}
                 </h3>
 
                 {/* Date */}
@@ -143,7 +145,7 @@ export default function BehindTheProductionSection() {
 
                 {/* Description */}
                 <p className="text-base md:text-lg leading-relaxed mb-8 font-sans transition-colors duration-300" style={{ color: "#E0E0E0" }}>
-                  {article.description}
+                  {language === "th" && article.descriptionTh ? article.descriptionTh : article.description}
                 </p>
 
                 {/* Read More Button */}

@@ -1,10 +1,28 @@
 import { useParams, Link } from "react-router-dom"
 import { getArticleById, getOtherArticles } from "../data/articles"
+import { useI18n } from "../i18n/i18nContext"
 
 export default function Article() {
   const { id } = useParams<{ id: string }>()
+  const { language } = useI18n()
   const article = getArticleById(id || "1")
   const relatedArticles = getOtherArticles(id || "1", 2)
+  
+  // Get localized content based on current language
+  const getTitle = () => {
+    if (language === "th" && article?.titleTh) return article.titleTh
+    return article?.title || ""
+  }
+  
+  const getSubtitle = () => {
+    if (language === "th" && article?.subtitleTh) return article.subtitleTh
+    return article?.subtitle
+  }
+  
+  const getContent = () => {
+    if (language === "th" && article?.contentTh) return article.contentTh
+    return article?.content || ""
+  }
 
   if (!article) {
     return (
@@ -79,12 +97,12 @@ export default function Article() {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 md:mb-6 text-charcoal leading-tight">
-            {article.title}
+            {getTitle()}
           </h1>
           
-          {article.subtitle && (
+          {getSubtitle() && (
             <p className="text-xl md:text-2xl font-serif text-charcoal/80 italic mb-6">
-              {article.subtitle}
+              {getSubtitle()}
             </p>
           )}
 
@@ -93,7 +111,7 @@ export default function Article() {
 
         {/* Body Content */}
         <div className="prose prose-lg max-w-none">
-          {article.content.split("\n\n").map((paragraph, idx) => {
+          {getContent().split("\n\n").map((paragraph, idx) => {
             const trimmed = paragraph.trim()
             
             // Handle headings (lines starting with #)
@@ -247,7 +265,7 @@ export default function Article() {
                     <div className="p-6 md:p-8 relative z-10">
                       {/* Title */}
                       <h4 className="text-xl md:text-2xl font-serif font-bold mb-3 transition-colors duration-300 group-hover:text-white" style={{ color: "#F5F5F5" }}>
-                        {relatedArticle.title}
+                        {language === "th" && relatedArticle.titleTh ? relatedArticle.titleTh : relatedArticle.title}
                       </h4>
 
                       {/* Date */}
@@ -257,7 +275,7 @@ export default function Article() {
 
                       {/* Description */}
                       <p className="text-base md:text-lg leading-relaxed font-sans transition-colors duration-300 line-clamp-3" style={{ color: "#E0E0E0" }}>
-                        {relatedArticle.description}
+                        {language === "th" && relatedArticle.descriptionTh ? relatedArticle.descriptionTh : relatedArticle.description}
                       </p>
                     </div>
                   </Link>

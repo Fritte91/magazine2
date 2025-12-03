@@ -1,9 +1,17 @@
+import { useEffect } from "react"
 import { Outlet } from "react-router-dom"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
 import ScrollToTop from "./ScrollToTop"
+import { useI18n } from "../i18n/i18nContext"
 
 export default function Layout() {
+  const { language } = useI18n()
+  
+  useEffect(() => {
+    document.documentElement.lang = language
+  }, [language])
+  
   return (
     <div 
       className="flex flex-col min-h-screen text-charcoal"

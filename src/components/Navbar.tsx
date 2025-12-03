@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Menu, X } from "lucide-react"
 import LanguageToggle from "./LanguageToggle"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
 
   const isActive = (path: string) => {
     if (path === "/" && location.pathname === "/") return true
@@ -19,6 +20,42 @@ export default function Navbar() {
 
   const closeMenu = () => {
     setIsMenuOpen(false)
+  }
+
+  const scrollToSection = (sectionId: string) => {
+    if (location.pathname !== "/") {
+      navigate("/")
+      setTimeout(() => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          const offset = 80 // Account for fixed navbar
+          const elementPosition = element.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.pageYOffset - offset
+          window.scrollTo({ top: offsetPosition, behavior: "smooth" })
+        }
+      }, 100)
+    } else {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        const offset = 80 // Account for fixed navbar
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - offset
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" })
+      }
+    }
+    closeMenu()
+  }
+
+  const scrollToTop = () => {
+    if (location.pathname !== "/") {
+      navigate("/")
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      }, 100)
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+    closeMenu()
   }
 
   return (
@@ -49,32 +86,25 @@ export default function Navbar() {
 
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-8 lg:gap-10">
-          <Link 
-            to="/" 
+          <button
+            onClick={scrollToTop}
             className={`text-base font-sans font-semibold transition-all duration-200 relative ${
-              isActive("/") 
+              isActive("/") && location.pathname === "/"
                 ? "text-green-primary" 
                 : "text-charcoal hover:text-green-primary"
             }`}
           >
             Home
-            {isActive("/") && (
+            {isActive("/") && location.pathname === "/" && (
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
             )}
-          </Link>
-          <Link 
-            to="/stories" 
-            className={`text-base font-sans font-semibold transition-all duration-200 relative ${
-              isActive("/stories") 
-                ? "text-green-primary" 
-                : "text-charcoal hover:text-green-primary"
-            }`}
+          </button>
+          <button
+            onClick={() => scrollToSection("stories")}
+            className="text-base font-sans font-semibold transition-all duration-200 relative text-charcoal hover:text-green-primary"
           >
             Stories
-            {isActive("/stories") && (
-              <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
-            )}
-          </Link>
+          </button>
           <Link 
             to="/shop" 
             className={`text-base font-sans font-semibold transition-all duration-200 relative ${
@@ -88,45 +118,31 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
             )}
           </Link>
-          <Link 
-            to="/" 
-            className={`text-base font-sans font-semibold transition-all duration-200 relative ${
-              isActive("/about") 
-                ? "text-green-primary" 
-                : "text-charcoal hover:text-green-primary"
-            }`}
+          <button
+            onClick={() => scrollToSection("topics")}
+            className={`text-base font-sans font-semibold transition-all duration-200 relative text-charcoal hover:text-green-primary`}
           >
             About
-            {isActive("/about") && (
-              <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
-            )}
-          </Link>
+          </button>
           <Link 
-            to="/" 
+            to="/stories" 
             className={`text-base font-sans font-semibold transition-all duration-200 relative ${
-              isActive("/blog") 
+              isActive("/stories") 
                 ? "text-green-primary" 
                 : "text-charcoal hover:text-green-primary"
             }`}
           >
             Blog
-            {isActive("/blog") && (
+            {isActive("/stories") && (
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
             )}
           </Link>
-          <Link 
-            to="/" 
-            className={`text-base font-sans font-semibold transition-all duration-200 relative ${
-              isActive("/author") 
-                ? "text-green-primary" 
-                : "text-charcoal hover:text-green-primary"
-            }`}
+          <button
+            onClick={() => scrollToSection("about-author")}
+            className={`text-base font-sans font-semibold transition-all duration-200 relative text-charcoal hover:text-green-primary`}
           >
             Author
-            {isActive("/author") && (
-              <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
-            )}
-          </Link>
+          </button>
         </div>
 
         {/* Desktop Language Toggle */}
@@ -156,28 +172,22 @@ export default function Navbar() {
       >
         <div className="container-padding bg-white border-t border-gray-100 py-4">
           <div className="flex flex-col space-y-1">
-            <Link
-              to="/"
-              onClick={closeMenu}
-              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
-                isActive("/")
+            <button
+              onClick={scrollToTop}
+              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left ${
+                isActive("/") && location.pathname === "/"
                   ? "text-green-primary bg-green-primary/10"
                   : "text-charcoal hover:text-green-primary hover:bg-gray-50"
               }`}
             >
               Home
-            </Link>
-            <Link
-              to="/stories"
-              onClick={closeMenu}
-              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
-                isActive("/stories")
-                  ? "text-green-primary bg-green-primary/10"
-                  : "text-charcoal hover:text-green-primary hover:bg-gray-50"
-              }`}
+            </button>
+            <button
+              onClick={() => scrollToSection("stories")}
+              className="px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left text-charcoal hover:text-green-primary hover:bg-gray-50"
             >
               Stories
-            </Link>
+            </button>
             <Link
               to="/shop"
               onClick={closeMenu}
@@ -189,39 +199,29 @@ export default function Navbar() {
             >
               Shop
             </Link>
-            <Link
-              to="/"
-              onClick={closeMenu}
-              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
-                isActive("/about")
-                  ? "text-green-primary bg-green-primary/10"
-                  : "text-charcoal hover:text-green-primary hover:bg-gray-50"
-              }`}
+            <button
+              onClick={() => scrollToSection("topics")}
+              className="px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left text-charcoal hover:text-green-primary hover:bg-gray-50"
             >
               About
-            </Link>
+            </button>
             <Link
-              to="/"
+              to="/stories"
               onClick={closeMenu}
               className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
-                isActive("/blog")
+                isActive("/stories")
                   ? "text-green-primary bg-green-primary/10"
                   : "text-charcoal hover:text-green-primary hover:bg-gray-50"
               }`}
             >
               Blog
             </Link>
-            <Link
-              to="/"
-              onClick={closeMenu}
-              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
-                isActive("/author")
-                  ? "text-green-primary bg-green-primary/10"
-                  : "text-charcoal hover:text-green-primary hover:bg-gray-50"
-              }`}
+            <button
+              onClick={() => scrollToSection("about-author")}
+              className="px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left text-charcoal hover:text-green-primary hover:bg-gray-50"
             >
               Author
-            </Link>
+            </button>
             {/* Language Toggle in Mobile Menu */}
             <div className="px-4 py-3">
               <LanguageToggle />

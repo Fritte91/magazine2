@@ -35,46 +35,44 @@ export default function TopicsSection() {
           {topics.map((topic: any, idx: number) => (
             <div
               key={idx}
-              className="group relative flex flex-col items-center rounded-2xl p-8 md:p-10 lg:p-12 cursor-pointer overflow-hidden transition-all duration-500"
+              className="topic-card group relative flex flex-col items-center rounded-2xl p-8 md:p-10 lg:p-12 cursor-pointer overflow-hidden transition-all duration-500"
               style={{
                 background: "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(252, 250, 248, 0.98) 100%)",
                 border: "1px solid rgba(34, 85, 68, 0.1)",
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(34, 85, 68, 0.3)"
-                e.currentTarget.style.boxShadow = "0 20px 40px rgba(34, 85, 68, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9)"
-                e.currentTarget.style.transform = "translateY(-8px)"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(34, 85, 68, 0.1)"
-                e.currentTarget.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)"
-                e.currentTarget.style.transform = "translateY(0)"
               }}
             >
               {/* Decorative gradient overlay on hover */}
               <div 
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
-                  background: "linear-gradient(135deg, rgba(34, 85, 68, 0.05) 0%, rgba(76, 175, 80, 0.03) 100%)",
+                  background: "linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(255, 193, 7, 0.05) 100%)",
                 }}
               ></div>
 
               {/* Accent line */}
               <div 
-                className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-primary/0 via-green-primary/0 to-green-primary/0 group-hover:from-green-primary group-hover:via-green-light group-hover:to-green-primary transition-all duration-500"
+                className="absolute top-0 left-0 right-0 h-1 transition-all duration-500"
+                style={{
+                  background: "transparent",
+                }}
               ></div>
 
               {/* Icon */}
               <div className="relative mb-6 group-hover:scale-110 transition-transform duration-500">
-                <div className="absolute inset-0 bg-green-primary/0 group-hover:bg-green-primary/10 rounded-full blur-xl group-hover:blur-2xl transition-all duration-500"></div>
+                <div 
+                  className="absolute inset-0 rounded-full blur-xl transition-all duration-500"
+                  style={{
+                    backgroundColor: "transparent",
+                  }}
+                ></div>
                 <div className="relative">
                   <TopicIcon iconPath={topic.icon || ""} />
                 </div>
               </div>
               
               {/* Title */}
-              <h3 className="relative text-xl md:text-2xl lg:text-3xl font-serif font-bold text-charcoal mb-5 md:mb-6 text-center group-hover:text-green-primary transition-colors duration-300">
+              <h3 className="topic-title relative text-xl md:text-2xl lg:text-3xl font-serif font-bold mb-5 md:mb-6 text-center transition-colors duration-300">
                 {topic.title}
               </h3>
               
@@ -85,15 +83,38 @@ export default function TopicsSection() {
 
               {/* Decorative corner elements */}
               <div className="absolute top-4 right-4 w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-green-primary rounded-tr-lg"></div>
+                <div 
+                  className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 rounded-tr-lg"
+                  style={{ borderColor: 'rgb(212, 175, 55)' }}
+                ></div>
               </div>
               <div className="absolute bottom-4 left-4 w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-green-primary rounded-bl-lg"></div>
+                <div 
+                  className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 rounded-bl-lg"
+                  style={{ borderColor: 'rgb(212, 175, 55)' }}
+                ></div>
               </div>
             </div>
           ))}
         </div>
       </div>
+      <style>{`
+        .topic-card:hover {
+          border-color: rgba(212, 175, 55, 0.4) !important;
+          box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+          transform: translateY(-8px);
+        }
+        .topic-card:hover .absolute.top-0.left-0.right-0.h-1 {
+          background: linear-gradient(to right, rgb(212, 175, 55), rgb(255, 193, 7), rgb(212, 175, 55)) !important;
+        }
+        .topic-card:hover .topic-title {
+          color: rgb(212, 175, 55) !important;
+        }
+        .topic-card:hover .relative.mb-6 .absolute.inset-0 {
+          background-color: rgba(212, 175, 55, 0.15) !important;
+          filter: blur(24px) !important;
+        }
+      `}</style>
     </section>
   )
 }

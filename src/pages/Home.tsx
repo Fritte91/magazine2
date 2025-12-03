@@ -12,12 +12,18 @@ export default function Home() {
     <div>
       <HeroSection />
       <StatisticsSection />
-      <AboutAuthorSection />
-      <TopicsSection />
+      <div id="about-author">
+        <AboutAuthorSection />
+      </div>
+      <div id="topics">
+        <TopicsSection />
+      </div>
       <TestimonialsSlider />
       <LegendsSlider />
       <NewsletterForm />
-      <BehindTheProductionSection />
+      <div id="stories">
+        <BehindTheProductionSection />
+      </div>
     </div>
   )
 }

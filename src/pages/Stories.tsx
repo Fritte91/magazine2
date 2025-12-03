@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom"
 import { articles } from "../data/articles"
+import { useI18n } from "../i18n/i18nContext"
 
 export default function Stories() {
+  const { language } = useI18n()
   return (
     <div className="pt-28 md:pt-32 pb-16 md:pb-20 lg:pb-28 relative overflow-hidden" style={{ backgroundColor: "#0a0a0a", minHeight: "100vh" }}>
       {/* Premium dark background with subtle gradient */}
@@ -158,7 +160,7 @@ export default function Stories() {
               <div className="p-6 md:p-8 lg:p-10 relative z-10">
                 {/* Title */}
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-serif font-bold mb-3 transition-colors duration-300 group-hover:text-white" style={{ color: "#F5F5F5" }}>
-                  {article.title}
+                  {language === "th" && article.titleTh ? article.titleTh : article.title}
                 </h3>
 
                 {/* Date */}
@@ -168,7 +170,7 @@ export default function Stories() {
 
                 {/* Description */}
                 <p className="text-base md:text-lg leading-relaxed mb-8 font-sans transition-colors duration-300" style={{ color: "#E0E0E0" }}>
-                  {article.description}
+                  {language === "th" && article.descriptionTh ? article.descriptionTh : article.description}
                 </p>
 
                 {/* Read More Button */}

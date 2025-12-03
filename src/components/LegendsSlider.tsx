@@ -8,9 +8,9 @@ const legendsData = [
       "A key figure in Thailand's cannabis scene, known for popularizing the KD Koh Tao strain, a local strain from Koh Tao Island. He is also widely known and recognized for supporting and educating local communities, and the development of Thailand's cannabis culture.",
     image: "/kdkohtao.jpeg",
   },
-  { name: "Kitty Chopaka", description: "Artist & Visionary", image: "/kittychopaka.jpeg" },
-  { name: "Dr.K Highthai", description: "Cannabis Enthusiast", image: "/highthai.webp" },
-  { name: "Name Four", description: "Photographer", image: "/legend.jpg" },
+  { name: "Kitty Chopaka", description:"A prominent cannabis advocate in Thailand who played a crucial role in the legalization movement. Her work continues to shape the emerging legal cannabis industry in Southeast Asia.", image: "/kittychopaka.jpeg" },
+  { name: "Dr.K Highthai", description: "A voice of sharing within Thailand's cannabis culture, P'K has spent over 20 years growing, teaching, and sharing his craft with an open heart. With passion and a free spirit, he continues to grow and cultivate the community, rooted in love and knowledge.", image: "/highthai.webp" },
+  
 ]
 
 export default function LegendsSlider() {
@@ -68,7 +68,6 @@ export default function LegendsSlider() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
           zIndex: 0,
         }}
       />

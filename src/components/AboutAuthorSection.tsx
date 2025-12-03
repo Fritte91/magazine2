@@ -37,7 +37,7 @@ export default function AboutAuthorSection() {
           <div className="relative z-10 p-8 md:p-12 lg:p-16 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {/* My Journey */}
             <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200">
-              <h4 className="text-xl md:text-2xl font-serif font-bold text-green-primary mb-4">
+              <h4 className="text-xl md:text-2xl font-serif font-bold text-charcoal mb-4">
                 {t("about_author.my_journey.title")}
               </h4>
               <p className="text-base md:text-lg leading-relaxed text-charcoal font-sans">
@@ -47,7 +47,7 @@ export default function AboutAuthorSection() {
 
             {/* Creative Insights */}
             <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200">
-              <h4 className="text-xl md:text-2xl font-serif font-bold text-green-primary mb-4">
+              <h4 className="text-xl md:text-2xl font-serif font-bold text-charcoal mb-4">
                 {t("about_author.creative_insights.title")}
               </h4>
               <p className="text-base md:text-lg leading-relaxed text-charcoal font-sans">
@@ -57,7 +57,7 @@ export default function AboutAuthorSection() {
 
             {/* The Mission */}
             <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200">
-              <h4 className="text-xl md:text-2xl font-serif font-bold text-green-primary mb-4">
+              <h4 className="text-xl md:text-2xl font-serif font-bold text-charcoal mb-4">
                 {t("about_author.the_mission.title")}
               </h4>
               <p className="text-base md:text-lg leading-relaxed text-charcoal font-sans">
@@ -67,7 +67,7 @@ export default function AboutAuthorSection() {
 
             {/* Magazine Perspective */}
             <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200">
-              <h4 className="text-xl md:text-2xl font-serif font-bold text-green-primary mb-4">
+              <h4 className="text-xl md:text-2xl font-serif font-bold text-charcoal mb-4">
                 {t("about_author.magazine_perspective.title")}
               </h4>
               <p className="text-base md:text-lg leading-relaxed text-charcoal font-sans">

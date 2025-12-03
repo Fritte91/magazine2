@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /checkout
+Disallow: /thank-you
+
+Sitemap: https://nowornevermagazine.com/sitemap.xml
+

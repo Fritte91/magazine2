@@ -9,7 +9,6 @@ export default function HeroSection() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
       }}
     >
       {/* Dark Overlay for Better Contrast */}

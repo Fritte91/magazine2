@@ -126,60 +126,63 @@ export default function CheckoutForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
       {/* Customer Info Section */}
-      <div>
-        <h3 className="text-xl md:text-2xl font-serif mb-6">{t("checkout.customer_info")}</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-5 shadow-lg border-2 border-charcoal/5 hover:border-charcoal/10 transition-all duration-300">
+        <div className="flex items-center gap-2 mb-4 pb-2 md:pb-3 border-b-2 border-charcoal/10">
+          <div className="w-1 h-5 md:h-6 rounded-full" style={{ background: 'linear-gradient(to bottom, rgb(212, 175, 55), rgb(255, 193, 7))' }}></div>
+          <h3 className="text-base md:text-lg lg:text-xl font-serif font-bold text-charcoal">{t("checkout.customer_info")}</h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
           {/* Full Name */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-semibold mb-2">{t("checkout.full_name")} *</label>
+            <label className="block text-xs font-bold mb-1.5 text-charcoal/80 uppercase tracking-wide">{t("checkout.full_name")} *</label>
             <input
               type="text"
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-stone/30 bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-charcoal text-base md:text-lg"
+              className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
             />
-            {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+            {errors.fullName && <p className="text-red-600 text-xs mt-1 font-medium">{errors.fullName}</p>}
           </div>
 
           {/* Email */}
           <div>
-            <label className="block text-sm font-semibold mb-2">{t("checkout.email")} *</label>
+            <label className="block text-xs font-bold mb-1.5 text-charcoal/80 uppercase tracking-wide">{t("checkout.email")} *</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-stone/30 bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-charcoal text-base"
+              className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
             />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+            {errors.email && <p className="text-red-600 text-xs mt-1 font-medium">{errors.email}</p>}
           </div>
 
           {/* Phone */}
           <div>
-            <label className="block text-sm font-semibold mb-2">{t("checkout.phone")} *</label>
+            <label className="block text-xs font-bold mb-1.5 text-charcoal/80 uppercase tracking-wide">{t("checkout.phone")} *</label>
             <input
               type="tel"
               name="phone"
               placeholder="0812345678"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-stone/30 bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-charcoal text-base"
+              className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
               inputMode="numeric"
             />
-            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+            {errors.phone && <p className="text-red-600 text-xs mt-1 font-medium">{errors.phone}</p>}
           </div>
 
           {/* Province */}
           <div>
-            <label className="block text-sm font-semibold mb-2">{t("checkout.province")} *</label>
+            <label className="block text-xs font-bold mb-1.5 text-charcoal/80 uppercase tracking-wide">{t("checkout.province")} *</label>
             <select
               name="province"
               value={formData.province}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-stone/30 bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-charcoal text-base"
+              className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
             >
               <option value="">Select Province</option>
               {thaiProvinces.map((province) => (
@@ -188,25 +191,25 @@ export default function CheckoutForm() {
                 </option>
               ))}
             </select>
-            {errors.province && <p className="text-red-500 text-sm mt-1">{errors.province}</p>}
+            {errors.province && <p className="text-red-600 text-xs mt-1 font-medium">{errors.province}</p>}
           </div>
 
           {/* District */}
           <div>
-            <label className="block text-sm font-semibold mb-2">{t("checkout.district")} *</label>
+            <label className="block text-xs font-bold mb-1.5 text-charcoal/80 uppercase tracking-wide">{t("checkout.district")} *</label>
             <input
               type="text"
               name="district"
               value={formData.district}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-stone/30 bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-charcoal text-base"
+              className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
             />
-            {errors.district && <p className="text-red-500 text-sm mt-1">{errors.district}</p>}
+            {errors.district && <p className="text-red-600 text-xs mt-1 font-medium">{errors.district}</p>}
           </div>
 
           {/* Postal Code */}
           <div>
-            <label className="block text-sm font-semibold mb-2">{t("checkout.postal_code")} *</label>
+            <label className="block text-xs font-bold mb-1.5 text-charcoal/80 uppercase tracking-wide">{t("checkout.postal_code")} *</label>
             <input
               type="text"
               name="postalCode"
@@ -214,60 +217,74 @@ export default function CheckoutForm() {
               maxLength={5}
               value={formData.postalCode}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-stone/30 bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-charcoal text-base"
+              className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
               inputMode="numeric"
             />
-            {errors.postalCode && <p className="text-red-500 text-sm mt-1">{errors.postalCode}</p>}
+            {errors.postalCode && <p className="text-red-600 text-xs mt-1 font-medium">{errors.postalCode}</p>}
           </div>
 
           {/* Address */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-semibold mb-2">{t("checkout.address")} *</label>
+            <label className="block text-xs font-bold mb-1.5 text-charcoal/80 uppercase tracking-wide">{t("checkout.address")} *</label>
             <textarea
               name="address"
               rows={3}
               value={formData.address}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-stone/30 bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-charcoal text-base"
+              className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md resize-none"
             />
-            {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
+            {errors.address && <p className="text-red-600 text-xs mt-1 font-medium">{errors.address}</p>}
           </div>
 
           {/* Notes */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-semibold mb-2">{t("checkout.notes")}</label>
+            <label className="block text-xs font-bold mb-1.5 text-charcoal/80 uppercase tracking-wide">{t("checkout.notes")}</label>
             <textarea
               name="notes"
               rows={2}
               value={formData.notes}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-stone/30 bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-charcoal text-base"
+              className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md resize-none"
             />
           </div>
         </div>
       </div>
 
       {/* Payment Section */}
-      <div className="border-t border-stone/20 pt-8">
-        <h3 className="text-xl md:text-2xl font-serif mb-6">{t("checkout.payment")}</h3>
+      <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-5 shadow-lg border-2 border-charcoal/5 hover:border-charcoal/10 transition-all duration-300">
+        <div className="flex items-center gap-2 mb-4 pb-2 md:pb-3 border-b-2 border-charcoal/10">
+          <div className="w-1 h-5 md:h-6 rounded-full" style={{ background: 'linear-gradient(to bottom, rgb(212, 175, 55), rgb(255, 193, 7))' }}></div>
+          <h3 className="text-base md:text-lg lg:text-xl font-serif font-bold text-charcoal">{t("checkout.payment")}</h3>
+        </div>
 
-        <div className="bg-stone/5 p-6 md:p-8 rounded-lg mb-6">
-          <p className="text-sm text-stone mb-4 text-center">Scan QR code to transfer ฿499</p>
-          <div className="flex justify-center">
-            <img
-              src="/thai-payment-qr-code.jpg"
-              alt="QR Payment Code"
-              className="w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64"
-            />
+        <div className="bg-gradient-to-br from-cream/50 to-white p-4 md:p-5 rounded-lg md:rounded-xl mb-4 md:mb-5 border-2 border-charcoal/10 shadow-inner relative overflow-hidden">
+          <div className="absolute inset-0 opacity-50" style={{ background: 'linear-gradient(to bottom right, rgba(212, 175, 55, 0.05), transparent)' }}></div>
+          <div className="relative z-10">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, rgba(212, 175, 55, 0.3), transparent)' }}></div>
+              <p className="text-xs text-charcoal/80 font-bold uppercase tracking-wider px-2 md:px-3">Scan QR code to transfer</p>
+              <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, rgba(212, 175, 55, 0.3), transparent)' }}></div>
+            </div>
+            <div className="flex justify-center mb-2 md:mb-3">
+              <div className="bg-white p-2 md:p-3 rounded-lg md:rounded-xl shadow-xl border-2" style={{ borderColor: 'rgba(212, 175, 55, 0.2)' }}>
+                <img
+                  src="/thai-payment-qr-code.jpg"
+                  alt="QR Payment Code"
+                  className="w-32 h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-lg"
+                />
+              </div>
+            </div>
+            <p className="text-lg md:text-xl lg:text-2xl font-serif font-bold text-center text-charcoal">฿1420</p>
           </div>
         </div>
 
         {/* File Upload */}
         <div>
-          <label className="block text-sm font-semibold mb-3">
-            {t("checkout.upload_slip")} * (JPG, PNG, PDF, or HEIC)
+          <label className="block text-xs font-bold mb-2 text-charcoal/80 uppercase tracking-wide">
+            {t("checkout.upload_slip")} * <span className="normal-case font-normal text-xs">(JPG, PNG, PDF, or HEIC)</span>
           </label>
-          <div className="border-2 border-dashed border-stone/30 p-6 md:p-8 text-center cursor-pointer hover:bg-stone/5 hover:border-stone/50 transition-all">
+          <div className="checkout-upload border-2 border-dashed border-charcoal/20 bg-gradient-to-br from-cream/30 to-white p-3 md:p-4 text-center cursor-pointer transition-all duration-300 rounded-lg group relative overflow-hidden">
+            <div className="absolute inset-0 transition-all duration-300" style={{ background: 'linear-gradient(to bottom right, transparent, transparent)' }}></div>
             <input
               type="file"
               onChange={handleFileChange}
@@ -275,28 +292,96 @@ export default function CheckoutForm() {
               className="hidden"
               id="payment-file"
             />
-            <label htmlFor="payment-file" className="cursor-pointer">
-              <p className="text-base text-charcoal font-semibold">
-                {paymentFile ? `Selected: ${paymentFile.name}` : "Click to upload or drag and drop"}
-              </p>
-              <p className="text-sm text-stone mt-2">PNG, JPG, PDF or HEIC</p>
+            <label htmlFor="payment-file" className="cursor-pointer relative z-10 block">
+              {paymentFile ? (
+                <div className="flex items-center justify-center gap-2">
+                  <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: 'rgb(212, 175, 55)' }}>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="text-sm text-charcoal font-medium truncate">{paymentFile.name}</p>
+                  <span className="text-xs text-charcoal/60 ml-1">(Click to change)</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center gap-2 md:gap-3">
+                  <div className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-charcoal/5 rounded-lg transition-colors duration-300">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-charcoal/60 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm text-charcoal font-medium">Click to upload or drag and drop</p>
+                    <p className="text-xs text-charcoal/60">PNG, JPG, PDF or HEIC</p>
+                  </div>
+                </div>
+              )}
             </label>
           </div>
-          {errors.paymentFile && <p className="text-red-500 text-sm mt-2">{errors.paymentFile}</p>}
+          {errors.paymentFile && <p className="text-red-600 text-xs mt-2 font-medium">{errors.paymentFile}</p>}
         </div>
       </div>
 
       {/* Submit Button */}
-      <div>
-        {errors.submit && <p className="text-red-500 text-sm mb-4 text-center">{errors.submit}</p>}
+      <div className="pt-2">
+        {errors.submit && <div className="mb-3 p-3 bg-red-50 border-2 border-red-200 rounded-lg"><p className="text-red-600 text-xs font-medium text-center">{errors.submit}</p></div>}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-4 md:py-5 bg-charcoal text-white font-serif text-base md:text-lg tracking-wide hover:bg-opacity-90 active:scale-95 transition-all duration-300 uppercase disabled:opacity-50 disabled:cursor-not-allowed touch-none"
+          className="checkout-submit-btn w-full py-3 md:py-3.5 text-white font-serif text-sm tracking-wider active:scale-[0.98] transition-all duration-300 uppercase disabled:opacity-50 disabled:cursor-not-allowed touch-none rounded-lg shadow-xl font-bold relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(to right, rgb(30, 30, 30), rgba(30, 30, 30, 0.95))'
+          }}
         >
-          {isSubmitting ? "Submitting..." : t("checkout.submit_order")}
+          <span className="relative z-10 flex items-center justify-center gap-3">
+            {isSubmitting ? (
+              <>
+                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Processing...</span>
+              </>
+            ) : (
+              <>
+                <span>{t("checkout.submit_order")}</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </>
+            )}
+          </span>
+          <div className="absolute inset-0 transition-opacity duration-300" style={{ background: 'linear-gradient(to right, rgb(212, 175, 55), rgb(255, 193, 7))', opacity: 0 }}></div>
         </button>
       </div>
+      <style>{`
+        .checkout-input:focus {
+          border-color: rgba(212, 175, 55, 0.5) !important;
+          box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+        }
+        .checkout-input:hover {
+          border-color: rgba(212, 175, 55, 0.3) !important;
+        }
+        .checkout-upload:hover {
+          background: linear-gradient(to bottom right, rgba(212, 175, 55, 0.1), rgba(252, 250, 248, 0.4)) !important;
+          border-color: rgba(212, 175, 55, 0.4) !important;
+        }
+        .checkout-upload:hover .absolute.inset-0 {
+          background: linear-gradient(to bottom right, rgba(212, 175, 55, 0.05), transparent) !important;
+        }
+        .checkout-upload:hover .bg-charcoal\\/5 {
+          background-color: rgba(212, 175, 55, 0.2) !important;
+        }
+        .checkout-upload:hover .text-charcoal\\/60 {
+          color: rgb(212, 175, 55) !important;
+        }
+        .checkout-submit-btn:hover {
+          background: linear-gradient(to right, rgb(212, 175, 55), rgb(255, 193, 7)) !important;
+          color: rgb(30, 30, 30) !important;
+          box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3) !important;
+        }
+        .checkout-submit-btn:hover .absolute.inset-0 {
+          opacity: 1 !important;
+        }
+      `}</style>
     </form>
   )
 }

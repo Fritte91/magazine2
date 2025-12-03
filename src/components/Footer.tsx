@@ -1,9 +1,45 @@
 import { Instagram, Facebook } from "lucide-react"
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useI18n } from "../i18n/i18nContext"
 
 export default function Footer() {
   const { t } = useI18n()
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const scrollToSection = (sectionId: string) => {
+    if (location.pathname !== "/") {
+      navigate("/")
+      setTimeout(() => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          const offset = 80
+          const elementPosition = element.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.pageYOffset - offset
+          window.scrollTo({ top: offsetPosition, behavior: "smooth" })
+        }
+      }, 100)
+    } else {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        const offset = 80
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - offset
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" })
+      }
+    }
+  }
+
+  const scrollToTop = () => {
+    if (location.pathname !== "/") {
+      navigate("/")
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      }, 100)
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+  }
 
   return (
     <footer className="relative text-white py-6 md:py-10 lg:py-12 overflow-hidden">
@@ -58,7 +94,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-2 md:gap-3 pt-1">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/nowornevermagazine/?igsh=MXFlYWVkdm1tbnB4eA%3D%3D&utm_source=qr#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-green-primary/20 hover:bg-green-primary/30 border border-green-primary/30 hover:border-green-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-primary/20"
@@ -67,7 +103,7 @@ export default function Footer() {
                 <Instagram className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-light" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/people/Now-or-Never/61578822662304/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-green-primary/20 hover:bg-green-primary/30 border border-green-primary/30 hover:border-green-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-primary/20"
@@ -84,23 +120,23 @@ export default function Footer() {
               <h4 className="text-xs font-sans font-bold tracking-wider mb-3 md:mb-4 uppercase text-green-light">Quick Links</h4>
               <ul className="space-y-2 md:space-y-2.5 text-xs md:text-sm font-sans">
                 <li>
-                  <Link to="/" className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
+                  <button onClick={scrollToTop} className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
                     <span className="flex items-center gap-2">
                       <span className="w-0 group-hover:w-2 h-0.5 bg-green-light transition-all duration-200"></span>
                       Home
                     </span>
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link to="/shop" className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
+                  <button onClick={() => scrollToSection("stories")} className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
                     <span className="flex items-center gap-2">
                       <span className="w-0 group-hover:w-2 h-0.5 bg-green-light transition-all duration-200"></span>
                       Stories
                     </span>
-                  </Link>
+                  </button>
                 </li>
                 <li>
-                  <Link to="#" className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
+                  <Link to="/stories" className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
                     <span className="flex items-center gap-2">
                       <span className="w-0 group-hover:w-2 h-0.5 bg-green-light transition-all duration-200"></span>
                       Journal
@@ -108,12 +144,12 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
+                  <button onClick={() => scrollToSection("about-author")} className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
                     <span className="flex items-center gap-2">
                       <span className="w-0 group-hover:w-2 h-0.5 bg-green-light transition-all duration-200"></span>
                       Author
                     </span>
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>
