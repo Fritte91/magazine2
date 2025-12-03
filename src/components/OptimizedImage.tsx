@@ -24,6 +24,7 @@ export default function OptimizedImage({
       className={className}
       width={width}
       height={height}
+      sizes={sizes}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
       style={{
