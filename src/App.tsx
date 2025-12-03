@@ -1,14 +1,18 @@
+import { lazy, Suspense } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { I18nProvider } from "./i18n/i18nContext"
 import ErrorBoundary from "./components/ErrorBoundary"
 import Layout from "./components/Layout"
-import Home from "./pages/Home"
-import Shop from "./pages/Shop"
-import Checkout from "./pages/Checkout"
-import ThankYou from "./pages/ThankYou"
-import GoogleForm from "./pages/GoogleForm"
-import Article from "./pages/Article"
-import Stories from "./pages/Stories"
+import LoadingSpinner from "./components/LoadingSpinner"
+
+// Lazy load all page components
+const Home = lazy(() => import("./pages/Home"))
+const Shop = lazy(() => import("./pages/Shop"))
+const Checkout = lazy(() => import("./pages/Checkout"))
+const ThankYou = lazy(() => import("./pages/ThankYou"))
+const GoogleForm = lazy(() => import("./pages/GoogleForm"))
+const Article = lazy(() => import("./pages/Article"))
+const Stories = lazy(() => import("./pages/Stories"))
 
 function App() {
   return (
@@ -17,13 +21,62 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/stories" element={<Stories />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/thank-you" element={<ThankYou />} />
-              <Route path="/form" element={<GoogleForm />} />
-              <Route path="/article/:id" element={<Article />} />
+              <Route 
+                path="/" 
+                element={
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <Home />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/shop" 
+                element={
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <Shop />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/stories" 
+                element={
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <Stories />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/checkout" 
+                element={
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <Checkout />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/thank-you" 
+                element={
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <ThankYou />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/form" 
+                element={
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <GoogleForm />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/article/:id" 
+                element={
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <Article />
+                  </Suspense>
+                } 
+              />
             </Route>
           </Routes>
         </BrowserRouter>
