@@ -1,13 +1,24 @@
+import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
+import { Menu, X } from "lucide-react"
 import LanguageToggle from "./LanguageToggle"
 
 export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
 
   const isActive = (path: string) => {
     if (path === "/" && location.pathname === "/") return true
     if (path !== "/" && location.pathname.startsWith(path)) return true
     return false
+  }
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
   }
 
   return (
@@ -36,7 +47,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Nav Links */}
+        {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-8 lg:gap-10">
           <Link 
             to="/" 
@@ -118,8 +129,105 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Language Toggle */}
-        <LanguageToggle />
+        {/* Desktop Language Toggle */}
+        <div className="hidden md:block">
+          <LanguageToggle />
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={toggleMenu}
+          className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? (
+            <X size={24} className="text-charcoal" />
+          ) : (
+            <Menu size={24} className="text-charcoal" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="container-padding bg-white border-t border-gray-100 py-4">
+          <div className="flex flex-col space-y-1">
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
+                isActive("/")
+                  ? "text-green-primary bg-green-primary/10"
+                  : "text-charcoal hover:text-green-primary hover:bg-gray-50"
+              }`}
+            >
+              Home
+            </Link>
+            <Link
+              to="/stories"
+              onClick={closeMenu}
+              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
+                isActive("/stories")
+                  ? "text-green-primary bg-green-primary/10"
+                  : "text-charcoal hover:text-green-primary hover:bg-gray-50"
+              }`}
+            >
+              Stories
+            </Link>
+            <Link
+              to="/shop"
+              onClick={closeMenu}
+              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
+                isActive("/shop")
+                  ? "text-green-primary bg-green-primary/10"
+                  : "text-charcoal hover:text-green-primary hover:bg-gray-50"
+              }`}
+            >
+              Shop
+            </Link>
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
+                isActive("/about")
+                  ? "text-green-primary bg-green-primary/10"
+                  : "text-charcoal hover:text-green-primary hover:bg-gray-50"
+              }`}
+            >
+              About
+            </Link>
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
+                isActive("/blog")
+                  ? "text-green-primary bg-green-primary/10"
+                  : "text-charcoal hover:text-green-primary hover:bg-gray-50"
+              }`}
+            >
+              Blog
+            </Link>
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
+                isActive("/author")
+                  ? "text-green-primary bg-green-primary/10"
+                  : "text-charcoal hover:text-green-primary hover:bg-gray-50"
+              }`}
+            >
+              Author
+            </Link>
+            {/* Language Toggle in Mobile Menu */}
+            <div className="px-4 py-3">
+              <LanguageToggle />
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   )

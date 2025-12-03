@@ -2,7 +2,7 @@ export default function StatisticsSection() {
   return (
     <section className="py-8 md:py-10 bg-white border-y border-gray-100">
       <div className="container-padding max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-3 md:grid-cols-3 gap-4 md:gap-8">
           {/* Stat 1 */}
           <div className="text-center">
             <div 

@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
+import ScrollToTop from "./ScrollToTop"
 
 export default function Layout() {
   return (
@@ -12,6 +13,7 @@ export default function Layout() {
         width: "100%",
       }}
     >
+      <ScrollToTop />
       <Navbar />
       <main className="flex-1" style={{ backgroundColor: "#ffffff", width: "100%" }}>
         <Outlet />

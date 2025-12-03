@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 const legendsData = [
@@ -15,6 +15,8 @@ const legendsData = [
 
 export default function LegendsSlider() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const touchStartX = useRef<number | null>(null)
+  const touchEndX = useRef<number | null>(null)
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? legendsData.length - 1 : prev - 1))
@@ -22,6 +24,36 @@ export default function LegendsSlider() {
 
   const goToNext = () => {
     setCurrentIndex((prev) => (prev === legendsData.length - 1 ? 0 : prev + 1))
+  }
+
+  // Minimum swipe distance (in pixels)
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchEndX.current = null
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const onTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+
+    const distance = touchStartX.current - touchEndX.current
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+
+    if (isLeftSwipe) {
+      goToNext()
+    } else if (isRightSwipe) {
+      goToPrevious()
+    }
+
+    // Reset
+    touchStartX.current = null
+    touchEndX.current = null
   }
 
   const currentLegend = legendsData[currentIndex]
@@ -63,12 +95,16 @@ export default function LegendsSlider() {
         <div className="flex justify-center mb-8 md:mb-12">
           <div
             className="w-full max-w-4xl rounded-xl p-6 md:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 transition-all duration-500"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
             style={{
               backgroundColor: "rgba(0, 0, 0, 0.45)",
               backdropFilter: "blur(12px)",
               WebkitBackdropFilter: "blur(12px)",
               border: "1px solid rgba(255, 255, 255, 0.15)",
               boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)",
+              touchAction: "pan-x pan-y",
             }}
           >
             {/* Image */}
@@ -91,7 +127,7 @@ export default function LegendsSlider() {
             <div className="flex flex-col justify-center">
               <h3
                 className="text-2xl md:text-3xl font-sans font-bold mb-4 transition-colors duration-500"
-                style={{ color: "#4caf50" }}
+                style={{ color: "#ff8c42" }}
               >
                 {currentLegend.name}
               </h3>

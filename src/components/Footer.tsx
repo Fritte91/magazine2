@@ -6,7 +6,7 @@ export default function Footer() {
   const { t } = useI18n()
 
   return (
-    <footer className="relative text-white py-16 md:py-20 lg:py-24 overflow-hidden">
+    <footer className="relative text-white py-6 md:py-10 lg:py-12 overflow-hidden">
       {/* Gradient background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0d1a0f] via-[#1a2e1f] to-[#0f1f12]"></div>
       
@@ -39,11 +39,11 @@ export default function Footer() {
       ></div>
 
       <div className="container-padding max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 mb-6 md:mb-8">
           {/* Brand */}
-          <div className="space-y-5">
-            <div className="flex items-center gap-3">
-              <div className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden shadow-xl ring-2 ring-green-primary/30">
+          <div className="space-y-3 md:space-y-4">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden shadow-xl ring-2 ring-green-primary/30">
                 <img
                   src="/LOGO1.png"
                   alt="Now Or Never Logo"
@@ -52,37 +52,37 @@ export default function Footer() {
                 />
               </div>
             </div>
-            <p className="text-base text-white/90 leading-relaxed font-sans max-w-sm">
+            <p className="text-xs md:text-sm text-white/90 leading-relaxed font-sans max-w-sm">
               Now Or Never 420 documents Thailand's living cannabis culture - bridging growers, artists, healers, and
               dreamers through authentic stories and beautiful photography.
             </p>
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex items-center gap-2 md:gap-3 pt-1">
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full bg-green-primary/20 hover:bg-green-primary/30 border border-green-primary/30 hover:border-green-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-primary/20"
+                className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-green-primary/20 hover:bg-green-primary/30 border border-green-primary/30 hover:border-green-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-primary/20"
                 aria-label="Instagram"
               >
-                <Instagram className="w-5 h-5 text-green-light" />
+                <Instagram className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-light" />
               </a>
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full bg-green-primary/20 hover:bg-green-primary/30 border border-green-primary/30 hover:border-green-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-primary/20"
+                className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-green-primary/20 hover:bg-green-primary/30 border border-green-primary/30 hover:border-green-primary/50 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-green-primary/20"
                 aria-label="Facebook"
               >
-                <Facebook className="w-5 h-5 text-green-light" />
+                <Facebook className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-light" />
               </a>
             </div>
           </div>
 
           {/* Quick Links & Community Partners */}
-          <div className="space-y-8">
+          <div className="space-y-4 md:space-y-6">
             <div>
-              <h4 className="text-sm font-sans font-bold tracking-wider mb-6 uppercase text-green-light">Quick Links</h4>
-              <ul className="space-y-3 text-base font-sans">
+              <h4 className="text-xs font-sans font-bold tracking-wider mb-3 md:mb-4 uppercase text-green-light">Quick Links</h4>
+              <ul className="space-y-2 md:space-y-2.5 text-xs md:text-sm font-sans">
                 <li>
                   <Link to="/" className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
                     <span className="flex items-center gap-2">
@@ -118,32 +118,32 @@ export default function Footer() {
               </ul>
             </div>
             <div>
-              <h4 className="text-sm font-sans font-bold tracking-wider mb-4 uppercase text-green-light">
+              <h4 className="text-xs font-sans font-bold tracking-wider mb-2 md:mb-3 uppercase text-green-light">
                 Community Partners
               </h4>
-              <div className="inline-block px-4 py-2 rounded-lg bg-green-primary/20 border border-green-primary/30">
-                <p className="text-base text-green-light font-sans font-semibold">Phonotype_247</p>
+              <div className="inline-block px-2.5 py-1 md:px-3 md:py-1.5 rounded-lg bg-green-primary/20 border border-green-primary/30">
+                <p className="text-xs md:text-sm text-green-light font-sans font-semibold">Phonotype_247</p>
               </div>
             </div>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-sans font-bold tracking-wider mb-6 uppercase text-green-light">Contact</h4>
-            <ul className="space-y-5 text-base font-sans">
+            <h4 className="text-xs font-sans font-bold tracking-wider mb-3 md:mb-4 uppercase text-green-light">Contact</h4>
+            <ul className="space-y-3 md:space-y-4 text-xs md:text-sm font-sans">
               <li>
-                <span className="text-white/70 block mb-2 text-sm font-medium tracking-wide">EMAIL</span>
+                <span className="text-white/70 block mb-1 md:mb-1.5 text-[10px] md:text-xs font-medium tracking-wide">EMAIL</span>
                 <a 
                   href="mailto:info@nowornevermagazine.com" 
-                  className="text-white hover:text-green-light transition-colors duration-200 break-all inline-flex items-center gap-2 group"
+                  className="text-white hover:text-green-light transition-colors duration-200 break-all inline-flex items-center gap-2 group text-xs md:text-sm"
                 >
                   <span>info@nowornevermagazine.com</span>
                   <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                 </a>
               </li>
               <li>
-                <span className="text-white/70 block mb-2 text-sm font-medium tracking-wide">LOCATION</span>
-                <span className="text-white flex items-center gap-2">
+                <span className="text-white/70 block mb-1 md:mb-1.5 text-[10px] md:text-xs font-medium tracking-wide">LOCATION</span>
+                <span className="text-white flex items-center gap-2 text-xs md:text-sm">
                   <span>Bangkok, Thailand</span>
                   <span className="text-green-light">📍</span>
                 </span>
@@ -153,8 +153,8 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-green-primary/20 pt-10 text-center">
-          <p className="text-sm text-white/70 font-sans">{t("footer.copy")}</p>
+        <div className="border-t border-green-primary/20 pt-4 md:pt-6 text-center">
+          <p className="text-[10px] md:text-xs text-white/70 font-sans">{t("footer.copy")}</p>
         </div>
       </div>
     </footer>
