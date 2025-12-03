@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import { I18nProvider } from "./i18n/i18nContext"
 import ErrorBoundary from "./components/ErrorBoundary"
 import Layout from "./components/Layout"
@@ -81,6 +82,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </I18nProvider>
+      <SpeedInsights />
     </ErrorBoundary>
   )
 }
