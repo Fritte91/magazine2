@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
 import "./IntroFlip.css"
 
 interface IntroFlipProps {
@@ -13,35 +13,36 @@ export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
   const [progress, setProgress] = useState(0)
 
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const [isInteracting, setIsInteracting] = useState(false)
 
   const startXRef = useRef<number | null>(null)
-  const movedRef = useRef(false)
 
-  // Disable scrolling while intro is active
+  // Lock scroll while intro is visible
   useEffect(() => {
-    const o = document.body.style
-    const originalOverflow = o.overflow
-    const originalPos = o.position
+    const style = document.body.style
+    const originalOverflow = style.overflow
+    const originalPos = style.position
 
-    o.overflow = "hidden"
-    o.position = "fixed"
+    style.overflow = "hidden"
+    style.position = "fixed"
 
     return () => {
-      o.overflow = originalOverflow
-      o.position = originalPos
+      style.overflow = originalOverflow
+      style.position = originalPos
     }
   }, [])
 
-  // Gyroscope parallax (mobile only)
+  // Gyroscope parallax (mobile / tablet)
   useEffect(() => {
     if (window.innerWidth > 1024) return
+    if (typeof DeviceOrientationEvent === "undefined") return
 
     const handler = (event: DeviceOrientationEvent) => {
       const beta = event.beta ?? 0
       const gamma = event.gamma ?? 0
 
-      const x = Math.max(-12, Math.min(12, beta)) / 12
-      const y = Math.max(-18, Math.min(18, gamma)) / 18
+      const x = Math.max(-10, Math.min(10, beta)) / 10
+      const y = Math.max(-16, Math.min(16, gamma)) / 16
 
       setTilt({ x, y })
     }
@@ -56,49 +57,70 @@ export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
     setIsFlipped(true)
     setProgress(1)
     setBend(0)
+    setIsInteracting(false)
 
-    if (navigator.vibrate) navigator.vibrate(10)
+    if (navigator.vibrate) navigator.vibrate(8)
 
     setTimeout(() => {
       setIsFading(true)
-      setTimeout(() => onFlipComplete(), 500)
-    }, 850)
+      setTimeout(() => onFlipComplete(), 450)
+    }, 800)
   }
 
   const handlePointerDown = (e: React.PointerEvent) => {
     startXRef.current = e.clientX
-    movedRef.current = false
+    setIsInteracting(true)
   }
 
   const handlePointerMove = (e: React.PointerEvent) => {
     if (startXRef.current == null || isFlipped) return
 
     const deltaX = startXRef.current - e.clientX
-    const normalized = Math.min(Math.max(deltaX / 180, 0), 1)
+    const normalized = Math.min(Math.max(deltaX / 160, 0), 1)
 
     setBend(normalized)
     setProgress(normalized * 0.85)
 
-    if (deltaX > 30) {
-      movedRef.current = true
+    // SUPER EASY SWIPE: tiny movement opens
+    if (deltaX > 12) {
       triggerOpen()
       startXRef.current = null
     }
   }
 
-  const handlePointerUp = (e: React.PointerEvent) => {
+  const endInteraction = () => {
     setBend(0)
     setProgress(0)
+    setTimeout(() => setIsInteracting(false), 100)
+    startXRef.current = null
+  }
 
-    if (!isFlipped && !movedRef.current) {
-      if (e.clientX > window.innerWidth * 0.45) triggerOpen()
+  const handlePointerUp = () => {
+    if (!isFlipped) {
+      // Tap anywhere on cover also opens
+      triggerOpen()
     }
+    endInteraction()
+  }
+
+  const handlePointerLeave = () => {
+    if (!isFlipped) {
+      setBend(0)
+      setProgress(0)
+    }
+    setTimeout(() => setIsInteracting(false), 100)
   }
 
   return (
     <div className={`intro-overlay ${isFading ? "intro-fade-out" : ""}`}>
-      
-      {/* Floating stickers above the magazine */}
+      {/* Golden particles */}
+      <div className="particles">
+        {Array.from({ length: 24 }).map((_, i) => (
+          <span key={i} className={`dot d${(i % 8) + 1}`} />
+        ))}
+      </div>
+
+      {/* Floating stickers */}
       <div className="floating-ui">
         <div className="sticker-floating pre">PRE-ORDER NOW</div>
         <div className="sticker-floating limited">LIMITED ISSUE 2025</div>
@@ -112,19 +134,28 @@ export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
             "--progress": progress,
             "--tiltX": tilt.x,
             "--tiltY": tilt.y,
-          } as React.CSSProperties
+          } as CSSProperties
         }
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerLeave}
       >
-        <div className="book">
-
+        <div
+          className={`book ${
+            isInteracting ? "interacting" : ""
+          } ${isFlipped ? "no-breath" : ""}`}
+        >
           <div className="inner-page" />
           <div className="spine" />
           <div className="page-block" />
 
           <div className="cover">
+            {/* dual gloss */}
+            <div className="gloss-soft" />
+            <div className="gloss-sweep" />
+
+            {/* curl shading */}
             <div className="page-bend-layer" />
 
             <div className="cover-img-wrap">

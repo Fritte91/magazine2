@@ -1,11 +1,11 @@
 /* ============================= */
-/* FULLSCREEN OVERLAY            */
+/* OVERLAY BACKGROUND            */
 /* ============================= */
 
 .intro-overlay {
   position: fixed;
   inset: 0;
-  z-index: 99999;
+  z-index: 999999;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -14,12 +14,11 @@
   background:
     radial-gradient(circle at 30% 20%, rgba(90, 200, 140, 0.22), transparent 60%),
     radial-gradient(circle at 70% 85%, rgba(40, 130, 90, 0.25), transparent 60%),
-    #121416;
+    #050607;
 
   transition: opacity 0.45s ease;
 }
 
-/* Blurred ambient */
 .intro-overlay::before {
   content: "";
   position: absolute;
@@ -28,7 +27,7 @@
   filter: blur(38px) brightness(0.25);
   opacity: 0.75;
   transform: scale(1.16);
-  z-index: -1;
+  z-index: -2;
 }
 
 .intro-fade-out {
@@ -36,18 +35,67 @@
 }
 
 /* ============================= */
-/* FLOATING STICKERS (ABOVE)     */
+/* GOLDEN PARTICLES              */
+/* ============================= */
+
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.particles .dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: radial-gradient(circle, #ffd27a, #ffb347);
+  opacity: 0;
+  filter: blur(0.8px);
+  animation: floatDot 10s linear infinite;
+}
+
+/* we reuse 8 base paths, but TSX duplicates them for density */
+.dot.d1 { left: 18%; bottom: 8%; animation-delay: 0s; }
+.dot.d2 { left: 30%; bottom: 12%; animation-delay: 1.5s; }
+.dot.d3 { left: 44%; bottom: 6%; animation-delay: 3s; }
+.dot.d4 { left: 58%; bottom: 10%; animation-delay: 4.5s; }
+.dot.d5 { right: 26%; bottom: 8%; animation-delay: 6s; }
+.dot.d6 { right: 14%; bottom: 14%; animation-delay: 7.5s; }
+.dot.d7 { left: 22%; bottom: 18%; animation-delay: 2.4s; }
+.dot.d8 { right: 20%; bottom: 20%; animation-delay: 5.4s; }
+
+@keyframes floatDot {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.85;
+  }
+  60% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-90px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* ============================= */
+/* FLOATING STICKERS ABOVE       */
 /* ============================= */
 
 .floating-ui {
   position: absolute;
-  top: 4%;
+  top: 3%;
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 20px;
-  z-index: 50;
+  gap: 16px;
   pointer-events: none;
+  z-index: 10;
 }
 
 .sticker-floating {
@@ -55,9 +103,9 @@
   padding: 12px 20px;
   border-radius: 999px;
   color: #fff;
-  font-size: clamp(0.8rem, 2vw, 1.1rem);
   font-weight: 700;
   letter-spacing: 0.08em;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
 
   box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.6),
@@ -71,31 +119,32 @@
 /* ============================= */
 
 .magazine-stage {
-  margin-top: 10vh;
-  position: relative;
-  width: 94vw;
-  max-height: 90vh;
+  margin-top: 9vh;
+  width: 100vw;          /* full width on phones */
+  max-height: 92vh;
   aspect-ratio: 3 / 4;
-  perspective: 2100px;
+  perspective: 2300px;
   cursor: grab;
 }
 
+/* Tablet – bigger now */
 @media (min-width: 768px) {
   .magazine-stage {
-    width: 70vw;
-    max-height: 86vh;
+    width: 94vw;
+    max-height: 95vh;
   }
 }
 
+/* Desktop – large but with breathing room */
 @media (min-width: 1024px) {
   .magazine-stage {
-    width: 50vw;
-    max-height: 80vh;
+    width: 70vw;
+    max-height: 92vh;
   }
 }
 
 /* ============================= */
-/* BOOK WRAPPER (gyro)           */
+/* BOOK WRAPPER (gyro + breath)  */
 /* ============================= */
 
 .book {
@@ -103,11 +152,54 @@
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  overflow: hidden; /* prevents seams */
+  overflow: hidden;
+  border-radius: 10px;
+
   transform:
     rotateX(calc(var(--tiltX, 0) * 3deg))
     rotateY(calc(var(--tiltY, 0) * 3deg));
-  transition: transform 0.15s ease-out;
+
+  animation: breath 5s ease-in-out infinite;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.book.no-breath {
+  animation: none;
+}
+
+.book.interacting {
+  animation: jiggle 0.25s ease-out;
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes breath {
+  0%, 100% {
+    transform:
+      translateZ(0)
+      rotateX(calc(var(--tiltX, 0) * 3deg))
+      rotateY(calc(var(--tiltY, 0) * 3deg))
+      scale(1);
+  }
+  50% {
+    transform:
+      translateZ(10px)
+      rotateX(calc(var(--tiltX, 0) * 3deg))
+      rotateY(calc(var(--tiltY, 0) * 3deg))
+      scale(1.015);
+  }
+}
+
+@keyframes jiggle {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.01) rotateX(-0.8deg) rotateY(0.8deg); }
+  80% { transform: scale(1.005) rotateX(0.5deg) rotateY(-0.5deg); }
+  100% { transform: scale(1); }
 }
 
 /* ============================= */
@@ -118,14 +210,10 @@
   position: absolute;
   inset: 0;
   background: #050607;
-  border-radius: inherit;
   backface-visibility: hidden;
 }
 
-/* ============================= */
-/* SPINE                         */
-/* ============================= */
-
+/* Spine */
 .spine {
   position: absolute;
   left: 0;
@@ -134,13 +222,9 @@
   height: 100%;
   background: linear-gradient(to right, #111, #444, #666, #333);
   transform: rotateY(90deg) translateX(-6px);
-  transform-origin: left;
 }
 
-/* ============================= */
-/* PAGE BLOCK EDGE               */
-/* ============================= */
-
+/* Page block */
 .page-block {
   position: absolute;
   right: 0;
@@ -149,7 +233,6 @@
   height: 100%;
   background: repeating-linear-gradient(#eee, #fff 4px, #ddd 8px);
   transform: rotateY(-90deg) translateX(5px);
-  transform-origin: right;
 }
 
 /* ============================= */
@@ -159,11 +242,9 @@
 .cover {
   position: absolute;
   inset: 0;
-  border-radius: inherit;
   overflow: hidden;
-  background: black;
+  background: #000;
   backface-visibility: hidden;
-
   transform-origin: left;
   transform-style: preserve-3d;
 
@@ -171,29 +252,96 @@
   transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* Full open */
 .magazine-stage.open .cover {
   transform: rotateY(-180deg);
 }
 
 /* ============================= */
-/* PAGE CURL                     */
+/* DUAL GLOSS                    */
+/* ============================= */
+
+.gloss-soft {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255,255,255,0.18), transparent 55%),
+    linear-gradient(135deg, rgba(255,255,255,0.16), transparent 40%, transparent 60%, rgba(0,0,0,0.6));
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+.gloss-sweep {
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  width: 40%;
+  left: -30%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.85),
+    transparent
+  );
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transform: translateX(0) skewX(-15deg);
+  animation: sweepIdle 7s ease-in-out infinite;
+}
+
+.book.interacting .gloss-sweep {
+  opacity: 0.7;
+  animation: sweepTouch 0.8s ease-out;
+}
+
+@keyframes sweepIdle {
+  0%, 60% {
+    opacity: 0;
+    transform: translateX(-40%) skewX(-15deg);
+  }
+  80% {
+    opacity: 0.45;
+    transform: translateX(140%) skewX(-15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(160%) skewX(-15deg);
+  }
+}
+
+@keyframes sweepTouch {
+  0% {
+    opacity: 0;
+    transform: translateX(-40%) skewX(-15deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(80%) skewX(-15deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(140%) skewX(-15deg);
+  }
+}
+
+/* ============================= */
+/* CURL SHADING                  */
 /* ============================= */
 
 .page-bend-layer {
   position: absolute;
   inset: 0;
-  pointer-events: none;
   transform-origin: right center;
-
+  pointer-events: none;
   transform:
     translateZ(2px)
     scaleX(calc(1 - (var(--bend, 0) * 0.18)));
 
   background: radial-gradient(
     circle at calc(100% - 30px) 50%,
-    rgba(0, 0, 0, calc(0.45 * var(--bend))) 0,
-    rgba(0, 0, 0, 0) 65%
+    rgba(0,0,0, calc(0.45 * var(--bend))) 0,
+    rgba(0,0,0,0) 65%
   );
 }
 
@@ -205,7 +353,6 @@
   position: absolute;
   inset: 0;
   background: #0a0d0b;
-  overflow: hidden;
 }
 
 .cover-img {
@@ -216,41 +363,39 @@
 }
 
 /* ============================= */
-/* SWIPE TEXT (BIGGER + PULSE)   */
+/* SWIPE TEXT                    */
 /* ============================= */
 
 .swipe-text {
   position: absolute;
-  bottom: 7%;
+  bottom: 6%;
   width: 100%;
   text-align: center;
-
-  font-size: clamp(1.3rem, 3.5vw, 2.4rem);
+  font-size: clamp(1.4rem, 4vw, 2.5rem);
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
+  color: #fff;
 
-  color: #ffffff;
   text-shadow:
-    0 0 14px rgba(76, 255, 100, 0.9),
-    0 0 26px rgba(76, 255, 100, 0.7),
-    0 0 40px rgba(50, 200, 80, 0.6);
+    0 0 18px rgba(76,255,100,1),
+    0 0 36px rgba(76,255,100,0.9),
+    0 0 52px rgba(50,200,80,0.9);
 
   animation: pulseGlow 1.4s ease-in-out infinite;
-  transform: translateZ(4px);
 }
 
 @keyframes pulseGlow {
   0%, 100% {
-    opacity: 0.95;
+    opacity: 0.9;
     text-shadow:
-      0 0 18px rgba(76, 255, 100, 1),
-      0 0 36px rgba(76, 255, 100, 0.9);
+      0 0 18px rgba(76,255,100,1),
+      0 0 36px rgba(76,255,100,0.8);
   }
   50% {
     opacity: 1;
     text-shadow:
-      0 0 26px rgba(76, 255, 100, 1),
-      0 0 48px rgba(76, 255, 100, 0.95);
+      0 0 26px rgba(76,255,100,1),
+      0 0 56px rgba(76,255,100,0.95);
   }
 }
 
@@ -260,12 +405,24 @@
 
 .floor-shadow {
   position: absolute;
-  bottom: -6%;
+  bottom: -8%;
   left: 50%;
   width: 90%;
-  height: 22%;
+  height: 24%;
   transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.75), transparent 70%);
-  filter: blur(7px);
-  z-index: -2;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.78), transparent 70%);
+  filter: blur(8px);
+  z-index: -1;
+}
+
+/* ============================= */
+/* UTILITY                       */
+/* ============================= */
+
+.intro-overlay {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
