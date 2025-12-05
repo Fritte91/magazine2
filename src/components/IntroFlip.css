@@ -1,498 +1,262 @@
-.intro-container {
+/* ============================= */
+/* FULLSCREEN BACKDROP           */
+/* ============================= */
+
+.intro-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #000;
-  z-index: 9999;
+  inset: 0;
+  z-index: 99999;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.8s ease-in-out;
   overflow: hidden;
+
+  background:
+    radial-gradient(circle at 30% 15%, rgba(100, 200, 140, 0.24), transparent 55%),
+    radial-gradient(circle at 80% 90%, rgba(50, 140, 100, 0.25), transparent 55%),
+    #020405;
+
+  transition: opacity 0.5s ease-in-out;
 }
 
-/* Tablet: Center the flipbook */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .intro-container {
-    align-items: center;
-    justify-content: center;
-    background: 
-      radial-gradient(ellipse at 20% 30%, rgba(76, 175, 80, 0.15) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 70%, rgba(34, 85, 68, 0.15) 0%, transparent 50%),
-      linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 30%, #0f0f0f 70%, #0a0a0a 100%);
-  }
+.intro-overlay::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  background: url("/Cover.webp") center/cover no-repeat;
+  filter: blur(38px) brightness(0.25);
+  opacity: 0.8;
+  transform: scale(1.16);
+  z-index: -1;
 }
 
-body:has(.intro-container:not(.fade-out)) {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
-
-.intro-container.fade-out {
+.intro-fade-out {
   opacity: 0;
   pointer-events: none;
 }
 
-.intro-flipbook {
-  width: 100vw;
-  height: 100vh;
+/* ============================= */
+/* MAGAZINE STAGE & SIZING       */
+/* ============================= */
+
+.magazine-stage {
   position: relative;
+  width: 98vw;
+  max-height: 95vh;
+  aspect-ratio: 3 / 4;
+  perspective: 2100px;
+  cursor: grab;
 }
 
-/* Ensure flipbook container fills viewport */
-.intro-flipbook > div {
-  width: 100vw !important;
-  height: 100vh !important;
-}
-
-/* Tablet: Size the flipbook */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .intro-flipbook {
-    width: 95vw;
-    height: 95vh;
-    max-width: 95vw;
-    max-height: 95vh;
-    margin: 0 auto;
-  }
-  
-  .intro-flipbook > div {
-    width: 100% !important;
-    height: 100% !important;
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .magazine-stage {
+    width: 78vw;
+    max-height: 90vh;
   }
 }
 
-.page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  background-color: #000;
-  overflow: visible;
-  width: 100%;
-  height: 100%;
-}
-
-/* Ensure library page items fill properly */
-.intro-flipbook .stf__item {
-  width: 100% !important;
-  height: 100% !important;
-  position: relative !important;
-  z-index: auto;
-}
-
-.intro-flipbook .stf__item .stf__item--hard {
-  width: 100% !important;
-  height: 100% !important;
-  overflow: visible !important;
-  position: relative !important;
-  z-index: auto;
-}
-
-/* Tablet: Ensure cover page item doesn't block overlay */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .intro-flipbook .stf__item[data-page="0"] {
-    z-index: auto !important;
-    isolation: auto !important;
-  }
-  
-  .intro-flipbook .stf__item[data-page="0"] .stf__item--hard {
-    z-index: auto !important;
-    isolation: auto !important;
-  }
-  
-  .cover-page {
-    z-index: auto !important;
-    isolation: auto !important;
+/* Desktop */
+@media (min-width: 1025px) {
+  .magazine-stage {
+    width: 58vw;
+    max-height: 86vh;
   }
 }
 
-/* Lock library block and wrapper to prevent movement */
-.intro-flipbook .stf__block {
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  transform: translate(0, 0) !important;
-}
-
-.intro-flipbook .stf__wrapper {
-  position: relative !important;
-  top: 0 !important;
-  left: 0 !important;
-  transform: translate(0, 0) !important;
-}
-
-.cover-page {
+/* Gyro parallax applied to the book wrapper */
+.book {
   width: 100%;
   height: 100%;
   position: relative;
-  overflow: visible;
-  z-index: auto;
+  border-radius: 10px;
+  transform-style: preserve-3d;
+  transform:
+    rotateX(calc(var(--tiltX, 0) * 4deg))
+    rotateY(calc(var(--tiltY, 0) * 4deg));
+  transition: transform 0.18s ease-out;
 }
 
-/* Tablet: Ensure cover page doesn't block overlay */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .cover-page {
-    overflow: visible !important;
-    z-index: auto !important;
-  }
-}
+/* ============================= */
+/* INNER PAGE / INSIDE VIEW      */
+/* ============================= */
 
-.cover-image-wrapper {
+.inner-page {
   position: absolute;
-  top: 0;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 15%, #111, #020304);
+  /* This is the only thing visible "inside" */
+}
+
+/* Spine */
+.spine {
+  position: absolute;
   left: 0;
-  width: 100%;
+  top: 0;
+  width: 12px;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
-  z-index: 1;
+  background: linear-gradient(to right, #111, #484848, #666, #333, #111);
+  transform: rotateY(90deg) translateX(-6px);
+  transform-origin: left center;
+  box-shadow:
+    inset -3px 0 5px rgba(0, 0, 0, 0.7),
+    inset 2px 0 4px rgba(255, 255, 255, 0.08);
+}
+
+/* Page block (edge of pages) */
+.page-block {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    #f3f3f3,
+    #ffffff 3px,
+    #d8d8d8 6px
+  );
+  transform: rotateY(-90deg) translateX(5px);
+  transform-origin: right center;
+  box-shadow:
+    inset 1px 0 2px rgba(0, 0, 0, 0.2),
+    0 0 3px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================= */
+/* FRONT COVER + CURL            */
+/* ============================= */
+
+.cover {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
   overflow: hidden;
+  background: black;
+
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden; /* <-- IMPORTANT: prevent double-cover inside */
+
+  /* Rotation controlled by --progress (0–1) until fully opened */
+  transform: rotateY(calc(-180deg * var(--progress, 0)));
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* Tablet: Ensure overlay and stickers are above image */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .cover-image-wrapper {
-    z-index: 1 !important;
-  }
-  
-  .cover-image {
-    z-index: 1 !important;
-  }
+/* When fully opened (after triggerOpen) force full rotation */
+.magazine-stage.open .cover {
+  transform: rotateY(-180deg);
 }
 
-.cover-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-}
-
-/* Tablet: Show full cover with contain */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .cover-image {
-    object-fit: contain;
-  }
-}
-
-.overlay-content {
+/* Curl shading layer – reacts to --bend */
+.page-bend-layer {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at calc(100% - 18px) 50%,
+      rgba(0, 0, 0, calc(0.55 * var(--bend, 0))) 0,
+      rgba(0, 0, 0, 0) 60%
+    );
+  transform-origin: right center;
+  transform:
+    translateZ(2px)
+    scaleX(calc(1 - (var(--bend, 0) * 0.18)));
+}
+
+/* Cover art */
+.cover-img-wrap {
+  position: absolute;
+  inset: 0;
+  background: #050807;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cover-img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  transform: translateZ(3px);
+}
+
+/* ============================= */
+/* STICKERS + SWIPE TEXT         */
+/* ============================= */
+
+.cover-ui {
+  position: absolute;
+  inset: 0;
   pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  padding-bottom: 8vh;
-  z-index: 10;
-  box-sizing: border-box;
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .overlay-content {
-    padding-bottom: 4vh;
-    z-index: 10 !important;
-    position: absolute !important;
-    overflow: visible !important;
-  }
-}
-
-.overlay-text {
-  color: #ffffff;
-  font-size: clamp(1.25rem, 3.5vw, 2.25rem);
-  text-align: center;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  -webkit-text-stroke: 2px rgba(76, 175, 80, 1);
-  text-shadow: 
-    0 0 15px rgba(76, 175, 80, 1),
-    0 0 25px rgba(76, 175, 80, 0.8),
-    0 0 35px rgba(76, 175, 80, 0.6),
-    0 0 45px rgba(76, 175, 80, 0.4),
-    0 2px 4px rgba(0, 0, 0, 0.9);
-  animation: glow-pulse 2s ease-in-out infinite;
-  margin-bottom: 2vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  padding: 0.5em 1em;
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .overlay-text {
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
-  }
-  
-  .overlay-text::after {
-    content: " (or drag from right)";
-    font-size: 0.7em;
-    opacity: 0.8;
-    display: block;
-    margin-top: 0.5em;
-  }
-}
-
-@keyframes glow-pulse {
-  0%, 100% {
-    opacity: 0.95;
-    text-shadow: 
-      0 0 15px rgba(76, 175, 80, 1),
-      0 0 25px rgba(76, 175, 80, 0.8),
-      0 0 35px rgba(76, 175, 80, 0.6),
-      0 0 45px rgba(76, 175, 80, 0.4),
-      0 2px 4px rgba(0, 0, 0, 0.9);
-  }
-  50% {
-    opacity: 1;
-    text-shadow: 
-      0 0 20px rgba(76, 175, 80, 1),
-      0 0 30px rgba(76, 175, 80, 0.9),
-      0 0 40px rgba(76, 175, 80, 0.7),
-      0 0 50px rgba(76, 175, 80, 0.5),
-      0 2px 4px rgba(0, 0, 0, 0.9);
-  }
 }
 
 .sticker {
   position: absolute;
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.95) 0%, rgba(34, 85, 68, 0.95) 100%);
-  color: #ffffff;
-  font-size: clamp(0.65rem, 1.2vw, 0.9rem);
-  font-weight: 600;
-  padding: clamp(6px, 1vw, 10px) clamp(12px, 2vw, 18px);
-  border-radius: 20px;
-  box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.4),
-    0 0 8px rgba(76, 175, 80, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(76, 175, 80, 0.3);
-  pointer-events: none;
-  animation: float 3s ease-in-out infinite;
-  z-index: 11;
-  display: block;
-  visibility: visible;
-  opacity: 1;
+  letter-spacing: 0.08em;
+  font-size: clamp(0.7rem, 1.7vw, 1rem);
+  color: #fff;
+  background: linear-gradient(135deg, #4caf50, #225544);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
-.sticker.pre-order {
-  top: clamp(8%, 10vh, 12%);
-  left: clamp(5%, 5vw, 8%);
-  animation-delay: 0s;
+.sticker.pre {
+  top: 6%;
+  left: 6%;
 }
 
-.sticker.limited-issue {
-  top: clamp(8%, 10vh, 12%);
-  right: clamp(5%, 5vw, 8%);
-  animation-delay: 1.5s;
+.sticker.limited {
+  top: 6%;
+  right: 6%;
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .sticker {
-    z-index: 11 !important;
-    position: absolute !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .sticker.pre-order {
-    left: clamp(3%, 3vw, 5%);
-    top: clamp(5%, 6vh, 8%);
-    z-index: 11 !important;
-  }
-  
-  .sticker.limited-issue {
-    right: clamp(3%, 3vw, 5%);
-    top: clamp(5%, 6vh, 8%);
-    z-index: 11 !important;
-  }
-  
-  .overlay-content {
-    z-index: 10 !important;
-    position: absolute !important;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.blank-page {
-  background-color: #1a2e1f;
+.swipe-text {
+  position: absolute;
+  bottom: 6%;
   width: 100%;
-  height: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #fff;
+  text-shadow:
+    0 0 12px #4caf50,
+    0 0 24px rgba(76, 175, 80, 0.9);
 }
 
-/* Mobile optimizations */
-@media (max-width: 768px) {
-  .overlay-text {
-    font-size: 1.5rem;
-    padding: 0.4em 0.8em;
-    -webkit-text-stroke: 1.5px rgba(76, 175, 80, 1);
-  }
+/* ============================= */
+/* FLOOR SHADOW                  */
+/* ============================= */
 
-  .sticker {
-    font-size: 0.6rem;
-    padding: 5px 10px;
-  }
-
-  .sticker.pre-order {
-    top: 6%;
-    left: 4%;
-  }
-
-  .sticker.limited-issue {
-    top: 6%;
-    right: 4%;
-  }
-
-  .overlay-content {
-    padding-bottom: 6vh;
-  }
+.floor-shadow {
+  position: absolute;
+  bottom: -7%;
+  left: 50%;
+  width: 92%;
+  height: 24%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.75), transparent 70%);
+  filter: blur(7px);
+  z-index: -1;
 }
 
-/* Prevent text selection */
-.intro-container {
+/* ============================= */
+/* UTILITY                       */
+/* ============================= */
+
+.intro-overlay {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
-}
-
-/* Mobile: Lock initial position, allow natural flip animation */
-@media (max-width: 768px) {
-  .intro-flipbook {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-  }
-  
-  /* Only prevent vertical movement, allow horizontal flip */
-  .intro-flipbook .stf__block {
-    transform: translateY(0) !important;
-  }
-  
-  .intro-flipbook .stf__wrapper {
-    transform: translateY(0) !important;
-  }
-  
-  /* Set transform origin for natural flip from right edge */
-  .intro-flipbook .stf__item[data-page="0"] {
-    transform-origin: right center !important;
-  }
-  
-  /* Ensure cover page starts correctly positioned */
-  .cover-page {
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-  }
-}
-
-/* Tablet: Lock initial position, ensure cover displays, allow natural flip */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .intro-flipbook {
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-  }
-  
-  /* Only prevent vertical movement, allow horizontal flip */
-  .intro-flipbook .stf__block {
-    transform: translateY(0) !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-  
-  .intro-flipbook .stf__wrapper {
-    transform: translateY(0) !important;
-  }
-  
-  .intro-flipbook .stf__item {
-    width: 100% !important;
-    height: 100% !important;
-  }
-  
-  /* Set transform origin for natural flip from right edge */
-  .intro-flipbook .stf__item[data-page="0"] {
-    transform-origin: right center !important;
-  }
-  
-  .intro-flipbook .stf__item[data-page="0"] .stf__item--hard {
-    width: 100% !important;
-    height: 100% !important;
-  }
-  
-  .cover-page {
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-  
-  .cover-image-wrapper {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-  
-  .cover-image {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;
-    object-position: center center !important;
-    display: block !important;
-    z-index: 1 !important;
-  }
-  
-  .cover-image-wrapper {
-    z-index: 1 !important;
-  }
-  
-  /* Ensure overlay content and stickers are above everything on tablet */
-  .overlay-content {
-    z-index: 10 !important;
-    position: absolute !important;
-    overflow: visible !important;
-  }
-  
-  .sticker {
-    z-index: 11 !important;
-    position: absolute !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .sticker.pre-order,
-  .sticker.limited-issue {
-    z-index: 11 !important;
-  }
 }
