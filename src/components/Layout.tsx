@@ -12,6 +12,17 @@ export default function Layout() {
   useEffect(() => {
     document.documentElement.lang = language
   }, [language])
+
+  // Ensure we're at the top when Layout first mounts
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    // Also prevent scroll restoration
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual"
+    }
+  }, [])
   
   return (
     <div 
