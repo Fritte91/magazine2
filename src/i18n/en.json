@@ -28,7 +28,7 @@
     },
     "magazine_perspective": {
       "title": "มุมมองของหนังสือ",
-      "text": "ในฐานะผู้จัดท่า หนังสือ Now or neverist ผมรวบรวมความสวยงามของกัญชาในมิติต่างๆ ผ่าน เรื่องราวที่เชื่อมโยงกับการต่อของผู้คนในเส้นทางสายนี้ เพื่อเป็นการน่าเสนอให้เห็นถึงสิ่งที่เกิด"
+      "text": "ในฐานะผู้จัดท่า หนังสือ Now Or Never 1st ผมรวบรวมความสวยงามของกัญชาในมิติต่างๆ ผ่าน เรื่องราวที่เชื่อมโยงกับการต่อของผู้คนในเส้นทางสายนี้ เพื่อเป็นการน่าเสนอให้เห็นถึงสิ่งที่เกิด"
     }
   },
   "topics": {
@@ -89,15 +89,17 @@
   },
   "shop": {
     "title": "Now or Never Magazine",
-    "price": "฿499",
+    "price": "฿1420",
     "description": "Limited edition first issue. Featuring exclusive interviews, stunning photography, and thought-provoking essays.",
     "features": [
-      "120 pages of premium content",
+      "150 pages of premium content",
       "High-quality print on specialty paper",
       "Exclusive photography",
-      "Limited edition: 1000 copies"
+      "Limited edition: 420 copies"
     ],
-    "order_button": "Order Now"
+    "order_button": "Order Now",
+    "pre_order_closed": "Pre-Orders Coming Soon",
+    "pre_order_date": "Pre-orders open on"
   },
   "checkout": {
     "title": "Order Summary",

@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom"
 import { useI18n } from "../i18n/i18nContext"
 import ProductCard from "../components/ProductCard"
+import { isPreOrderOpen, formatPreOrderDate } from "../utils/shop"
 
 export default function Shop() {
-  const { t } = useI18n()
+  const { t, language } = useI18n()
   const features = t("shop.features", []) as string[]
+  const preOrderOpen = isPreOrderOpen()
+  const preOrderDate = formatPreOrderDate(language)
 
   // Ensure features is an array
   if (!Array.isArray(features)) {
@@ -52,16 +55,36 @@ export default function Shop() {
                   <span className="shop-total-price text-2xl transition-colors duration-300">฿1420</span>
                 </div>
 
-                <Link
-                  to="/checkout"
-                  className="shop-button block w-full py-4 text-white text-center font-serif text-sm tracking-wide transition-all duration-300 uppercase rounded-xl shadow-lg font-bold transform relative overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(to right, rgb(30, 30, 30), rgba(30, 30, 30, 0.95))'
-                  }}
-                >
-                  <span className="relative z-10">{t("shop.order_button")}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-gold-accent to-yellow-accent opacity-0 transition-opacity duration-300"></div>
-                </Link>
+                {preOrderOpen ? (
+                  <Link
+                    to="/checkout"
+                    className="shop-button block w-full py-4 text-white text-center font-serif text-sm tracking-wide transition-all duration-300 uppercase rounded-xl shadow-lg font-bold transform relative overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(to right, rgb(30, 30, 30), rgba(30, 30, 30, 0.95))'
+                    }}
+                  >
+                    <span className="relative z-10">{t("shop.order_button")}</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-gold-accent to-yellow-accent opacity-0 transition-opacity duration-300"></div>
+                  </Link>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="shop-button-disabled block w-full py-4 text-white text-center font-serif text-sm tracking-wide uppercase rounded-xl shadow-lg font-bold relative overflow-hidden cursor-not-allowed opacity-60"
+                      style={{
+                        background: 'linear-gradient(to right, rgb(100, 100, 100), rgba(100, 100, 100, 0.95))'
+                      }}
+                    >
+                      <span className="relative z-10">{t("shop.order_button")}</span>
+                    </div>
+                    <div className="p-4 bg-gradient-to-r from-charcoal/5 to-charcoal/10 rounded-lg border-2 border-charcoal/20">
+                      <p className="text-sm text-charcoal/90 text-center font-semibold mb-2">
+                        {t("shop.pre_order_closed")}
+                      </p>
+                      <p className="text-xs text-charcoal/70 text-center">
+                        {t("shop.pre_order_date")} {preOrderDate}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 <div className="mt-5 p-3 bg-gradient-to-r from-gold-accent/10 to-yellow-accent/10 rounded-lg border border-gold-accent/20">
                   <p className="text-xs text-charcoal/80 text-center font-semibold">
@@ -128,6 +151,9 @@ export default function Shop() {
         }
         .shop-button:focus {
           outline: none !important;
+        }
+        .shop-button-disabled {
+          pointer-events: none;
         }
       `}</style>
     </div>
