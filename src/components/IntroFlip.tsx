@@ -16,6 +16,7 @@ export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
   const flipBookRef = useRef<any>(null)
   const isDraggingRef = useRef(false)
   const dragStartRef = useRef({ x: 0, y: 0 })
+  const flipbookKeyRef = useRef(Date.now()) // Unique key per component instance
 
   // Handle window resize with debounce
   useEffect(() => {
@@ -141,24 +142,152 @@ export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
     }
   }, [isFlipped])
 
-  // Initialize flipbook after mount
+  // Initialize flipbook after mount and force reset to page 0
   useEffect(() => {
     // Small delay to ensure flipbook is fully initialized
     const timer = setTimeout(() => {
       if (flipBookRef.current && flipBookRef.current.pageFlip) {
         try {
           const pageFlip = flipBookRef.current.pageFlip()
-          if (pageFlip && typeof pageFlip.update === "function") {
-            pageFlip.update()
+          if (pageFlip) {
+            // Force reset to page 0 (cover) on mount
+            if (typeof pageFlip.flip === "function") {
+              pageFlip.flip(0)
+            } else if (typeof pageFlip.gotoPage === "function") {
+              pageFlip.gotoPage(0)
+            }
+            // Update after reset
+            if (typeof pageFlip.update === "function") {
+              pageFlip.update()
+            }
           }
         } catch (error) {
           // Silently handle errors
         }
       }
+      
+      // Ensure initial position is correct - only prevent vertical movement
+      const flipbookElement = document.querySelector('.intro-flipbook') as HTMLElement
+      
+      if (flipbookElement && flipbookElement.querySelector) {
+        const wrapper = flipbookElement.querySelector('.stf__wrapper') as HTMLElement
+        const block = flipbookElement.querySelector('.stf__block') as HTMLElement
+        
+        if (wrapper) {
+          wrapper.style.setProperty('top', '0', 'important')
+          wrapper.style.setProperty('left', '0', 'important')
+          wrapper.style.setProperty('position', 'relative', 'important')
+          // Only lock Y axis
+          wrapper.style.setProperty('transform', 'translateY(0)', 'important')
+        }
+        if (block) {
+          block.style.setProperty('left', '0', 'important')
+          block.style.setProperty('top', '0', 'important')
+          block.style.setProperty('position', 'relative', 'important')
+          // Only lock Y axis
+          block.style.setProperty('transform', 'translateY(0)', 'important')
+        }
+      }
+      
+      // Reset flipbook container position
+      if (flipbookElement) {
+        const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024
+        if (isTablet) {
+          flipbookElement.style.setProperty('position', 'relative', 'important')
+        } else {
+          flipbookElement.style.setProperty('position', 'fixed', 'important')
+        }
+        flipbookElement.style.setProperty('left', '0', 'important')
+        flipbookElement.style.setProperty('top', '0', 'important')
+      }
     }, 100)
 
     return () => clearTimeout(timer)
   }, [dimensions])
+
+  // Force reset flipbook to page 0 on component mount and continuously monitor/reset positions
+  useEffect(() => {
+    // Reset state when component mounts
+    setIsFlipped(false)
+    setIsFading(false)
+    
+    let resetInterval: ReturnType<typeof setInterval>
+    let resetAttempts = 0
+    const maxAttempts = 30 // Stop after 3 seconds (30 * 100ms)
+    
+    // Function to reset to page 0 and ensure initial position
+    const resetFlipbook = () => {
+      if (flipBookRef.current && flipBookRef.current.pageFlip) {
+        try {
+          const pageFlip = flipBookRef.current.pageFlip()
+          if (pageFlip) {
+            if (typeof pageFlip.flip === "function") {
+              pageFlip.flip(0)
+            } else if (typeof pageFlip.gotoPage === "function") {
+              pageFlip.gotoPage(0)
+            } else if (typeof pageFlip.turnToPage === "function") {
+              pageFlip.turnToPage(0)
+            } else if (typeof pageFlip.turnPage === "function") {
+              pageFlip.turnPage(0)
+            }
+            if (typeof pageFlip.update === "function") {
+              pageFlip.update()
+            }
+          }
+        } catch (error) {
+          // Silently handle errors
+        }
+      }
+      
+      // Only prevent vertical movement, allow horizontal flip animation
+      const flipbookElement = document.querySelector('.intro-flipbook') as HTMLElement
+      if (flipbookElement && flipbookElement.querySelector) {
+        const wrapper = flipbookElement.querySelector('.stf__wrapper') as HTMLElement
+        const block = flipbookElement.querySelector('.stf__block') as HTMLElement
+        
+        if (wrapper) {
+          // Only lock Y axis, allow X for flip animation
+          const currentTransform = wrapper.style.transform || window.getComputedStyle(wrapper).transform
+          if (currentTransform && currentTransform.includes('translateY')) {
+            wrapper.style.setProperty('transform', currentTransform.replace(/translateY\([^)]*\)/g, 'translateY(0)'), 'important')
+          } else {
+            wrapper.style.setProperty('transform', 'translateY(0)', 'important')
+          }
+        }
+        if (block) {
+          // Only lock Y axis, allow X for flip animation
+          const currentTransform = block.style.transform || window.getComputedStyle(block).transform
+          if (currentTransform && currentTransform.includes('translateY')) {
+            block.style.setProperty('transform', currentTransform.replace(/translateY\([^)]*\)/g, 'translateY(0)'), 'important')
+          } else {
+            block.style.setProperty('transform', 'translateY(0)', 'important')
+          }
+        }
+      }
+    }
+    
+    // Initial reset after delay
+    const resetTimer = setTimeout(() => {
+      resetFlipbook()
+      
+      // Continue monitoring and resetting for a short period
+      resetInterval = setInterval(() => {
+        resetAttempts++
+        resetFlipbook()
+        
+        if (resetAttempts >= maxAttempts) {
+          clearInterval(resetInterval)
+        }
+      }, 100)
+    }, 300)
+
+    return () => {
+      clearTimeout(resetTimer)
+      if (resetInterval) {
+        clearInterval(resetInterval)
+      }
+    }
+  }, [])
 
   // Prevent scroll restoration and ensure we start at top
   useEffect(() => {
@@ -190,16 +319,19 @@ export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
   }, [])
 
   // Calculate flipbook size based on screen size
+  // Only handle mobile and tablet (up to 1024px) - desktop is handled in App.tsx
   const isMobile = dimensions.width <= 768
+  const isTablet = dimensions.width > 768 && dimensions.width <= 1024
   
   // For mobile: full screen
-  // For tablet/desktop: use viewport-based sizing (handled by CSS)
-  const flipbookWidth = isMobile ? dimensions.width : (dimensions.width <= 1024 ? dimensions.width * 0.95 : dimensions.width * 0.85)
-  const flipbookHeight = isMobile ? dimensions.height : (dimensions.width <= 1024 ? dimensions.height * 0.95 : dimensions.height * 0.90)
+  // For tablet: use viewport-based sizing (handled by CSS)
+  const flipbookWidth = isMobile ? dimensions.width : (isTablet ? dimensions.width * 0.95 : dimensions.width)
+  const flipbookHeight = isMobile ? dimensions.height : (isTablet ? dimensions.height * 0.95 : dimensions.height)
 
   return (
     <div className={`intro-container ${isFading ? "fade-out" : ""}`}>
       <HTMLFlipBook
+        key={flipbookKeyRef.current}
         width={flipbookWidth}
         height={flipbookHeight}
         size="stretch"

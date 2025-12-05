@@ -19,6 +19,39 @@ const Stories = lazy(() => import("./pages/Stories"))
 function App() {
   const [introCompleted, setIntroCompleted] = useState(false)
   const [showMainApp, setShowMainApp] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  // Check if screen is desktop/large (>= 1025px) on mount and resize
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth
+      // Desktop/large screens: 1025px and above - skip intro
+      // Tablet and mobile: up to 1024px - show intro
+      setIsDesktop(width >= 1025)
+      
+      // If desktop, immediately mark intro as completed and show main app
+      if (width >= 1025) {
+        setIntroCompleted(true)
+        setShowMainApp(true)
+      }
+    }
+
+    // Check on mount
+    checkScreenSize()
+
+    // Listen for resize events
+    let resizeTimer: ReturnType<typeof setTimeout>
+    const handleResize = () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(checkScreenSize, 150)
+    }
+
+    window.addEventListener("resize", handleResize)
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      clearTimeout(resizeTimer)
+    }
+  }, [])
 
   // Handle intro completion with proper scroll timing
   const handleIntroComplete = () => {
@@ -66,7 +99,7 @@ function App() {
   return (
     <ErrorBoundary>
       <I18nProvider>
-        {!introCompleted ? (
+        {!introCompleted && !isDesktop ? (
           <IntroFlip onFlipComplete={handleIntroComplete} />
         ) : showMainApp ? (
           <div className="fade-in">
