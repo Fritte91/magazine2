@@ -17,17 +17,85 @@ interface CheckoutFormData {
 }
 
 const thaiProvinces = [
+  "Amnat Charoen",
+  "Ang Thong",
   "Bangkok",
-  "Phetchaburi",
-  "Prachuap Khiri Khan",
+  "Bueng Kan",
+  "Buriram",
+  "Chachoengsao",
+  "Chai Nat",
+  "Chaiyaphum",
+  "Chanthaburi",
+  "Chiang Mai",
+  "Chiang Rai",
+  "Chonburi",
   "Chumphon",
-  "Ranong",
-  "Phang Nga",
-  "Phuket",
+  "Kalasin",
+  "Kamphaeng Phet",
+  "Kanchanaburi",
+  "Khon Kaen",
   "Krabi",
-  "Trang",
+  "Lampang",
+  "Lamphun",
+  "Loei",
+  "Lopburi",
+  "Mae Hong Son",
+  "Maha Sarakham",
+  "Mukdahan",
+  "Nakhon Nayok",
+  "Nakhon Pathom",
+  "Nakhon Phanom",
+  "Nakhon Ratchasima",
+  "Nakhon Sawan",
+  "Nakhon Si Thammarat",
+  "Nan",
+  "Narathiwat",
+  "Nong Bua Lamphu",
+  "Nong Khai",
+  "Nonthaburi",
+  "Pathum Thani",
+  "Pattani",
+  "Phang Nga",
+  "Phatthalung",
+  "Phayao",
+  "Phetchabun",
+  "Phetchaburi",
+  "Phichit",
+  "Phitsanulok",
+  "Phra Nakhon Si Ayutthaya",
+  "Phrae",
+  "Phuket",
+  "Prachinburi",
+  "Prachuap Khiri Khan",
+  "Ranong",
+  "Ratchaburi",
+  "Rayong",
+  "Roi Et",
+  "Sa Kaeo",
+  "Sakon Nakhon",
+  "Samut Prakan",
+  "Samut Sakhon",
+  "Samut Songkhram",
+  "Saraburi",
   "Satun",
-]
+  "Sing Buri",
+  "Sisaket",
+  "Songkhla",
+  "Sukhothai",
+  "Suphan Buri",
+  "Surat Thani",
+  "Surin",
+  "Tak",
+  "Trang",
+  "Trat",
+  "Ubon Ratchathani",
+  "Udon Thani",
+  "Uthai Thani",
+  "Uttaradit",
+  "Yala",
+  "Yasothon"
+];
+
 
 export default function CheckoutForm() {
   const { t } = useI18n()
@@ -410,6 +478,16 @@ export default function CheckoutForm() {
           </span>
           <div className="absolute inset-0 transition-opacity duration-300" style={{ background: 'linear-gradient(to right, rgb(212, 175, 55), rgb(255, 193, 7))', opacity: 0 }}></div>
         </button>
+        
+        {/* Pre-order Notice */}
+        <div className="mt-4 p-3 md:p-4 bg-red-50 border-2 border-red-200 rounded-lg">
+          <p className="text-red-600 text-xs md:text-sm font-medium text-center leading-relaxed mb-2">
+            <strong>EN:</strong> This item is available for pre-order. The official copy will be dispatched at the end of January. Thank you for your understanding and support.
+          </p>
+          <p className="text-red-600 text-xs md:text-sm font-medium text-center leading-relaxed">
+            <strong>TH:</strong> สินค้านี้เป็นสินค้า พรีออเดอร์ โดยสินค้าตัวจริงจะจัดส่ง ภายในช่วงปลายเดือนมกราคม ขอขอบคุณสำหรับความเข้าใจและการสนับสนุนของท่าน
+          </p>
+        </div>
       </div>
       <style>{`
         .checkout-input:focus {
