@@ -1,6 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import { Analytics } from "@vercel/analytics/react"
 import { I18nProvider } from "./i18n/i18nContext"
 import ErrorBoundary from "./components/ErrorBoundary"
 import Layout from "./components/Layout"
@@ -21,6 +22,22 @@ function App() {
   const [showMainApp, setShowMainApp] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
 
+  // Check if intro was shown today using localStorage
+  const hasIntroBeenShownToday = () => {
+    try {
+      const lastShownDate = localStorage.getItem("introFlipLastShown")
+      if (!lastShownDate) return false
+      
+      const today = new Date().toDateString()
+      const lastShown = new Date(lastShownDate).toDateString()
+      
+      return today === lastShown
+    } catch (error) {
+      // If localStorage is not available, return false to show intro
+      return false
+    }
+  }
+
   // Check if screen is desktop/large (>= 1025px) on mount and resize
   useEffect(() => {
     const checkScreenSize = () => {
@@ -33,6 +50,12 @@ function App() {
       if (width >= 1025) {
         setIntroCompleted(true)
         setShowMainApp(true)
+      } else {
+        // For mobile/tablet, check if intro was shown today
+        if (hasIntroBeenShownToday()) {
+          setIntroCompleted(true)
+          setShowMainApp(true)
+        }
       }
     }
 
@@ -55,6 +78,14 @@ function App() {
 
   // Handle intro completion with proper scroll timing
   const handleIntroComplete = () => {
+    // Save the current date to localStorage so intro won't show again today
+    try {
+      localStorage.setItem("introFlipLastShown", new Date().toISOString())
+    } catch (error) {
+      // If localStorage is not available, continue anyway
+      console.warn("Could not save intro completion to localStorage", error)
+    }
+    
     // First, ensure we're scrolled to top BEFORE showing main app
     window.scrollTo(0, 0)
     document.documentElement.scrollTop = 0
@@ -169,6 +200,7 @@ function App() {
         ) : null}
       </I18nProvider>
       <SpeedInsights />
+      <Analytics />
     </ErrorBoundary>
   )
 }
