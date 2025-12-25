@@ -7,7 +7,7 @@ export default function GoogleForm() {
     <div className="pt-28 md:pt-32 pb-12 md:pb-16">
       <div className="container-padding max-w-4xl mx-auto">
         <h1 className="text-center mb-4">{t("nav.contact")}</h1>
-        <p className="text-center text-stone mb-12 md:mb-16">Fill out the form below to get in touch with us.</p>
+        <p className="text-center text-stone mb-12 md:mb-16">{t("contact.description")}</p>
 
         {/* Embedded Google Form */}
         <div className="bg-white border border-stone/20 p-6 md:p-8 rounded-lg">
@@ -20,12 +20,12 @@ export default function GoogleForm() {
             marginWidth={0}
             className="rounded"
           >
-            Loading...
+            {t("contact.loading")}
           </iframe>
         </div>
 
         <p className="text-center text-sm text-stone mt-8">
-          * Replace the iframe src with your actual Google Form embed URL
+          {t("contact.iframe_note")}
         </p>
       </div>
     </div>

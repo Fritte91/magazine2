@@ -1,4 +1,8 @@
+import { useI18n } from "../i18n/i18nContext"
+
 export default function StatisticsSection() {
+  const { t } = useI18n()
+  
   return (
     <section className="py-8 md:py-10 bg-white border-y border-gray-100">
       <div className="container-padding max-w-5xl mx-auto">
@@ -12,7 +16,7 @@ export default function StatisticsSection() {
               420
             </div>
             <p className="text-xs md:text-sm text-charcoal/70 font-sans uppercase tracking-[0.15em] font-medium">
-              LIMITED COPIES
+              {t("statistics.limited_copies")}
             </p>
           </div>
 
@@ -25,7 +29,7 @@ export default function StatisticsSection() {
               12
             </div>
             <p className="text-xs md:text-sm text-charcoal/70 font-sans uppercase tracking-[0.15em] font-medium">
-              FEATURED ARTISTS
+              {t("statistics.featured_artists")}
             </p>
           </div>
 
@@ -38,7 +42,7 @@ export default function StatisticsSection() {
               24
             </div>
             <p className="text-xs md:text-sm text-charcoal/70 font-sans uppercase tracking-[0.15em] font-medium">
-              UNIQUE STORIES
+              {t("statistics.unique_stories")}
             </p>
           </div>
         </div>

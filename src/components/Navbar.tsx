@@ -2,8 +2,10 @@ import { useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Menu, X } from "lucide-react"
 import LanguageToggle from "./LanguageToggle"
+import { useI18n } from "../i18n/i18nContext"
 
 export default function Navbar() {
+  const { t } = useI18n()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
@@ -80,7 +82,7 @@ export default function Navbar() {
             to="/"
             className="text-xl md:text-2xl lg:text-3xl font-sans font-bold text-charcoal hover:opacity-70 transition-opacity"
           >
-            Now Or Never
+            {t("site.title")}
           </Link>
         </div>
 
@@ -94,7 +96,7 @@ export default function Navbar() {
                 : "text-charcoal hover:text-green-primary"
             }`}
           >
-            Home
+            {t("nav.home")}
             {isActive("/") && location.pathname === "/" && (
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
             )}
@@ -103,7 +105,7 @@ export default function Navbar() {
             onClick={() => scrollToSection("stories")}
             className="text-base font-sans font-semibold transition-all duration-200 relative text-charcoal hover:text-green-primary"
           >
-            Stories
+            {t("nav.stories")}
           </button>
           <Link 
             to="/shop" 
@@ -113,7 +115,7 @@ export default function Navbar() {
                 : "text-charcoal hover:text-green-primary"
             }`}
           >
-            Shop
+            {t("nav.shop")}
             {isActive("/shop") && (
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
             )}
@@ -122,7 +124,7 @@ export default function Navbar() {
             onClick={() => scrollToSection("topics")}
             className={`text-base font-sans font-semibold transition-all duration-200 relative text-charcoal hover:text-green-primary`}
           >
-            About
+            {t("nav.about")}
           </button>
           <Link 
             to="/stories" 
@@ -132,7 +134,7 @@ export default function Navbar() {
                 : "text-charcoal hover:text-green-primary"
             }`}
           >
-            Blog
+            {t("nav.blog")}
             {isActive("/stories") && (
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
             )}
@@ -141,7 +143,7 @@ export default function Navbar() {
             onClick={() => scrollToSection("about-author")}
             className={`text-base font-sans font-semibold transition-all duration-200 relative text-charcoal hover:text-green-primary`}
           >
-            Author
+            {t("nav.author")}
           </button>
         </div>
 
@@ -180,13 +182,13 @@ export default function Navbar() {
                   : "text-charcoal hover:text-green-primary hover:bg-gray-50"
               }`}
             >
-              Home
+              {t("nav.home")}
             </button>
             <button
               onClick={() => scrollToSection("stories")}
               className="px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left text-charcoal hover:text-green-primary hover:bg-gray-50"
             >
-              Stories
+              {t("nav.stories")}
             </button>
             <Link
               to="/shop"
@@ -197,13 +199,13 @@ export default function Navbar() {
                   : "text-charcoal hover:text-green-primary hover:bg-gray-50"
               }`}
             >
-              Shop
+              {t("nav.shop")}
             </Link>
             <button
               onClick={() => scrollToSection("topics")}
               className="px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left text-charcoal hover:text-green-primary hover:bg-gray-50"
             >
-              About
+              {t("nav.about")}
             </button>
             <Link
               to="/stories"
@@ -214,13 +216,13 @@ export default function Navbar() {
                   : "text-charcoal hover:text-green-primary hover:bg-gray-50"
               }`}
             >
-              Blog
+              {t("nav.blog")}
             </Link>
             <button
               onClick={() => scrollToSection("about-author")}
               className="px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left text-charcoal hover:text-green-primary hover:bg-gray-50"
             >
-              Author
+              {t("nav.author")}
             </button>
             {/* Language Toggle in Mobile Menu */}
             <div className="px-4 py-3">

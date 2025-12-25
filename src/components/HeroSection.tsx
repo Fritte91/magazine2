@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom"
+import { useI18n } from "../i18n/i18nContext"
 
 export default function HeroSection() {
+  const { t } = useI18n()
+  
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-24 lg:pt-28 pb-12 md:pb-16"
@@ -33,7 +36,7 @@ export default function HeroSection() {
                   textShadow: "0 4px 20px rgba(0, 0, 0, 0.8), 0 2px 10px rgba(0, 0, 0, 0.6)",
                 }}
               >
-                Go on a Journey
+                {t("hero.journey_title")}
               </h1>
             </div>
 
@@ -45,7 +48,7 @@ export default function HeroSection() {
                 textShadow: "0 2px 10px rgba(0, 0, 0, 0.7)",
               }}
             >
-              เริ่มการเดินทางของคุณ.... ตอนนี้เลย
+              {t("hero.journey_subtitle_th")}
             </p>
 
             {/* English Tagline */}
@@ -56,7 +59,7 @@ export default function HeroSection() {
                 textShadow: "0 2px 10px rgba(0, 0, 0, 0.7)",
               }}
             >
-              Dive into the story right now.
+              {t("hero.journey_tagline")}
             </p>
 
             {/* Divider */}
@@ -70,9 +73,7 @@ export default function HeroSection() {
                 textShadow: "0 2px 8px rgba(0, 0, 0, 0.6)",
               }}
             >
-              Explore the fascinating world of Thai cannabis culture, from traditional healing practices to modern
-              cultivation techniques. Our magazine brings you authentic stories, expert insights, and beautiful
-              photography that captures the essence of Thailand's emerging cannabis renaissance.
+              {t("hero.journey_description")}
             </p>
 
             {/* CTA Button - Premium Green Styling */}
@@ -97,7 +98,7 @@ export default function HeroSection() {
                   e.currentTarget.style.boxShadow = "0 10px 30px rgba(34, 85, 68, 0.5)"
                 }}
               >
-                BUY MAGAZINE (฿1420)
+                {t("hero.buy_button")}
               </Link>
             </div>
 
@@ -114,7 +115,7 @@ export default function HeroSection() {
                   boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
                 }}
               >
-                LIMITED EDITION - ONLY 420 COPIES
+                {t("hero.limited_badge")}
               </div>
             </div>
           </div>
@@ -131,7 +132,7 @@ export default function HeroSection() {
                     textShadow: "0 2px 8px rgba(0, 0, 0, 0.7)",
                   }}
                 >
-                  มาพร้อมใบเซอร์
+                  {t("hero.certificate_text")}
                 </p>
                 <p
                   className="text-sm md:text-base font-sans font-medium tracking-wide"
@@ -140,7 +141,7 @@ export default function HeroSection() {
                     textShadow: "0 2px 8px rgba(0, 0, 0, 0.7)",
                   }}
                 >
-                  ที่คั่นหนังสือรันนัมเบอร์
+                  {t("hero.bookmark_text")}
                 </p>
                 <p
                   className="text-base md:text-lg font-sans font-semibold tracking-wide"
@@ -149,7 +150,7 @@ export default function HeroSection() {
                     textShadow: "0 2px 8px rgba(0, 0, 0, 0.7)",
                   }}
                 >
-                  420 ชุดเท่านั้น
+                  {t("hero.limited_text")}
                 </p>
               </div>
 

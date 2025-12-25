@@ -45,13 +45,13 @@ export default function Shop() {
                     <span className="shop-price font-bold text-lg text-charcoal transition-colors duration-300">฿1420</span>
                   </div>
                   <div className="flex justify-between items-center text-sm text-charcoal/70">
-                    <span>Shipping (No Tracking)</span>
-                    <span className="font-semibold text-green-primary">FREE</span>
+                    <span>{t("shop.shipping")}</span>
+                    <span className="font-semibold text-green-primary">{t("shop.shipping_free")}</span>
                   </div>
                 </div>
 
                 <div className="shop-total flex justify-between items-center mb-8 text-lg md:text-xl font-serif font-bold text-charcoal border-t-2 pt-5 transition-colors duration-300" style={{ borderColor: 'rgba(30, 30, 30, 0.1)' }}>
-                  <span>Total:</span>
+                  <span>{t("checkout.total")}:</span>
                   <span className="shop-total-price text-2xl transition-colors duration-300">฿1420</span>
                 </div>
 
@@ -84,7 +84,7 @@ export default function Shop() {
 
                 <div className="mt-5 p-3 bg-gradient-to-r from-gold-accent/10 to-yellow-accent/10 rounded-lg border border-gold-accent/20">
                   <p className="text-xs text-charcoal/80 text-center font-semibold">
-                    <span className="text-gold-accent font-bold">⚡ Limited Edition:</span> Only 420 copies available
+                    <span className="text-gold-accent font-bold">{t("shop.limited_edition")}</span> {t("shop.limited_copies")}
                   </p>
                 </div>
               </div>

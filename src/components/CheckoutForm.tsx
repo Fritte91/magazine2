@@ -132,7 +132,7 @@ export default function CheckoutForm() {
       } else {
         setErrors((prev) => ({
           ...prev,
-          paymentFile: "Invalid file type. Please upload JPG, PNG, PDF, or HEIC.",
+          paymentFile: t("checkout.errors.file_type_invalid"),
         }))
       }
     }
@@ -141,16 +141,16 @@ export default function CheckoutForm() {
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {}
 
-    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required"
-    if (!formData.email.trim()) newErrors.email = "Email is required"
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Invalid email address"
+    if (!formData.fullName.trim()) newErrors.fullName = t("checkout.errors.full_name_required")
+    if (!formData.email.trim()) newErrors.email = t("checkout.errors.email_required")
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = t("checkout.errors.email_invalid")
     if (!validateThaiPhone(formData.phone))
-      newErrors.phone = "Invalid Thai phone number (should be 10 digits starting with 0)"
-    if (!formData.province) newErrors.province = "Province is required"
-    if (!formData.district.trim()) newErrors.district = "District is required"
-    if (!validatePostalCode(formData.postalCode)) newErrors.postalCode = "Postal code must be 5 digits"
-    if (!formData.address.trim()) newErrors.address = "Address is required"
-    if (!paymentFile) newErrors.paymentFile = "Payment slip is required"
+      newErrors.phone = t("checkout.errors.phone_invalid")
+    if (!formData.province) newErrors.province = t("checkout.errors.province_required")
+    if (!formData.district.trim()) newErrors.district = t("checkout.errors.district_required")
+    if (!validatePostalCode(formData.postalCode)) newErrors.postalCode = t("checkout.errors.postal_code_invalid")
+    if (!formData.address.trim()) newErrors.address = t("checkout.errors.address_required")
+    if (!paymentFile) newErrors.paymentFile = t("checkout.errors.payment_slip_required")
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -248,7 +248,7 @@ export default function CheckoutForm() {
       window.location.href = "/thank-you"
     } catch (error) {
       console.error("Submission error:", error)
-      setErrors({ submit: "Failed to submit order. Please try again." })
+      setErrors({ submit: t("checkout.errors.submit_failed") })
     } finally {
       setIsSubmitting(false)
     }
@@ -313,7 +313,7 @@ export default function CheckoutForm() {
               onChange={handleChange}
               className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
             >
-              <option value="">Select Province</option>
+              <option value="">{t("checkout.select_province")}</option>
               {thaiProvinces.map((province) => (
                 <option key={province} value={province}>
                   {province}
@@ -390,7 +390,7 @@ export default function CheckoutForm() {
           <div className="relative z-10">
             <div className="flex items-center justify-center gap-2 mb-3">
               <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, #d4d4d4, transparent)' }}></div>
-              <p className="text-xs font-bold uppercase tracking-wider px-2 md:px-3" style={{ color: '#1e1e1e' }}>Scan QR code to transfer</p>
+              <p className="text-xs font-bold uppercase tracking-wider px-2 md:px-3" style={{ color: '#1e1e1e' }}>{t("checkout.scan_qr")}</p>
               <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, #d4d4d4, transparent)' }}></div>
             </div>
             <div className="flex justify-center mb-2 md:mb-3">
@@ -409,7 +409,7 @@ export default function CheckoutForm() {
         {/* File Upload */}
         <div>
           <label className="block text-xs font-bold mb-2 uppercase tracking-wide" style={{ color: '#1e1e1e' }}>
-            {t("checkout.upload_slip")} * <span className="normal-case font-normal text-xs" style={{ color: '#787878' }}>(JPG, PNG, PDF, or HEIC)</span>
+            {t("checkout.upload_slip")} * <span className="normal-case font-normal text-xs" style={{ color: '#787878' }}>{t("checkout.file_types")}</span>
           </label>
           <div className="checkout-upload border-2 border-dashed p-3 md:p-4 text-center cursor-pointer transition-all duration-300 rounded-lg group relative overflow-hidden bg-white" style={{ borderColor: '#d4d4d4' }}>
             <input
@@ -426,7 +426,7 @@ export default function CheckoutForm() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <p className="text-sm font-semibold truncate" style={{ color: '#1e1e1e' }}>{paymentFile.name}</p>
-                  <span className="text-xs ml-1" style={{ color: '#787878' }}>(Click to change)</span>
+                  <span className="text-xs ml-1" style={{ color: '#787878' }}>{t("checkout.click_to_change")}</span>
                 </div>
               ) : (
                 <div className="flex items-center justify-center gap-2 md:gap-3">
@@ -436,8 +436,8 @@ export default function CheckoutForm() {
                     </svg>
                   </div>
                   <div className="text-left">
-                    <p className="text-sm font-semibold" style={{ color: '#1e1e1e' }}>Click to upload or drag and drop</p>
-                    <p className="text-xs" style={{ color: '#787878' }}>PNG, JPG, PDF or HEIC</p>
+                    <p className="text-sm font-semibold" style={{ color: '#1e1e1e' }}>{t("checkout.click_to_upload")}</p>
+                    <p className="text-xs" style={{ color: '#787878' }}>{t("checkout.file_types_short")}</p>
                   </div>
                 </div>
               )}
@@ -465,7 +465,7 @@ export default function CheckoutForm() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span>Processing...</span>
+                <span>{t("checkout.processing")}</span>
               </>
             ) : (
               <>
@@ -482,10 +482,10 @@ export default function CheckoutForm() {
         {/* Pre-order Notice */}
         <div className="mt-4 p-3 md:p-4 bg-red-50 border-2 border-red-200 rounded-lg">
           <p className="text-red-600 text-xs md:text-sm font-medium text-center leading-relaxed mb-2">
-            <strong>EN:</strong> This item is available for pre-order. The official copy will be dispatched at the end of January. Thank you for your understanding and support.
+            <strong>EN:</strong> {t("checkout.pre_order_notice.en")}
           </p>
           <p className="text-red-600 text-xs md:text-sm font-medium text-center leading-relaxed">
-            <strong>TH:</strong> สินค้านี้เป็นสินค้า พรีออเดอร์ โดยสินค้าตัวจริงจะจัดส่ง ภายในช่วงปลายเดือนมกราคม ขอขอบคุณสำหรับความเข้าใจและการสนับสนุนของท่าน
+            <strong>TH:</strong> {t("checkout.pre_order_notice.th")}
           </p>
         </div>
       </div>

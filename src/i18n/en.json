@@ -1,14 +1,30 @@
 {
+  "site": {
+    "title": "Now Or Never"
+  },
   "nav": {
     "home": "Home",
     "shop": "Shop",
-    "contact": "Contact"
+    "contact": "Contact",
+    "stories": "Stories",
+    "about": "About",
+    "blog": "Blog",
+    "author": "Author"
   },
   "hero": {
     "title": "Now or Never",
     "subtitle": "The Magazine",
     "description": "Discover stories from the world's most compelling voices. Limited edition physical magazine.",
-    "cta": "Order the Magazine"
+    "cta": "Order the Magazine",
+    "journey_title": "Go on a Journey",
+    "journey_subtitle_th": "เริ่มการเดินทางของคุณ.... ตอนนี้เลย",
+    "journey_tagline": "Dive into the story right now.",
+    "journey_description": "Explore the fascinating world of Thai cannabis culture, from traditional healing practices to modern cultivation techniques. Our magazine brings you authentic stories, expert insights, and beautiful photography that captures the essence of Thailand's emerging cannabis renaissance.",
+    "buy_button": "BUY MAGAZINE (฿1420)",
+    "limited_badge": "LIMITED EDITION - ONLY 420 COPIES",
+    "certificate_text": "มาพร้อมใบเซอร์",
+    "bookmark_text": "ที่คั่นหนังสือรันนัมเบอร์",
+    "limited_text": "420 ชุดเท่านั้น"
   },
   "about_author": {
     "title": "The Author",
@@ -99,35 +115,105 @@
     ],
     "order_button": "Order Now",
     "pre_order_closed": "Pre-Orders Coming Soon",
-    "pre_order_date": "Pre-orders open on"
+    "pre_order_date": "Pre-orders open on",
+    "shipping": "Shipping (No Tracking)",
+    "shipping_free": "FREE",
+    "limited_edition": "⚡ Limited Edition:",
+    "limited_copies": "Only 420 copies available"
   },
   "checkout": {
     "title": "Order Summary",
+    "page_title": "Checkout",
     "customer_info": "Shipping Information",
     "payment": "Payment",
     "full_name": "Full Name",
     "email": "Email",
     "phone": "Phone Number (Thai)",
     "province": "Province",
+    "select_province": "Select Province",
     "district": "District",
     "postal_code": "Postal Code",
     "address": "Full Address",
     "notes": "Special Notes (Optional)",
     "upload_slip": "Upload Payment Slip",
     "submit_order": "Submit Order",
-    "total": "Total"
+    "total": "Total",
+    "scan_qr": "Scan QR code to transfer",
+    "file_types": "(JPG, PNG, PDF, or HEIC)",
+    "click_to_change": "(Click to change)",
+    "click_to_upload": "Click to upload or drag and drop",
+    "file_types_short": "PNG, JPG, PDF or HEIC",
+    "processing": "Processing...",
+    "errors": {
+      "full_name_required": "Full name is required",
+      "email_required": "Email is required",
+      "email_invalid": "Invalid email address",
+      "phone_invalid": "Invalid Thai phone number (should be 10 digits starting with 0)",
+      "province_required": "Province is required",
+      "district_required": "District is required",
+      "postal_code_invalid": "Postal code must be 5 digits",
+      "address_required": "Address is required",
+      "payment_slip_required": "Payment slip is required",
+      "file_type_invalid": "Invalid file type. Please upload JPG, PNG, PDF, or HEIC.",
+      "submit_failed": "Failed to submit order. Please try again."
+    },
+    "pre_order_notice": {
+      "en": "This item is available for pre-order. The official copy will be dispatched at the end of January. Thank you for your understanding and support.",
+      "th": "สินค้านี้เป็นสินค้า พรีออเดอร์ โดยสินค้าตัวจริงจะจัดส่ง ภายในช่วงปลายเดือนมกราคม ขอขอบคุณสำหรับความเข้าใจและการสนับสนุนของท่าน"
+    }
   },
   "thank_you": {
     "title": "Thank You for Your Order!",
     "order_number": "Order Number",
     "confirmation_message": "Your order has been received. We'll be in touch soon.",
-    "back_home": "Return to Home"
+    "back_home": "Return to Home",
+    "order_confirmed": "Order Confirmed",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "shipping_address": "Shipping Address",
+    "whats_next": "What's Next?",
+    "step1": "We've received your payment and will process your order within {days} business days.",
+    "step1_days": "2",
+    "step2": "You'll receive a {email_type} with tracking information.",
+    "step2_email": "confirmation email",
+    "step3": "Your magazine will be shipped via {shipper}. Delivery typically takes {time}.",
+    "step3_shipper": "Thai Post",
+    "step3_time": "3-5 business days",
+    "questions": "Questions? Contact us at",
+    "contact_email": "hello@nowornever.com"
   },
   "footer": {
     "about": "About",
     "contact": "Contact",
     "instagram": "Instagram",
     "email": "Contact Us",
-    "copy": "© 2025 Now or Never Magazine. All rights reserved."
+    "copy": "© 2025 Now or Never Magazine. All rights reserved.",
+    "description": "Now Or Never 420 documents Thailand's living cannabis culture - bridging growers, artists, healers, and dreamers through authentic stories and beautiful photography.",
+    "quick_links": "Quick Links",
+    "journal": "Journal",
+    "community_partners": "Community Partners",
+    "email_label": "EMAIL",
+    "location_label": "LOCATION",
+    "location": "Bangkok, Thailand"
+  },
+  "intro_flip": {
+    "pre_order": "PRE-ORDER NOW",
+    "limited_issue": "LIMITED ISSUE 2025",
+    "swipe_to_open": "SWIPE LEFT TO OPEN"
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Fill out the form below to get in touch with us.",
+    "iframe_note": "* Replace the iframe src with your actual Google Form embed URL",
+    "loading": "Loading..."
+  },
+  "stories": {
+    "view_all": "View All Stories"
+  },
+  "statistics": {
+    "limited_copies": "LIMITED COPIES",
+    "featured_artists": "FEATURED ARTISTS",
+    "unique_stories": "UNIQUE STORIES"
   }
 }

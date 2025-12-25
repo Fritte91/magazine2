@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 import "./IntroFlip.css"
+import { useI18n } from "../i18n/i18nContext"
 
 interface IntroFlipProps {
   onFlipComplete: () => void
 }
 
 export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
+  const { t } = useI18n()
   const [isFlipped, setIsFlipped] = useState(false)
   const [isFading, setIsFading] = useState(false)
 
@@ -122,8 +124,8 @@ export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
 
       {/* Floating stickers */}
       <div className="floating-ui">
-        <div className="sticker-floating pre">PRE-ORDER NOW</div>
-        <div className="sticker-floating limited">LIMITED ISSUE 2025</div>
+        <div className="sticker-floating pre">{t("intro_flip.pre_order")}</div>
+        <div className="sticker-floating limited">{t("intro_flip.limited_issue")}</div>
       </div>
 
       <div
@@ -162,7 +164,7 @@ export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
               <img src="/Cover.webp" className="cover-img" alt="Magazine cover" />
             </div>
 
-            <div className="swipe-text">SWIPE LEFT TO OPEN</div>
+            <div className="swipe-text">{t("intro_flip.swipe_to_open")}</div>
           </div>
         </div>
 

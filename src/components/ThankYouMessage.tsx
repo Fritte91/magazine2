@@ -58,7 +58,7 @@ export default function ThankYouMessage() {
           </div>
           
           <p className="text-xs md:text-sm tracking-[0.2em] uppercase text-stone font-medium mb-4 md:mb-6 letter-spacing-wide" style={{ color: '#787878' }}>
-            Order Confirmed
+            {t("thank_you.order_confirmed")}
           </p>
           <h1 className="text-balance mb-5 md:mb-7 leading-[1.1] tracking-tight text-charcoal" style={{ color: '#1e1e1e' }}>
             {t("thank_you.title")}
@@ -83,25 +83,25 @@ export default function ThankYouMessage() {
             {/* Order Summary */}
             <div className="space-y-5 border-t border-b py-7 md:py-8" style={{ borderColor: '#e5e5e5' }}>
               <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-4">
-                <span className="text-sm md:text-base font-semibold uppercase tracking-wide" style={{ color: '#1e1e1e' }}>Name</span>
+                <span className="text-sm md:text-base font-semibold uppercase tracking-wide" style={{ color: '#1e1e1e' }}>{t("thank_you.name")}</span>
                 <span className="text-base md:text-lg font-bold sm:text-right leading-relaxed" style={{ color: '#1e1e1e' }}>
                   {orderDetails.name}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-4">
-                <span className="text-sm md:text-base font-semibold uppercase tracking-wide" style={{ color: '#1e1e1e' }}>Email</span>
+                <span className="text-sm md:text-base font-semibold uppercase tracking-wide" style={{ color: '#1e1e1e' }}>{t("thank_you.email")}</span>
                 <span className="text-base md:text-lg font-bold sm:text-right leading-relaxed break-all" style={{ color: '#1e1e1e' }}>
                   {orderDetails.email}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-4">
-                <span className="text-sm md:text-base font-semibold uppercase tracking-wide" style={{ color: '#1e1e1e' }}>Phone</span>
+                <span className="text-sm md:text-base font-semibold uppercase tracking-wide" style={{ color: '#1e1e1e' }}>{t("thank_you.phone")}</span>
                 <span className="text-base md:text-lg font-bold sm:text-right leading-relaxed" style={{ color: '#1e1e1e' }}>
                   {orderDetails.phone}
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between gap-2 sm:gap-4">
-                <span className="text-sm md:text-base font-semibold uppercase tracking-wide" style={{ color: '#1e1e1e' }}>Shipping Address</span>
+                <span className="text-sm md:text-base font-semibold uppercase tracking-wide" style={{ color: '#1e1e1e' }}>{t("thank_you.shipping_address")}</span>
                 <span className="text-base md:text-lg font-bold sm:text-right leading-relaxed max-w-md sm:ml-auto" style={{ color: '#1e1e1e' }}>
                   {orderDetails.address}
                 </span>
@@ -113,7 +113,7 @@ export default function ThankYouMessage() {
         {/* Next Steps */}
         <div className="thank-you-card bg-white border p-7 md:p-10 mb-8 md:mb-12 rounded-lg shadow-sm" style={{ borderColor: '#e5e5e5' }}>
           <h3 className="text-xl md:text-2xl font-serif font-bold mb-6 md:mb-8 tracking-tight" style={{ color: '#1e1e1e' }}>
-            What's Next?
+            {t("thank_you.whats_next")}
           </h3>
           <ol className="space-y-5 md:space-y-6">
             <li className="flex gap-4 md:gap-5 items-start">
@@ -121,7 +121,7 @@ export default function ThankYouMessage() {
                 1
               </span>
               <span className="text-base md:text-lg leading-relaxed pt-0.5" style={{ color: '#1e1e1e' }}>
-                We've received your payment and will process your order within <strong className="font-bold">2 business days</strong>.
+                {t("thank_you.step1").replace("{days}", t("thank_you.step1_days"))}
               </span>
             </li>
             <li className="flex gap-4 md:gap-5 items-start">
@@ -129,7 +129,7 @@ export default function ThankYouMessage() {
                 2
               </span>
               <span className="text-base md:text-lg leading-relaxed pt-0.5" style={{ color: '#1e1e1e' }}>
-                You'll receive a <strong className="font-bold">confirmation email</strong> with tracking information.
+                {t("thank_you.step2").replace("{email_type}", t("thank_you.step2_email"))}
               </span>
             </li>
             <li className="flex gap-4 md:gap-5 items-start">
@@ -137,7 +137,7 @@ export default function ThankYouMessage() {
                 3
               </span>
               <span className="text-base md:text-lg leading-relaxed pt-0.5" style={{ color: '#1e1e1e' }}>
-                Your magazine will be shipped via <strong className="font-bold">Thai Post</strong>. Delivery typically takes <strong className="font-bold">3-5 business days</strong>.
+                {t("thank_you.step3").replace("{shipper}", t("thank_you.step3_shipper")).replace("{time}", t("thank_you.step3_time"))}
               </span>
             </li>
           </ol>
@@ -156,13 +156,13 @@ export default function ThankYouMessage() {
 
         {/* Contact Info */}
         <p className="text-center text-sm md:text-base leading-relaxed" style={{ color: '#787878' }}>
-          Questions? Contact us at{' '}
+          {t("thank_you.questions")}{' '}
           <a 
-            href="mailto:hello@nowornever.com" 
+            href={`mailto:${t("thank_you.contact_email")}`} 
             className="font-semibold underline underline-offset-2 transition-colors duration-200 hover:opacity-80"
             style={{ color: '#1e1e1e' }}
           >
-            hello@nowornever.com
+            {t("thank_you.contact_email")}
           </a>
         </p>
       </div>

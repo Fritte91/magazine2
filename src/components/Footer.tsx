@@ -89,8 +89,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-xs md:text-sm text-white/90 leading-relaxed font-sans max-w-sm">
-              Now Or Never 420 documents Thailand's living cannabis culture - bridging growers, artists, healers, and
-              dreamers through authentic stories and beautiful photography.
+              {t("footer.description")}
             </p>
             <div className="flex items-center gap-2 md:gap-3 pt-1">
               <a
@@ -117,13 +116,13 @@ export default function Footer() {
           {/* Quick Links & Community Partners */}
           <div className="space-y-4 md:space-y-6">
             <div>
-              <h4 className="text-xs font-sans font-bold tracking-wider mb-3 md:mb-4 uppercase text-green-light">Quick Links</h4>
+              <h4 className="text-xs font-sans font-bold tracking-wider mb-3 md:mb-4 uppercase text-green-light">{t("footer.quick_links")}</h4>
               <ul className="space-y-2 md:space-y-2.5 text-xs md:text-sm font-sans">
                 <li>
                   <button onClick={scrollToTop} className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
                     <span className="flex items-center gap-2">
                       <span className="w-0 group-hover:w-2 h-0.5 bg-green-light transition-all duration-200"></span>
-                      Home
+                      {t("nav.home")}
                     </span>
                   </button>
                 </li>
@@ -131,7 +130,7 @@ export default function Footer() {
                   <button onClick={() => scrollToSection("stories")} className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
                     <span className="flex items-center gap-2">
                       <span className="w-0 group-hover:w-2 h-0.5 bg-green-light transition-all duration-200"></span>
-                      Stories
+                      {t("nav.stories")}
                     </span>
                   </button>
                 </li>
@@ -139,7 +138,7 @@ export default function Footer() {
                   <Link to="/stories" className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
                     <span className="flex items-center gap-2">
                       <span className="w-0 group-hover:w-2 h-0.5 bg-green-light transition-all duration-200"></span>
-                      Journal
+                      {t("footer.journal")}
                     </span>
                   </Link>
                 </li>
@@ -147,7 +146,7 @@ export default function Footer() {
                   <button onClick={() => scrollToSection("about-author")} className="text-white/80 hover:text-green-light transition-all duration-200 inline-block hover:translate-x-2 group">
                     <span className="flex items-center gap-2">
                       <span className="w-0 group-hover:w-2 h-0.5 bg-green-light transition-all duration-200"></span>
-                      Author
+                      {t("nav.author")}
                     </span>
                   </button>
                 </li>
@@ -155,7 +154,7 @@ export default function Footer() {
             </div>
             <div>
               <h4 className="text-xs font-sans font-bold tracking-wider mb-2 md:mb-3 uppercase text-green-light">
-                Community Partners
+                {t("footer.community_partners")}
               </h4>
               <div className="inline-block px-2.5 py-1 md:px-3 md:py-1.5 rounded-lg bg-green-primary/20 border border-green-primary/30">
                 <p className="text-xs md:text-sm text-green-light font-sans font-semibold">Phonotype_247</p>
@@ -165,10 +164,10 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-xs font-sans font-bold tracking-wider mb-3 md:mb-4 uppercase text-green-light">Contact</h4>
+            <h4 className="text-xs font-sans font-bold tracking-wider mb-3 md:mb-4 uppercase text-green-light">{t("footer.contact")}</h4>
             <ul className="space-y-3 md:space-y-4 text-xs md:text-sm font-sans">
               <li>
-                <span className="text-white/70 block mb-1 md:mb-1.5 text-[10px] md:text-xs font-medium tracking-wide">EMAIL</span>
+                <span className="text-white/70 block mb-1 md:mb-1.5 text-[10px] md:text-xs font-medium tracking-wide">{t("footer.email_label")}</span>
                 <a 
                   href="mailto:info@nowornevermagazine.com" 
                   className="text-white hover:text-green-light transition-colors duration-200 break-all inline-flex items-center gap-2 group text-xs md:text-sm"
@@ -178,9 +177,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <span className="text-white/70 block mb-1 md:mb-1.5 text-[10px] md:text-xs font-medium tracking-wide">LOCATION</span>
+                <span className="text-white/70 block mb-1 md:mb-1.5 text-[10px] md:text-xs font-medium tracking-wide">{t("footer.location_label")}</span>
                 <span className="text-white flex items-center gap-2 text-xs md:text-sm">
-                  <span>Bangkok, Thailand</span>
+                  <span>{t("footer.location")}</span>
                   <span className="text-green-light">📍</span>
                 </span>
               </li>

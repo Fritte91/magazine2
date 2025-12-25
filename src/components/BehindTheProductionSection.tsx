@@ -6,7 +6,7 @@ import { useI18n } from "../i18n/i18nContext"
 const featuredArticles = articles.slice(0, 3)
 
 export default function BehindTheProductionSection() {
-  const { language } = useI18n()
+  const { language, t } = useI18n()
   return (
     <section className="py-16 md:py-20 lg:py-28 relative overflow-hidden" style={{ backgroundColor: "#0a0a0a" }}>
       {/* Premium dark background with subtle gradient */}
@@ -201,7 +201,7 @@ export default function BehindTheProductionSection() {
               e.currentTarget.style.borderColor = "rgba(76, 175, 80, 0.3)"
             }}
           >
-            <span>View All Stories</span>
+            <span>{t("stories.view_all")}</span>
             <span className="transition-transform duration-300 group-hover:translate-x-2">→</span>
             {/* Shine effect on hover */}
             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>

@@ -1,19 +1,35 @@
 {
+  "site": {
+    "title": "Now Or Never"
+  },
   "nav": {
     "home": "หน้าแรก",
     "shop": "ร้าน",
-    "contact": "ติดต่อ"
+    "contact": "ติดต่อ",
+    "stories": "เรื่องราว",
+    "about": "เกี่ยวกับ",
+    "blog": "บล็อก",
+    "author": "ผู้เขียน"
   },
   "hero": {
-    "title": "Now or Never",
-    "subtitle": "The Magazine",
-    "description": "ค้นหาเรื่องราวจากเสียงของโลก นิตยสารพิมพ์จำนวนจำกัด",
-    "cta": "สั่งซื้อนิตยสาร"
+    "title": "นาว ออร์ เนเวอร์",
+    "subtitle": "แมคกาซีน",
+    "description": "ค้นหาเรื่องราวจากคนจริง,พืชจริงและความสวยงามของพืชกัญชา",
+    "cta": "สั่งซื้อนิตยสาร",
+    "journey_title": "เริ่มต้นการเดินทาง",
+    "journey_subtitle_th": "เริ่มการเดินทางของคุณ.... ตอนนี้เลย",
+    "journey_tagline": "ดำดิ่งสู่เรื่องราวตอนนี้เลย",
+    "journey_description": "สำรวจโลกที่น่าหลงใหลของวัฒนธรรมกัญชาไทย,ศิลปะ,อีเว้นท์และเรื่องราวที่เกิดขึ้น. นิตยสารของเรานำเสนอเรื่องราวที่แท้จริง ข้อมูลเชิงลึกและภาพถ่ายที่สวยงามของวัฒนธรรมกัญชาในประเทศไทย",
+    "buy_button": "ซื้อนิตยสาร (฿1420)",
+    "limited_badge": "แมคกาซีน - เพียง 420 เล่มเท่านั้น",
+    "certificate_text": "มาพร้อมใบเซอร์",
+    "bookmark_text": "ที่คั่นหนังสือรันนัมเบอร์",
+    "limited_text": "420 ชุดเท่านั้น"
   },
   "about_author": {
-    "title": "The Author",
+    "title": "บรรณาธิการ",
     "name": "Phonotype_247",
-    "subtitle": "Cannabis Culture Journalist & Advocate",
+    "subtitle": "ผู้หลงใหลในพืชกัญชาและผู้จัดทำหนังสือ",
     "my_journey": {
       "title": "My Journey",
       "text": "Hello, I'm Phonotype_247, the author of Now or Never magazine. For a long time, I've always been in love with cannabis and the cultures surrounding it. Ever since I got to know and use it, many things in my life changed. It has helped me connect more deeply with myself and others, and expand myself to be more in tune with the surroundings."
@@ -28,30 +44,30 @@
     },
     "magazine_perspective": {
       "title": "มุมมองของหนังสือ",
-      "text": "ในฐานะผู้จัดท่า หนังสือ Now Or Never 1st ผมรวบรวมความสวยงามของกัญชาในมิติต่างๆ ผ่าน เรื่องราวที่เชื่อมโยงกับการต่อของผู้คนในเส้นทางสายนี้ เพื่อเป็นการน่าเสนอให้เห็นถึงสิ่งที่เกิด"
+      "text": "ในฐานะผู้จัดท่า หนังสือ Now Or Never 1st ผมรวบรวมความสวยงามของกัญชาในมิติต่างๆ ผ่านเรื่องราวที่เชื่อมโยงกับการต่อสู้ของผู้คนในเส้นทางสายนี้ เพื่อเป็นการนำเสนอให้เห็นถึงสิ่งที่เกิดขึ้นและความสวยงาม"
     }
   },
   "topics": {
     "title": "เรื่องราวเกี่ยวกับ",
     "items": [
       { 
-        "title": "Growing Cultures", 
-        "description": "Discover the rich traditions and modern techniques of cannabis cultivation in Thailand. From traditional farming methods to contemporary grow operations, explore how Thai cultivators are shaping the future of cannabis.",
+        "title": "วัฒนธรรมกัญชา", 
+        "description": "วัฒนธรรมการปลูกกัญชาในรูปแบบต่างๆจากนักปลูกในไทยที่ขับเคลื่อนแนวทางการปลูกหลากหลายวิธีการให้คุณได้ทำความเข้าใจและเปิดมุมมองกับวัฒนธรรมการสร้างสรรค์และแนวทางในอนาคตของพืชชนิดนี้",
         "icon": "8.webp"
       },
       { 
-        "title": "Revolution", 
-        "description": "Learn about the people that helped to shape Thailand's evolving cannabis culture. Their gentle efforts and open-minded vision continue to nurture growth and understanding.",
+        "title": "วิวัฒธนาการ", 
+        "description": "ทำความเข้าใจในความเป็นมาและมายซ์เซตของผู้ที่มีส่วนขับเคลื่อนวัฒนธรรมกัญชาไทยให้เกิดการพัฒนาและสืบทอดมาถึงปัจจุบัน",
         "icon": "6.webp"
       },
       { 
-        "title": "Spiritual Art", 
-        "description": "Journey through the intersection of cannabis and Thai spirituality. Explore diverse collection of artworks from both Thai and international artists, featuring spiritual artworks, glass arts, cannabis-inspired artworks and more.",
+        "title": "ศิลปะทางจิตใจ", 
+        "description": "โชว์เคสผลงานศิลปะที่หลากหลายจากศิลปินทั้งไทยและนานาชาติ,นำเสนอผลงานศิลปะรูปแบบต่างๆให้คุณได้เพลิดเพลินและเปิดมุมมองกับความสวยงามตามจินตนาการที่ได้ในระหว่างการชม",
         "icon": "7.webp"
       },
       { 
-        "title": "The Understanding", 
-        "description": "Delve deep into cannabis science, culture, and society. Understand the plant's role in Thai history and its impact on contemporary culture and lifestyle.",
+        "title": "ความเข้าใจ", 
+        "description": "สัมผัสวิทยาศาสตร์,วัฒนธรรมและสังคมที่เกี่ยวข้องกับกัญชาทำความเข้าใจบทบาทของพืชชนิดนี้ในเรื่องราวที่เกิดขึ้นจริงและอิทธิพลที่มีต่อวัฒนธรรมร่วมสมัยและวิถีชีวิตของมนุษย์ในปัจจุบัน",
         "icon": "5.webp"
       }
     ]
@@ -78,51 +94,121 @@
     ]
   },
   "legends": {
-    "title": "ปรากฏในฉบับนี้"
+    "title": "บุคคลสำคัญในเส้นทางสายนี้"
   },
   "newsletter": {
     "title": "เข้าร่วมชุมชนของเรา",
-    "description": "รับข้อมูลอัปเดตเกี่ยวกับฉบับถัดไปและเนื้อหาเฉพาะบุคคล",
+    "description": "รับข้อมูลอัปเดตแและเนื้อหาเฉพาะบุคคล",
     "placeholder_email": "your@email.com",
     "submit": "เข้าร่วม",
-    "success": "ขอบคุณ! เราจะติดต่อคุณในไม่ช้า"
+    "success": "ยินดีต้อนรับเข้าสู่ครอบครัว นาว ออร์ เนเวอร์ <3"
   },
   "shop": {
     "title": "Now or Never Magazine",
     "price": "฿1420",
-    "description": "ฉบับพิมพ์แรกจำนวนจำกัด ลักษณะเด่น: บทสัมภาษณ์เฉพาะบุคคล ภาพถ่ายที่สวยงาม และบทความที่กระตุ้นความคิด",
-    "features": ["120 หน้าของเนื้อหาระดับพรีเมียม", "พิมพ์คุณภาพสูงบนกระดาษพิเศษ", "ภาพถ่ายเฉพาะบุคคล", "ฉบับจำนวนจำกัด: 1000 สำเนา"],
+    "description": "นาว ออร์ เนเวอร์ ฉบับที่1",
+    "features": ["150 หน้าของเนื้อหาระดับพรีเมียม", "พิมพ์คุณภาพสูงบนกระดาษพิเศษ", "พร้อมของแถมสุดพิเศษ", "ฉบับจำนวนจำกัด: 420 ชุดเท่านั้น"],
     "order_button": "สั่งซื้อเลย",
     "pre_order_closed": "เปิดรับพรีออเดอร์เร็วๆ นี้",
-    "pre_order_date": "เปิดรับพรีออเดอร์ในวันที่"
+    "pre_order_date": "เปิดรับพรีออเดอร์ในวันที่ 28/12/2025",
+    "shipping": "ค่าจัดส่ง (ไม่มีหมายเลขติดตาม)",
+    "shipping_free": "ฟรี",
+    "limited_edition": "⚡ ฉบับจำกัด:",
+    "limited_copies": "มีเพียง 420 เล่มเท่านั้น"
   },
   "checkout": {
     "title": "สรุปคำสั่งซื้อ",
+    "page_title": "ชำระเงิน",
     "customer_info": "ข้อมูลการจัดส่ง",
     "payment": "การชำระเงิน",
     "full_name": "ชื่อเต็ม",
     "email": "อีเมล",
     "phone": "หมายเลขโทรศัพท์ (ไทย)",
     "province": "จังหวัด",
+    "select_province": "เลือกจังหวัด",
     "district": "อำเภอ",
     "postal_code": "รหัสไปรษณีย์",
     "address": "ที่อยู่เต็ม",
     "notes": "หมายเหตุพิเศษ (ไม่บังคับ)",
     "upload_slip": "อัปโหลดใบเสร็จการชำระเงิน",
     "submit_order": "ส่งคำสั่งซื้อ",
-    "total": "รวม"
+    "total": "รวม",
+    "scan_qr": "สแกน QR code เพื่อโอนเงิน",
+    "file_types": "(JPG, PNG, PDF หรือ HEIC)",
+    "click_to_change": "(คลิกเพื่อเปลี่ยน)",
+    "click_to_upload": "คลิกเพื่ออัปโหลดหรือลากและวาง",
+    "file_types_short": "PNG, JPG, PDF หรือ HEIC",
+    "processing": "กำลังประมวลผล...",
+    "errors": {
+      "full_name_required": "กรุณากรอกชื่อเต็ม",
+      "email_required": "กรุณากรอกอีเมล",
+      "email_invalid": "รูปแบบอีเมลไม่ถูกต้อง",
+      "phone_invalid": "หมายเลขโทรศัพท์ไทยไม่ถูกต้อง (ควรเป็น 10 หลักขึ้นต้นด้วย 0)",
+      "province_required": "กรุณาเลือกจังหวัด",
+      "district_required": "กรุณากรอกอำเภอ",
+      "postal_code_invalid": "รหัสไปรษณีย์ต้องเป็น 5 หลัก",
+      "address_required": "กรุณากรอกที่อยู่",
+      "payment_slip_required": "กรุณาอัปโหลดใบเสร็จการชำระเงิน",
+      "file_type_invalid": "ประเภทไฟล์ไม่ถูกต้อง กรุณาอัปโหลด JPG, PNG, PDF หรือ HEIC",
+      "submit_failed": "ส่งคำสั่งซื้อไม่สำเร็จ กรุณาลองอีกครั้ง"
+    },
+    "pre_order_notice": {
+      "en": "This item is available for pre-order. The official copy will be dispatched at the end of January. Thank you for your understanding and support.",
+      "th": "สินค้านี้เป็นสินค้า พรีออเดอร์ โดยสินค้าตัวจริงจะจัดส่ง ภายในช่วงปลายเดือนมกราคม ขอขอบคุณสำหรับความเข้าใจและการสนับสนุนของท่าน"
+    }
   },
   "thank_you": {
     "title": "ขอบคุณสำหรับคำสั่งซื้อของคุณ!",
     "order_number": "หมายเลขคำสั่งซื้อ",
     "confirmation_message": "คำสั่งซื้อของคุณได้รับการยืนยันแล้ว เราจะติดต่อคุณในไม่ช้า",
-    "back_home": "กลับไปหน้าแรก"
+    "back_home": "กลับไปหน้าแรก",
+    "order_confirmed": "ยืนยันคำสั่งซื้อแล้ว",
+    "name": "ชื่อ",
+    "email": "อีเมล",
+    "phone": "โทรศัพท์",
+    "shipping_address": "ที่อยู่จัดส่ง",
+    "whats_next": "ขั้นตอนถัดไป?",
+    "step1": "เราได้รับเงินของคุณแล้ว และจะดำเนินการคำสั่งซื้อของคุณภายใน {days} วันทำการ",
+    "step1_days": "2",
+    "step2": "คุณจะได้รับ {email_type} พร้อมข้อมูลการติดตาม",
+    "step2_email": "อีเมลยืนยัน",
+    "step3": "นิตยสารของคุณจะถูกจัดส่งผ่าน {shipper} โดยปกติจะใช้เวลา {time}",
+    "step3_shipper": "ไปรษณีย์ไทย",
+    "step3_time": "3-5 วันทำการ",
+    "questions": "มีคำถาม? ติดต่อเราที่",
+    "contact_email": "hello@nowornever.com"
   },
   "footer": {
     "about": "เกี่ยวกับ",
     "contact": "ติดต่อ",
     "instagram": "Instagram",
     "email": "ติดต่อเรา",
-    "copy": "© 2025 Now or Never Magazine. สงวนลิขสิทธิ์"
+    "copy": "© 2025 Now or Never Magazine. สงวนลิขสิทธิ์",
+    "description": "Now Or Never 420 แมคกาซีนที่พูดถึง 'กัญชา' ในมุมมองที่คุณไม่เคยเห็นถ่ายทอดเรื่องราวจากคนจริง,เรื่องจริง,พืชจริง- เพราะถ้าไม่ใช่ตอนนี้แล้วเมื่อไหร่",
+    "quick_links": "ลิงก์ด่วน",
+    "journal": "วารสาร",
+    "community_partners": "พันธมิตรชุมชน",
+    "email_label": "อีเมล",
+    "location_label": "ที่ตั้ง",
+    "location": "ประเทศไทย"
+  },
+  "intro_flip": {
+    "pre_order": "พรีออเดอร์ตอนนี้",
+    "limited_issue": "ฉบับจำกัด 2025",
+    "swipe_to_open": "ปัดซ้ายเพื่อเปิด"
+  },
+  "contact": {
+    "title": "ติดต่อ",
+    "description": "กรอกแบบฟอร์มด้านล่างเพื่อติดต่อเรา",
+    "iframe_note": "* แทนที่ iframe src ด้วย URL ของ Google Form ที่แท้จริงของคุณ",
+    "loading": "กำลังโหลด..."
+  },
+  "stories": {
+    "view_all": "ดูเรื่องราวทั้งหมด"
+  },
+  "statistics": {
+    "limited_copies": "ฉบับจำกัด",
+    "featured_artists": "ศิลปินที่โดดเด่น",
+    "unique_stories": "เรื่องราวที่ไม่เหมือนใคร"
   }
 }
