@@ -88,6 +88,21 @@ export default function CheckoutForm() {
     return Object.keys(newErrors).length === 0
   }
 
+  // Convert file to base64
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        const result = reader.result as string
+        // Remove data URL prefix (e.g., "data:image/jpeg;base64,")
+        const base64 = result.split(',')[1]
+        resolve(base64)
+      }
+      reader.onerror = (error) => reject(error)
+    })
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -102,18 +117,64 @@ export default function CheckoutForm() {
       sessionStorage.setItem("lastFormData", JSON.stringify(formData))
       sessionStorage.setItem("lastOrderNumber", orderNumber)
 
-      // Prepare form data for submission
-      const submitData = {
-        orderNumber,
-        ...formData,
-        paymentSlip: paymentFile,
+      // Prepare form data for submission to Make.com webhook
+      const webhookUrl = import.meta.env.VITE_ORDER_WEBHOOK_URL
+      
+      if (webhookUrl) {
+        // Convert payment slip file to base64
+        let paymentSlipBase64: string | null = null
+        let paymentSlipFileName: string | null = null
+        let paymentSlipMimeType: string | null = null
+        
+        if (paymentFile) {
+          paymentSlipBase64 = await fileToBase64(paymentFile)
+          paymentSlipFileName = paymentFile.name
+          paymentSlipMimeType = paymentFile.type
+        }
+        
+        // Create JSON payload with base64 image
+        const payload = {
+          orderNumber,
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          province: formData.province,
+          district: formData.district,
+          postalCode: formData.postalCode,
+          address: formData.address,
+          notes: formData.notes || '',
+          paymentSlip: paymentSlipBase64,
+          paymentSlipFileName: paymentSlipFileName,
+          paymentSlipMimeType: paymentSlipMimeType,
+          timestamp: new Date().toISOString(),
+          totalAmount: '1420',
+          currency: 'THB'
+        }
+        
+        // Send to Make.com webhook as JSON
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+        
+        if (!response.ok) {
+          throw new Error(`Webhook request failed: ${response.status} ${response.statusText}`)
+        }
+        
+        console.log("Order submitted successfully to webhook:", orderNumber)
+      } else {
+        // Development mode - log to console
+        console.log("Order Data (webhook not configured):", {
+          orderNumber,
+          ...formData,
+          paymentSlip: paymentFile?.name
+        })
+        // Simulate successful submission
+        await new Promise((resolve) => setTimeout(resolve, 1000))
       }
-
-      console.log("Order Data:", submitData)
-      // TODO: Connect to Make.com webhook with submitOrderToWebhook(submitData)
-
-      // Simulate successful submission
-      await new Promise((resolve) => setTimeout(resolve, 1000))
 
       // Redirect to thank you
       window.location.href = "/thank-you"
@@ -257,34 +318,32 @@ export default function CheckoutForm() {
           <h3 className="text-base md:text-lg lg:text-xl font-serif font-bold text-charcoal">{t("checkout.payment")}</h3>
         </div>
 
-        <div className="bg-gradient-to-br from-cream/50 to-white p-4 md:p-5 rounded-lg md:rounded-xl mb-4 md:mb-5 border-2 border-charcoal/10 shadow-inner relative overflow-hidden">
-          <div className="absolute inset-0 opacity-50" style={{ background: 'linear-gradient(to bottom right, rgba(212, 175, 55, 0.05), transparent)' }}></div>
+        <div className="bg-white p-4 md:p-5 rounded-lg md:rounded-xl mb-4 md:mb-5 border-2 shadow-sm relative overflow-hidden" style={{ borderColor: '#e5e5e5' }}>
           <div className="relative z-10">
             <div className="flex items-center justify-center gap-2 mb-3">
-              <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, rgba(212, 175, 55, 0.3), transparent)' }}></div>
-              <p className="text-xs text-charcoal/80 font-bold uppercase tracking-wider px-2 md:px-3">Scan QR code to transfer</p>
-              <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, rgba(212, 175, 55, 0.3), transparent)' }}></div>
+              <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, #d4d4d4, transparent)' }}></div>
+              <p className="text-xs font-bold uppercase tracking-wider px-2 md:px-3" style={{ color: '#1e1e1e' }}>Scan QR code to transfer</p>
+              <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, #d4d4d4, transparent)' }}></div>
             </div>
             <div className="flex justify-center mb-2 md:mb-3">
-              <div className="bg-white p-2 md:p-3 rounded-lg md:rounded-xl shadow-xl border-2" style={{ borderColor: 'rgba(212, 175, 55, 0.2)' }}>
+              <div className="bg-white p-2 md:p-3 rounded-lg md:rounded-xl shadow-lg border-2" style={{ borderColor: '#e5e5e5' }}>
                 <img
-                  src="/thai-payment-qr-code.jpg"
+                  src="/qr.jfif"
                   alt="QR Payment Code"
                   className="w-32 h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-lg"
                 />
               </div>
             </div>
-            <p className="text-lg md:text-xl lg:text-2xl font-serif font-bold text-center text-charcoal">฿1420</p>
+            <p className="text-lg md:text-xl lg:text-2xl font-serif font-bold text-center" style={{ color: '#1e1e1e' }}>฿1420</p>
           </div>
         </div>
 
         {/* File Upload */}
         <div>
-          <label className="block text-xs font-bold mb-2 text-charcoal/80 uppercase tracking-wide">
-            {t("checkout.upload_slip")} * <span className="normal-case font-normal text-xs">(JPG, PNG, PDF, or HEIC)</span>
+          <label className="block text-xs font-bold mb-2 uppercase tracking-wide" style={{ color: '#1e1e1e' }}>
+            {t("checkout.upload_slip")} * <span className="normal-case font-normal text-xs" style={{ color: '#787878' }}>(JPG, PNG, PDF, or HEIC)</span>
           </label>
-          <div className="checkout-upload border-2 border-dashed border-charcoal/20 bg-gradient-to-br from-cream/30 to-white p-3 md:p-4 text-center cursor-pointer transition-all duration-300 rounded-lg group relative overflow-hidden">
-            <div className="absolute inset-0 transition-all duration-300" style={{ background: 'linear-gradient(to bottom right, transparent, transparent)' }}></div>
+          <div className="checkout-upload border-2 border-dashed p-3 md:p-4 text-center cursor-pointer transition-all duration-300 rounded-lg group relative overflow-hidden bg-white" style={{ borderColor: '#d4d4d4' }}>
             <input
               type="file"
               onChange={handleFileChange}
@@ -295,22 +354,22 @@ export default function CheckoutForm() {
             <label htmlFor="payment-file" className="cursor-pointer relative z-10 block">
               {paymentFile ? (
                 <div className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: 'rgb(212, 175, 55)' }}>
+                  <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: '#1e1e1e' }}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <p className="text-sm text-charcoal font-medium truncate">{paymentFile.name}</p>
-                  <span className="text-xs text-charcoal/60 ml-1">(Click to change)</span>
+                  <p className="text-sm font-semibold truncate" style={{ color: '#1e1e1e' }}>{paymentFile.name}</p>
+                  <span className="text-xs ml-1" style={{ color: '#787878' }}>(Click to change)</span>
                 </div>
               ) : (
                 <div className="flex items-center justify-center gap-2 md:gap-3">
-                  <div className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-charcoal/5 rounded-lg transition-colors duration-300">
-                    <svg className="w-4 h-4 md:w-5 md:h-5 text-charcoal/60 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg transition-colors duration-300" style={{ backgroundColor: '#f5f5f5' }}>
+                    <svg className="w-4 h-4 md:w-5 md:h-5 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: '#1e1e1e' }}>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                     </svg>
                   </div>
                   <div className="text-left">
-                    <p className="text-sm text-charcoal font-medium">Click to upload or drag and drop</p>
-                    <p className="text-xs text-charcoal/60">PNG, JPG, PDF or HEIC</p>
+                    <p className="text-sm font-semibold" style={{ color: '#1e1e1e' }}>Click to upload or drag and drop</p>
+                    <p className="text-xs" style={{ color: '#787878' }}>PNG, JPG, PDF or HEIC</p>
                   </div>
                 </div>
               )}
@@ -354,24 +413,15 @@ export default function CheckoutForm() {
       </div>
       <style>{`
         .checkout-input:focus {
-          border-color: rgba(212, 175, 55, 0.5) !important;
-          box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+          border-color: #1e1e1e !important;
+          box-shadow: 0 0 0 2px rgba(30, 30, 30, 0.1) !important;
         }
         .checkout-input:hover {
-          border-color: rgba(212, 175, 55, 0.3) !important;
+          border-color: #787878 !important;
         }
         .checkout-upload:hover {
-          background: linear-gradient(to bottom right, rgba(212, 175, 55, 0.1), rgba(252, 250, 248, 0.4)) !important;
-          border-color: rgba(212, 175, 55, 0.4) !important;
-        }
-        .checkout-upload:hover .absolute.inset-0 {
-          background: linear-gradient(to bottom right, rgba(212, 175, 55, 0.05), transparent) !important;
-        }
-        .checkout-upload:hover .bg-charcoal\\/5 {
-          background-color: rgba(212, 175, 55, 0.2) !important;
-        }
-        .checkout-upload:hover .text-charcoal\\/60 {
-          color: rgb(212, 175, 55) !important;
+          background-color: #fafafa !important;
+          border-color: #1e1e1e !important;
         }
         .checkout-submit-btn:hover {
           background: linear-gradient(to right, rgb(212, 175, 55), rgb(255, 193, 7)) !important;

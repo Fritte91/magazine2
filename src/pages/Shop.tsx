@@ -59,12 +59,8 @@ export default function Shop() {
                   <Link
                     to="/checkout"
                     className="shop-button block w-full py-4 text-white text-center font-serif text-sm tracking-wide transition-all duration-300 uppercase rounded-xl shadow-lg font-bold transform relative overflow-hidden"
-                    style={{
-                      background: 'linear-gradient(to right, rgb(30, 30, 30), rgba(30, 30, 30, 0.95))'
-                    }}
                   >
                     <span className="relative z-10">{t("shop.order_button")}</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-gold-accent to-yellow-accent opacity-0 transition-opacity duration-300"></div>
                   </Link>
                 ) : (
                   <div className="space-y-4">
@@ -136,15 +132,21 @@ export default function Shop() {
         }
         .shop-button {
           background: linear-gradient(to right, rgb(30, 30, 30), rgba(30, 30, 30, 0.95)) !important;
+          color: rgb(255, 255, 255) !important;
+          text-decoration: none !important;
         }
         .shop-button:hover {
           background: linear-gradient(to right, rgb(212, 175, 55), rgb(255, 193, 7)) !important;
           color: rgb(30, 30, 30) !important;
           box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3) !important;
           transform: scale(1.02);
+          text-decoration: none !important;
         }
-        .shop-button:hover .absolute.inset-0 {
-          opacity: 1 !important;
+        .shop-button:visited {
+          color: rgb(255, 255, 255) !important;
+        }
+        .shop-button:visited:hover {
+          color: rgb(30, 30, 30) !important;
         }
         .shop-button:active {
           transform: scale(0.98);
