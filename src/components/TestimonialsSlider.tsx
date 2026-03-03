@@ -217,10 +217,13 @@ export default function TestimonialsSlider() {
   // Handle touch start
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!containerRef.current || !wrapperRef.current) return
+    if (!wrapperRef.current) return
     setIsDragging(true)
     setIsPaused(true)
     const rect = wrapperRef.current.getBoundingClientRect()
-    setStartX(e.touches[0].clientX - rect.left)
+    if (e.touches[0]) {
+      setStartX(e.touches[0].clientX - rect.left)
+    }
     setInitialScroll(scrollPosition)
   }
 
@@ -230,6 +233,7 @@ export default function TestimonialsSlider() {
     e.preventDefault() // Prevent default scrolling
 
     const rect = wrapperRef.current.getBoundingClientRect()
+    if (!e.touches[0]) return
     const x = e.touches[0].clientX - rect.left
     const walk = (x - startX) * 2
     let newPos = initialScroll - walk

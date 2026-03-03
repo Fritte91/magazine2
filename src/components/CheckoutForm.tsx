@@ -263,6 +263,10 @@ export default function CheckoutForm() {
         const result = reader.result as string
         // Remove data URL prefix (e.g., "data:image/jpeg;base64,")
         const base64 = result.split(',')[1]
+        if (!base64) {
+          reject(new Error('Failed to convert file to base64'))
+          return
+        }
         resolve(base64)
       }
       reader.onerror = (error) => reject(error)
@@ -285,11 +289,13 @@ export default function CheckoutForm() {
     setIsSubmitting(true)
     setLastSubmissionTime(now)
 
+    // Generate order number outside try block so it's available in catch
+    const orderNumber = generateOrderNumber()
+
     // Track order started
     trackOrder('started')
 
     try {
-      const orderNumber = generateOrderNumber()
 
       // Convert payment slip file to base64
       let paymentSlipBase64: string | null = null
@@ -345,7 +351,7 @@ export default function CheckoutForm() {
       if (webhookUrl) {
         // Send to Make.com webhook with retry logic
         try {
-          const response = await fetchWithRetry(
+          await fetchWithRetry(
             webhookUrl,
             {
               method: 'POST',

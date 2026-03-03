@@ -13,7 +13,6 @@ interface PendingOrder {
 }
 
 const MAX_RETRY_ATTEMPTS = 3
-const RETRY_DELAY = 5000 // 5 seconds
 
 /**
  * Get pending order from localStorage

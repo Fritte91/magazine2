@@ -31,11 +31,15 @@ export default function LegendsSlider() {
 
   const onTouchStart = (e: React.TouchEvent) => {
     touchEndX.current = null
-    touchStartX.current = e.touches[0].clientX
+    if (e.touches[0]) {
+      touchStartX.current = e.touches[0].clientX
+    }
   }
 
   const onTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX
+    if (e.touches[0]) {
+      touchEndX.current = e.touches[0].clientX
+    }
   }
 
   const onTouchEnd = () => {
@@ -57,6 +61,11 @@ export default function LegendsSlider() {
   }
 
   const currentLegend = legendsData[currentIndex]
+
+  // Early return if no legend data
+  if (!currentLegend) {
+    return null
+  }
 
   return (
     <section className="py-16 md:py-20 lg:py-24 relative overflow-hidden min-h-screen flex items-center">

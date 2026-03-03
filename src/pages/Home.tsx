@@ -10,7 +10,7 @@ import { useMetaTags } from "../hooks/useMetaTags"
 import { useI18n } from "../i18n/i18nContext"
 
 export default function Home() {
-  const { t, language } = useI18n()
+  const { t } = useI18n()
   
   useMetaTags(
     t("hero.title"),

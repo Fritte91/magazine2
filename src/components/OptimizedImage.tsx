@@ -64,8 +64,9 @@ export default function OptimizedImage({
         // Prevent layout shift
         objectFit: "cover",
       }}
-      // Add fetchpriority for critical images (lowercase for React compatibility)
-      fetchpriority={priority ? "high" : "auto"}
+      // Note: fetchPriority is not yet in React types, but works in browsers
+      // Using type assertion to avoid TypeScript error
+      {...(priority ? { fetchPriority: "high" as any } : {})}
     />
   )
 }

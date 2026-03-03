@@ -170,8 +170,8 @@ export default function HeroSection() {
                       loading="eager"
                       width={420}
                       height={560}
-                      fetchpriority="high"
                       decoding="async"
+                      {...({ fetchPriority: "high" } as any)}
                     />
                   </div>
 
