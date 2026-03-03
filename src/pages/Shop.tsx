@@ -2,12 +2,20 @@ import { Link } from "react-router-dom"
 import { useI18n } from "../i18n/i18nContext"
 import ProductCard from "../components/ProductCard"
 import { isPreOrderOpen, formatPreOrderDate } from "../utils/shop"
+import { useMetaTags } from "../hooks/useMetaTags"
 
 export default function Shop() {
   const { t, language } = useI18n()
   const features = t("shop.features", []) as string[]
   const preOrderOpen = isPreOrderOpen()
   const preOrderDate = formatPreOrderDate(language)
+
+  useMetaTags(
+    `${t("shop.title")} - Now or Never Magazine`,
+    t("shop.description"),
+    "/Cover.webp",
+    "product"
+  )
 
   // Ensure features is an array
   if (!Array.isArray(features)) {

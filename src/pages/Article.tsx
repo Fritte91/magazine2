@@ -1,6 +1,9 @@
 import { useParams, Link } from "react-router-dom"
+import { useEffect } from "react"
 import { getArticleById, getOtherArticles } from "../data/articles"
 import { useI18n } from "../i18n/i18nContext"
+import { useMetaTags } from "../hooks/useMetaTags"
+import { trackArticleView } from "../utils/analytics"
 
 export default function Article() {
   const { id } = useParams<{ id: string }>()
@@ -23,6 +26,26 @@ export default function Article() {
     if (language === "th" && article?.contentTh) return article.contentTh
     return article?.content || ""
   }
+
+  const getDescription = () => {
+    if (language === "th" && article?.descriptionTh) return article.descriptionTh
+    return article?.description || ""
+  }
+
+  // Set dynamic meta tags for SEO
+  useMetaTags(
+    `${getTitle()} - Now or Never Magazine`,
+    getDescription(),
+    article?.heroImage,
+    "article"
+  )
+
+  // Track article view
+  useEffect(() => {
+    if (article) {
+      trackArticleView(article.id, getTitle())
+    }
+  }, [article?.id, getTitle()])
 
   if (!article) {
     return (

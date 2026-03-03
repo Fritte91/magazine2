@@ -1,4 +1,6 @@
 import { Component, ErrorInfo, ReactNode } from "react"
+import { sanitizeError } from "../utils/sanitize"
+import { logError } from "../utils/logger"
 
 interface Props {
   children: ReactNode
@@ -18,17 +20,25 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Error caught by boundary:", error, errorInfo)
+    logError(error, {
+      component: 'ErrorBoundary',
+      componentStack: errorInfo.componentStack,
+    })
   }
 
   render() {
     if (this.state.hasError) {
+      // React automatically escapes text content, but we sanitize for extra safety
+      const safeErrorMessage = this.state.error 
+        ? sanitizeError(this.state.error) 
+        : "An unexpected error occurred"
+      
       return this.props.fallback || (
         <div className="min-h-screen flex items-center justify-center p-4">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
             <p className="text-gray-600 mb-4">
-              {this.state.error?.message || "An unexpected error occurred"}
+              {safeErrorMessage}
             </p>
             <button
               onClick={() => window.location.reload()}

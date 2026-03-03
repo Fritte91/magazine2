@@ -6,8 +6,18 @@ import TestimonialsSlider from "../components/TestimonialsSlider"
 import LegendsSlider from "../components/LegendsSlider"
 import NewsletterForm from "../components/NewsletterForm"
 import BehindTheProductionSection from "../components/BehindTheProductionSection"
+import { useMetaTags } from "../hooks/useMetaTags"
+import { useI18n } from "../i18n/i18nContext"
 
 export default function Home() {
+  const { t, language } = useI18n()
+  
+  useMetaTags(
+    t("hero.title"),
+    t("hero.description"),
+    "/Cover.webp",
+    "website"
+  )
   return (
     <div>
       <HeroSection />

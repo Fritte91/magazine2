@@ -156,21 +156,27 @@ export default function Navbar() {
         <button
           onClick={toggleMenu}
           className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
-          aria-label="Toggle menu"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
         >
           {isMenuOpen ? (
-            <X size={24} className="text-charcoal" />
+            <X size={24} className="text-charcoal" aria-hidden="true" />
           ) : (
-            <Menu size={24} className="text-charcoal" />
+            <Menu size={24} className="text-charcoal" aria-hidden="true" />
           )}
         </button>
       </div>
 
       {/* Mobile Menu Dropdown */}
       <div
+        id="mobile-menu"
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           isMenuOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
         }`}
+        role="menu"
+        aria-label="Mobile navigation menu"
+        aria-hidden={!isMenuOpen}
       >
         <div className="container-padding bg-white border-t border-gray-100 py-4">
           <div className="flex flex-col space-y-1">

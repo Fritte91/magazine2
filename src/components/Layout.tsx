@@ -33,10 +33,25 @@ export default function Layout() {
         width: "100%",
       }}
     >
+      {/* Skip to main content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-charcoal focus:text-white focus:rounded-lg focus:font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-charcoal"
+        style={{ zIndex: 9999 }}
+      >
+        Skip to main content
+      </a>
+      
       <StructuredData />
       <ScrollToTop />
       <Navbar />
-      <main className="flex-1" style={{ backgroundColor: "#ffffff", width: "100%" }}>
+      <main 
+        id="main-content"
+        className="flex-1" 
+        style={{ backgroundColor: "#ffffff", width: "100%" }}
+        role="main"
+        aria-label="Main content"
+      >
         <Outlet />
       </main>
       <Footer />

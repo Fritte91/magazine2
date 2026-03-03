@@ -1,9 +1,14 @@
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useI18n } from "../i18n/i18nContext"
 import { validateThaiPhone, validatePostalCode, validatePaymentSlipFile } from "../utils/validation"
 import { generateOrderNumber } from "./OrderNumberGenerator"
+import { fetchWithRetry } from "../utils/fetchWithRetry"
+import { logError } from "../utils/logger"
+import { formatPhoneNumber, unformatPhoneNumber, formatPostalCode } from "../utils/formatInput"
+import { trackOrder, trackFormSubmission } from "../utils/analytics"
+import { getPendingOrder, clearPendingOrder, getRecoveryMessage } from "../utils/orderRecovery"
 
 interface CheckoutFormData {
   fullName: string
@@ -112,11 +117,93 @@ export default function CheckoutForm() {
   const [paymentFile, setPaymentFile] = useState<File | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [lastSubmissionTime, setLastSubmissionTime] = useState<number>(0)
+  const [recoveryMessage, setRecoveryMessage] = useState<string | null>(null)
+
+  // Check for pending orders on mount
+  useEffect(() => {
+    const pendingOrder = getPendingOrder()
+    if (pendingOrder) {
+      const message = getRecoveryMessage(pendingOrder)
+      if (message) {
+        setRecoveryMessage(message)
+      }
+    }
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    let processedValue = value
+    
+    // Format phone number as user types
+    if (name === 'phone') {
+      processedValue = formatPhoneNumber(value)
+    }
+    
+    // Format postal code (digits only, max 5)
+    if (name === 'postalCode') {
+      processedValue = formatPostalCode(value)
+    }
+    
+    setFormData((prev) => ({ ...prev, [name]: processedValue }))
+    // Clear error when user starts typing
     if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }))
+    }
+  }
+
+  // Real-time validation on blur
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    const fieldErrors: Record<string, string> = {}
+
+    switch (name) {
+      case 'fullName':
+        if (!value.trim()) {
+          fieldErrors.fullName = t("checkout.errors.full_name_required")
+        }
+        break
+      case 'email':
+        if (!value.trim()) {
+          fieldErrors.email = t("checkout.errors.email_required")
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          fieldErrors.email = t("checkout.errors.email_invalid")
+        }
+        break
+      case 'phone':
+        // Validate using unformatted value
+        const unformattedPhone = unformatPhoneNumber(value)
+        if (!validateThaiPhone(unformattedPhone)) {
+          fieldErrors.phone = t("checkout.errors.phone_invalid")
+        }
+        break
+      case 'province':
+        if (!value) {
+          fieldErrors.province = t("checkout.errors.province_required")
+        }
+        break
+      case 'district':
+        if (!value.trim()) {
+          fieldErrors.district = t("checkout.errors.district_required")
+        }
+        break
+      case 'postalCode':
+        if (!validatePostalCode(value)) {
+          fieldErrors.postalCode = t("checkout.errors.postal_code_invalid")
+        }
+        break
+      case 'address':
+        if (!value.trim()) {
+          fieldErrors.address = t("checkout.errors.address_required")
+        }
+        break
+    }
+
+    // Only update errors for this specific field
+    if (Object.keys(fieldErrors).length > 0) {
+      setErrors((prev) => ({ ...prev, ...fieldErrors }))
+    } else {
+      // Clear error if field is now valid
       setErrors((prev) => ({ ...prev, [name]: "" }))
     }
   }
@@ -124,7 +211,8 @@ export default function CheckoutForm() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      if (validatePaymentSlipFile(file)) {
+      const validation = validatePaymentSlipFile(file)
+      if (validation.valid) {
         setPaymentFile(file)
         if (errors.paymentFile) {
           setErrors((prev) => ({ ...prev, paymentFile: "" }))
@@ -132,7 +220,7 @@ export default function CheckoutForm() {
       } else {
         setErrors((prev) => ({
           ...prev,
-          paymentFile: t("checkout.errors.file_type_invalid"),
+          paymentFile: t(`checkout.errors.${validation.error || "file_type_invalid"}`),
         }))
       }
     }
@@ -144,13 +232,23 @@ export default function CheckoutForm() {
     if (!formData.fullName.trim()) newErrors.fullName = t("checkout.errors.full_name_required")
     if (!formData.email.trim()) newErrors.email = t("checkout.errors.email_required")
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = t("checkout.errors.email_invalid")
-    if (!validateThaiPhone(formData.phone))
+    // Validate phone using unformatted value
+    const unformattedPhone = unformatPhoneNumber(formData.phone)
+    if (!validateThaiPhone(unformattedPhone))
       newErrors.phone = t("checkout.errors.phone_invalid")
     if (!formData.province) newErrors.province = t("checkout.errors.province_required")
     if (!formData.district.trim()) newErrors.district = t("checkout.errors.district_required")
     if (!validatePostalCode(formData.postalCode)) newErrors.postalCode = t("checkout.errors.postal_code_invalid")
     if (!formData.address.trim()) newErrors.address = t("checkout.errors.address_required")
-    if (!paymentFile) newErrors.paymentFile = t("checkout.errors.payment_slip_required")
+    if (!paymentFile) {
+      newErrors.paymentFile = t("checkout.errors.payment_slip_required")
+    } else {
+      // Validate file again on submit
+      const validation = validatePaymentSlipFile(paymentFile)
+      if (!validation.valid) {
+        newErrors.paymentFile = t(`checkout.errors.${validation.error || "file_type_invalid"}`)
+      }
+    }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -176,63 +274,111 @@ export default function CheckoutForm() {
 
     if (!validateForm()) return
 
+    // Rate limiting: prevent spam submissions (minimum 5 seconds between submissions)
+    const MIN_SUBMISSION_INTERVAL = 5000 // 5 seconds
+    const now = Date.now()
+    if (now - lastSubmissionTime < MIN_SUBMISSION_INTERVAL) {
+      setErrors({ submit: t("checkout.errors.too_fast") })
+      return
+    }
+
     setIsSubmitting(true)
+    setLastSubmissionTime(now)
+
+    // Track order started
+    trackOrder('started')
 
     try {
       const orderNumber = generateOrderNumber()
 
-      // Store form data for thank you page
+      // Convert payment slip file to base64
+      let paymentSlipBase64: string | null = null
+      let paymentSlipFileName: string | null = null
+      let paymentSlipMimeType: string | null = null
+      
+      if (paymentFile) {
+        paymentSlipBase64 = await fileToBase64(paymentFile)
+        paymentSlipFileName = paymentFile.name
+        paymentSlipMimeType = paymentFile.type
+      }
+      
+      // Create JSON payload with base64 image
+      // Store phone number unformatted for backend processing
+      const payload = {
+        orderNumber,
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: unformatPhoneNumber(formData.phone),
+        province: formData.province,
+        district: formData.district,
+        postalCode: formData.postalCode,
+        address: formData.address,
+        notes: formData.notes || '',
+        paymentSlip: paymentSlipBase64,
+        paymentSlipFileName: paymentSlipFileName,
+        paymentSlipMimeType: paymentSlipMimeType,
+        timestamp: new Date().toISOString(),
+        totalAmount: '1420',
+        currency: 'THB'
+      }
+
+      // Store order data in both sessionStorage and localStorage as backup
+      const orderData = {
+        formData,
+        orderNumber,
+        payload,
+        timestamp: Date.now(),
+        status: 'pending' as const
+      }
+      
+      // Store in sessionStorage for immediate use
       sessionStorage.setItem("lastFormData", JSON.stringify(formData))
       sessionStorage.setItem("lastOrderNumber", orderNumber)
+      
+      // Store in localStorage as backup (survives tab close)
+      localStorage.setItem("lastOrder", JSON.stringify(orderData))
+      localStorage.setItem("pendingOrder", JSON.stringify(orderData))
 
       // Prepare form data for submission to Make.com webhook
       const webhookUrl = import.meta.env.VITE_ORDER_WEBHOOK_URL
       
       if (webhookUrl) {
-        // Convert payment slip file to base64
-        let paymentSlipBase64: string | null = null
-        let paymentSlipFileName: string | null = null
-        let paymentSlipMimeType: string | null = null
-        
-        if (paymentFile) {
-          paymentSlipBase64 = await fileToBase64(paymentFile)
-          paymentSlipFileName = paymentFile.name
-          paymentSlipMimeType = paymentFile.type
+        // Send to Make.com webhook with retry logic
+        try {
+          const response = await fetchWithRetry(
+            webhookUrl,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(payload)
+            },
+            10000, // 10 second timeout
+            3 // 3 retry attempts
+          )
+          
+          console.log("Order submitted successfully to webhook:", orderNumber)
+          
+          // Track successful order
+          trackOrder('completed', orderNumber)
+          trackFormSubmission('checkout', true)
+          
+          // Clear pending order from localStorage after successful submission
+          clearPendingOrder()
+          setRecoveryMessage(null)
+          
+          // Mark order as completed in localStorage
+          const completedOrder = { ...orderData, status: 'completed' as const }
+          localStorage.setItem("lastOrder", JSON.stringify(completedOrder))
+        } catch (fetchError) {
+          // Handle timeout or network errors
+          if (fetchError instanceof Error && fetchError.message === 'TIMEOUT') {
+            throw new Error('TIMEOUT')
+          }
+          // Keep order in localStorage as pending for recovery
+          throw fetchError
         }
-        
-        // Create JSON payload with base64 image
-        const payload = {
-          orderNumber,
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          province: formData.province,
-          district: formData.district,
-          postalCode: formData.postalCode,
-          address: formData.address,
-          notes: formData.notes || '',
-          paymentSlip: paymentSlipBase64,
-          paymentSlipFileName: paymentSlipFileName,
-          paymentSlipMimeType: paymentSlipMimeType,
-          timestamp: new Date().toISOString(),
-          totalAmount: '1420',
-          currency: 'THB'
-        }
-        
-        // Send to Make.com webhook as JSON
-        const response = await fetch(webhookUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        })
-        
-        if (!response.ok) {
-          throw new Error(`Webhook request failed: ${response.status} ${response.statusText}`)
-        }
-        
-        console.log("Order submitted successfully to webhook:", orderNumber)
       } else {
         // Development mode - log to console
         console.log("Order Data (webhook not configured):", {
@@ -242,13 +388,35 @@ export default function CheckoutForm() {
         })
         // Simulate successful submission
         await new Promise((resolve) => setTimeout(resolve, 1000))
+        // Clear pending order in dev mode too
+        localStorage.removeItem("pendingOrder")
       }
 
       // Redirect to thank you
       window.location.href = "/thank-you"
     } catch (error) {
-      console.error("Submission error:", error)
-      setErrors({ submit: t("checkout.errors.submit_failed") })
+      let errorMessage = t("checkout.errors.submit_failed")
+      
+      if (error instanceof Error) {
+        if (error.message === 'TIMEOUT') {
+          errorMessage = t("checkout.errors.timeout")
+        } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+          errorMessage = t("checkout.errors.network_error")
+        }
+      }
+      
+      // Track failed order
+      trackOrder('failed', orderNumber, errorMessage)
+      trackFormSubmission('checkout', false, errorMessage)
+      
+      // Log error with context
+      logError(error instanceof Error ? error : new Error(String(error)), {
+        component: 'CheckoutForm',
+        action: 'submit_order',
+        orderNumber: orderNumber || 'unknown',
+      })
+      
+      setErrors({ submit: errorMessage })
     } finally {
       setIsSubmitting(false)
     }
@@ -268,12 +436,17 @@ export default function CheckoutForm() {
             <label className="block text-xs font-bold mb-1.5 text-charcoal/80 uppercase tracking-wide">{t("checkout.full_name")} *</label>
             <input
               type="text"
+              id="fullName"
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
+              aria-required="true"
+              aria-invalid={errors.fullName ? "true" : "false"}
+              aria-describedby={errors.fullName ? "fullName-error" : undefined}
             />
-            {errors.fullName && <p className="text-red-600 text-xs mt-1 font-medium">{errors.fullName}</p>}
+            {errors.fullName && <p id="fullName-error" className="text-red-600 text-xs mt-1 font-medium" role="alert">{errors.fullName}</p>}
           </div>
 
           {/* Email */}
@@ -284,6 +457,7 @@ export default function CheckoutForm() {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
             />
             {errors.email && <p className="text-red-600 text-xs mt-1 font-medium">{errors.email}</p>}
@@ -298,6 +472,7 @@ export default function CheckoutForm() {
               placeholder="0812345678"
               value={formData.phone}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
               inputMode="numeric"
             />
@@ -311,6 +486,7 @@ export default function CheckoutForm() {
               name="province"
               value={formData.province}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer"
             >
               <option value="">{t("checkout.select_province")}</option>
@@ -331,6 +507,7 @@ export default function CheckoutForm() {
               name="district"
               value={formData.district}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
             />
             {errors.district && <p className="text-red-600 text-xs mt-1 font-medium">{errors.district}</p>}
@@ -346,6 +523,7 @@ export default function CheckoutForm() {
               maxLength={5}
               value={formData.postalCode}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md"
               inputMode="numeric"
             />
@@ -360,6 +538,7 @@ export default function CheckoutForm() {
               rows={3}
               value={formData.address}
               onChange={handleChange}
+              onBlur={handleBlur}
               className="checkout-input w-full px-3 py-2 md:px-4 md:py-2.5 border-2 border-charcoal/15 bg-white text-charcoal focus:outline-none rounded-lg text-sm transition-all duration-300 shadow-sm hover:shadow-md resize-none"
             />
             {errors.address && <p className="text-red-600 text-xs mt-1 font-medium">{errors.address}</p>}
@@ -447,9 +626,20 @@ export default function CheckoutForm() {
         </div>
       </div>
 
+      {/* Recovery Message */}
+      {recoveryMessage && (
+        <div className="mb-4 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-lg" role="alert">
+          <p className="text-yellow-800 text-sm font-medium text-center">{recoveryMessage}</p>
+        </div>
+      )}
+
       {/* Submit Button */}
       <div className="pt-2">
-        {errors.submit && <div className="mb-3 p-3 bg-red-50 border-2 border-red-200 rounded-lg"><p className="text-red-600 text-xs font-medium text-center">{errors.submit}</p></div>}
+        {/* ARIA live region for form submission errors */}
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          {errors.submit && <span>{errors.submit}</span>}
+        </div>
+        {errors.submit && <div className="mb-3 p-3 bg-red-50 border-2 border-red-200 rounded-lg" role="alert"><p className="text-red-600 text-xs font-medium text-center">{errors.submit}</p></div>}
         <button
           type="submit"
           disabled={isSubmitting}

@@ -168,6 +168,10 @@ export default function HeroSection() {
                       alt="Now or Never Magazine Cover"
                       className="w-full max-w-[260px] md:max-w-[320px] lg:max-w-[380px] xl:max-w-[420px] h-auto block"
                       loading="eager"
+                      width={420}
+                      height={560}
+                      fetchpriority="high"
+                      decoding="async"
                     />
                   </div>
 

@@ -9,8 +9,22 @@ export const validatePostalCode = (code: string): boolean => {
   return /^\d{5}$/.test(code)
 }
 
+// Maximum file size: 10MB
+export const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB in bytes
+
 // File validation for payment slip
-export const validatePaymentSlipFile = (file: File): boolean => {
+export const validatePaymentSlipFile = (file: File): { valid: boolean; error?: string } => {
   const acceptedTypes = ["image/jpeg", "image/png", "application/pdf", "image/heic"]
-  return acceptedTypes.includes(file.type)
+  
+  // Check file type
+  if (!acceptedTypes.includes(file.type)) {
+    return { valid: false, error: "file_type_invalid" }
+  }
+  
+  // Check file size
+  if (file.size > MAX_FILE_SIZE) {
+    return { valid: false, error: "file_too_large" }
+  }
+  
+  return { valid: true }
 }

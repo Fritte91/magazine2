@@ -44,7 +44,7 @@
     },
     "magazine_perspective": {
       "title": "มุมมองของหนังสือ",
-      "text": "ในฐานะผู้จัดท่า หนังสือ Now Or Never 1st ผมรวบรวมความสวยงามของกัญชาในมิติต่างๆ ผ่าน เรื่องราวที่เชื่อมโยงกับการต่อของผู้คนในเส้นทางสายนี้ เพื่อเป็นการน่าเสนอให้เห็นถึงสิ่งที่เกิด"
+      "text": "ในฐานะผู้จัดทำหนังสือ Now Or Never 1st ผมรวบรวมความสวยงามของกัญชาในมิติต่างๆผ่าน เรื่องราวที่เชื่อมโยงกับการต่อสู้ของผู้คนในเส้นทางสายนี้ เพื่อเป็นการนำเสนอให้เห็นสิ่งที่เกิดขึ้นจริงตั้งแต่อดีตถึงปัจจุบัน"
     }
   },
   "topics": {
@@ -155,7 +155,11 @@
       "address_required": "Address is required",
       "payment_slip_required": "Payment slip is required",
       "file_type_invalid": "Invalid file type. Please upload JPG, PNG, PDF, or HEIC.",
-      "submit_failed": "Failed to submit order. Please try again."
+      "file_too_large": "File size must be less than 10MB. Please compress your image or use a smaller file.",
+      "submit_failed": "Failed to submit order. Please try again.",
+      "network_error": "Network error. Please check your connection and try again.",
+      "timeout": "Request took too long. Please check your connection and try again.",
+      "too_fast": "Please wait a moment before submitting again."
     },
     "pre_order_notice": {
       "en": "This item is available for pre-order. The official copy will be dispatched at the end of January. Thank you for your understanding and support.",

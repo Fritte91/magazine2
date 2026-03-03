@@ -1,5 +1,8 @@
 import { useState } from "react"
 import { useI18n } from "../i18n/i18nContext"
+import { fetchWithTimeout } from "../utils/fetchWithTimeout"
+import { logError } from "../utils/logger"
+import { trackNewsletterSignup, trackFormSubmission } from "../utils/analytics"
 
 interface FormData {
   email: string
@@ -11,6 +14,7 @@ export default function NewsletterForm() {
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [lastSubmissionTime, setLastSubmissionTime] = useState<number>(0)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ email: e.target.value })
@@ -20,7 +24,17 @@ export default function NewsletterForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+
+    // Rate limiting: prevent spam submissions (minimum 3 seconds between submissions)
+    const MIN_SUBMISSION_INTERVAL = 3000 // 3 seconds
+    const now = Date.now()
+    if (now - lastSubmissionTime < MIN_SUBMISSION_INTERVAL) {
+      setError("Please wait a moment before submitting again.")
+      return
+    }
+
     setIsSubmitting(true)
+    setLastSubmissionTime(now)
 
     try {
       // Prepare data for webhook
@@ -34,28 +48,55 @@ export default function NewsletterForm() {
       const webhookUrl = import.meta.env.VITE_NEWSLETTER_WEBHOOK_URL || undefined
       
       if (webhookUrl) {
-        const response = await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(webhookData)
-        })
+        try {
+          const response = await fetchWithTimeout(
+            webhookUrl,
+            {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(webhookData)
+            },
+            10000 // 10 second timeout
+          )
 
-        if (!response.ok) {
-          throw new Error('Failed to submit newsletter subscription')
+          if (!response.ok) {
+            throw new Error('Failed to submit newsletter subscription')
+          }
+        } catch (fetchError) {
+          // Handle timeout or network errors
+          if (fetchError instanceof Error && fetchError.message === 'TIMEOUT') {
+            throw new Error('Request took too long. Please check your connection and try again.')
+          }
+          throw fetchError
         }
       } else {
         // Development mode - log to console
         console.log("Newsletter submission (webhook not configured):", webhookData)
       }
 
+      // Track successful newsletter signup
+      trackNewsletterSignup(true)
+      trackFormSubmission('newsletter', true)
+
       setSubmitted(true)
       setFormData({ email: "" })
       setTimeout(() => setSubmitted(false), 4000)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.")
-      console.error("Newsletter submission error:", err)
+      const errorMessage = err instanceof Error ? err.message : "Something went wrong. Please try again."
+      setError(errorMessage)
+      
+      // Track failed newsletter signup
+      trackNewsletterSignup(false, errorMessage)
+      trackFormSubmission('newsletter', false, errorMessage)
+      
+      // Log error with context
+      logError(err instanceof Error ? err : new Error(String(err)), {
+        component: 'NewsletterForm',
+        action: 'submit_newsletter',
+        email: formData.email,
+      })
     } finally {
       setIsSubmitting(false)
     }
