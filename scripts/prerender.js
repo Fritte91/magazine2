@@ -2,6 +2,7 @@ import { createServer } from "http"
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs"
 import { join, dirname, extname } from "path"
 import puppeteer from "puppeteer"
+import chromium from "@sparticuz/chromium-min"
 
 const DIST_DIR = join(process.cwd(), "dist")
 const PORT = 4173
@@ -78,10 +79,17 @@ async function prerender() {
   const server = await startServer()
 
   // Launch Puppeteer
-  console.log("[prerender] Launching browser...")
+  const isCI = !!(process.env.VERCEL || process.env.CI)
+  console.log(`[prerender] Launching browser (${isCI ? "CI/Vercel" : "local"})...`)
+
+  const executablePath = isCI
+    ? await chromium.executablePath()
+    : puppeteer.executablePath()
+
   const browser = await puppeteer.launch({
     headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    executablePath,
+    args: isCI ? chromium.args : ["--no-sandbox", "--disable-setuid-sandbox"],
   })
 
   try {
