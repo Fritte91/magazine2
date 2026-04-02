@@ -1,7 +1,15 @@
 import { useI18n } from "../i18n/i18nContext"
+import { useMetaTags } from "../hooks/useMetaTags"
 
 export default function GoogleForm() {
   const { t } = useI18n()
+
+  useMetaTags(
+    t("nav.contact") + " - Now or Never Magazine",
+    "Get in touch with Now or Never Magazine. Contact us for inquiries, collaborations, or feedback about Thailand's premium cannabis culture publication.",
+    "/Cover.webp",
+    "website"
+  )
 
   return (
     <div className="pt-28 md:pt-32 pb-12 md:pb-16">

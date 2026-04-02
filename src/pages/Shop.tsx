@@ -25,6 +25,7 @@ export default function Shop() {
   return (
     <div className="shop-page pt-28 md:pt-32 relative">
       <div className="container-padding max-w-6xl mx-auto relative z-10">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white text-center mb-12 md:mb-16 tracking-tight">{t("shop.title")}</h1>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 mb-12 md:mb-16">
           {/* Product */}
           <div className="lg:col-span-2">

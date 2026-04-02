@@ -3,9 +3,17 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import ThankYouMessage from "../components/ThankYouMessage"
+import { useMetaTags } from "../hooks/useMetaTags"
 
 export default function ThankYou() {
   const navigate = useNavigate()
+
+  useMetaTags(
+    "Thank You - Now or Never Magazine",
+    "Thank you for your order. Your copy of Now or Never Magazine is on its way.",
+    "/Cover.webp",
+    "website"
+  )
 
   useEffect(() => {
     // Try to get order data from sessionStorage first, then localStorage as fallback

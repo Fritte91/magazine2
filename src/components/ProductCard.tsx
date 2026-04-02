@@ -25,7 +25,7 @@ export default function ProductCard({ image, title, features }: ProductCardProps
       {/* Product Info */}
       <div className="space-y-8">
         <div>
-          <h1 className="mb-3 text-charcoal">{title}</h1>
+          <h2 className="mb-3 text-charcoal">{title}</h2>
           <p className="text-2xl md:text-4xl font-serif font-bold text-charcoal">{t("shop.price")}</p>
         </div>
 

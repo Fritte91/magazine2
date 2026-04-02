@@ -3,11 +3,19 @@ import { useNavigate } from "react-router-dom"
 import { useI18n } from "../i18n/i18nContext"
 import CheckoutForm from "../components/CheckoutForm"
 import { isPreOrderOpen, formatPreOrderDate } from "../utils/shop"
+import { useMetaTags } from "../hooks/useMetaTags"
 
 export default function Checkout() {
   const navigate = useNavigate()
   const { t, language } = useI18n()
   const preOrderOpen = isPreOrderOpen()
+
+  useMetaTags(
+    t("checkout.page_title") + " - Now or Never Magazine",
+    "Complete your order for Now or Never Magazine. Secure checkout for Thailand's premium cannabis culture publication.",
+    "/Cover.webp",
+    "website"
+  )
 
   useEffect(() => {
     if (!preOrderOpen) {

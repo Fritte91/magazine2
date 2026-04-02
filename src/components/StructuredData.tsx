@@ -34,15 +34,7 @@ export default function StructuredData() {
     "@type": "WebSite",
     "name": "Now or Never Magazine",
     "url": "https://nowornevermagazine.com",
-    "inLanguage": language === "th" ? "th-TH" : "en-US",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": "https://nowornevermagazine.com/stories?q={search_term_string}"
-      },
-      "query-input": "required name=search_term_string"
-    }
+    "inLanguage": language === "th" ? "th-TH" : "en-US"
   }
 
   // Article schema (for article pages)
@@ -61,10 +53,10 @@ export default function StructuredData() {
         "headline": title,
         "description": description,
         "image": `https://nowornevermagazine.com${article.heroImage}`,
-        "datePublished": "2024-11-01",
-        "dateModified": "2024-11-01",
+        "datePublished": article.datePublished,
+        "dateModified": article.dateModified || article.datePublished,
         "author": {
-          "@type": "Person",
+          "@type": "Organization",
           "name": "Now or Never Magazine"
         },
         "publisher": {

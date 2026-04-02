@@ -1,12 +1,12 @@
 import { useI18n } from "../i18n/i18nContext"
 
 // Icon component that displays the image
-const TopicIcon = ({ iconPath }: { iconPath: string }) => {
+const TopicIcon = ({ iconPath, title }: { iconPath: string; title: string }) => {
   return (
     <div className="w-32 h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 mx-auto mb-8 flex items-center justify-center">
-      <img 
-        src={`/${iconPath}`} 
-        alt="" 
+      <img
+        src={`/${iconPath}`}
+        alt={`${title} topic icon`}
         className="w-full h-full object-contain drop-shadow-sm"
       />
     </div>
@@ -67,7 +67,7 @@ export default function TopicsSection() {
                   }}
                 ></div>
                 <div className="relative">
-                  <TopicIcon iconPath={topic.icon || ""} />
+                  <TopicIcon iconPath={topic.icon || ""} title={topic.title || ""} />
                 </div>
               </div>
               

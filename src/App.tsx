@@ -119,11 +119,16 @@ function App() {
         document.documentElement.scrollTop = 0
         document.body.scrollTop = 0
       }
-      
+
       scrollToTop()
       setTimeout(scrollToTop, 0)
       setTimeout(scrollToTop, 10)
       setTimeout(scrollToTop, 50)
+
+      // Signal to prerenderer that the app is ready
+      setTimeout(() => {
+        document.dispatchEvent(new Event("app-rendered"))
+      }, 100)
     }
   }, [showMainApp])
 

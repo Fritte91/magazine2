@@ -5,6 +5,8 @@ export interface ArticleData {
   subtitle?: string
   subtitleTh?: string
   date: string
+  datePublished: string
+  dateModified?: string
   description: string
   descriptionTh?: string
   heroImage: string
@@ -27,6 +29,7 @@ export const articles: ArticleData[] = [
     subtitle: "Introducing the first issue of Now or Never magazine",
     subtitleTh: "แนะนำฉบับแรกของนิตยสาร Now or Never",
     date: "November 2024",
+    datePublished: "2024-11-01",
     description: "Introducing the first issue of Now or Never magazine – a groundbreaking publication that explores cannabis from perspectives in Thailand you've never seen before. If not now, then when? Stay tuned for updates and pre-orders this November.",
     descriptionTh: "แนะนำฉบับแรกของนิตยสาร Now or Never – สิ่งพิมพ์ที่ปฏิวัติวงการ สำรวจกัญชาจากมุมมองในประเทศไทยที่คุณไม่เคยเห็นมาก่อน เพราะถ้าไม่ตอนนี้ แล้วเมื่อไหร่? ติดตามข่าวสารเพิ่มเติมและการสั่งจองหนังสือในเดือนพฤศจิกายนนี้",
     heroImage: "/cover10.webp",
@@ -59,6 +62,7 @@ Stay tuned for updates and pre-orders this November.`,
     subtitle: "THE STORY-STRAIGHT FROM THE JOURNEY",
     subtitleTh: "เรื่องราวตรงจากเส้นทาง",
     date: "November 2024",
+    datePublished: "2024-11-01",
     description: "At first, I never imagined that creating a magazine would be so complex and challenging. Only after diving into the process, step by step, did I realize that success required more than just \"doing the work.\" It meant \"thinking through every detail\"",
     descriptionTh: "ในช่วงเริ่มต้น ผมไม่เคยคาดคิดมาก่อนเลยว่า \"การทำแมกกาซีน\" จะเป็นงานที่ซับซ้อนและท้าทายได้ถึงเพียงนี้ จนกระทั่งได้ลงมือทำจริง ทีละขั้น ทีละวัน ผมจึงค่อย ๆ เรียนรู้ว่า หากต้องการให้แมกกาซีนฉบับนี้สำเร็จตามที่ตั้งใจไว้ ไม่ใช่เพียงแค่ \"ลงมือทำ\" เท่านั้น แต่ต้อง \"คิดให้รอบด้าน\"",
     heroImage: "/5. Root of Everything.webp",
@@ -89,6 +93,7 @@ The goal wasn't just to reach a niche group, but to spread "knowledge, understan
     title: "Through the Lens",
     titleTh: "ผ่านเลนส์",
     date: "November 2024",
+    datePublished: "2024-11-01",
     description: "We begin by capturing every light, shadow, and fiber of the cannabis. Painting stories that cannot simply be told. This is the beginning of NowOrNever Magazine—a space for knowledge, creativity, and experience.",
     descriptionTh: "เราเริ่มต้นด้วยการจับทุกแสง เงา และเส้นใยของกัญชา ถ่ายทอดเรื่องราวที่คำพูดไม่อาจอธิบายได้ นี่คือจุดเริ่มต้นของ NowOrNever Magazine—พื้นที่สำหรับความรู้ ความคิดสร้างสรรค์ และประสบการณ์",
     heroImage: "/4.Through the lens.webp",
@@ -163,6 +168,7 @@ Pre-order NowOrNever Magazine on our website—coming soon.📚🌿`,
     subtitle: "Now or Never 1st",
     subtitleTh: "Now or Never 1st",
     date: "November 2024",
+    datePublished: "2024-11-01",
     description: "The beginning of the journey was simple. I wanted to create a book—not just as a published work, but as a record of many different journeys converging into one place: the magazine.",
     descriptionTh: "การเริ่มต้นของเส้นทางนั้นเรียบง่าย ผมอยากสร้างหนังสือ—ไม่ใช่แค่สิ่งพิมพ์ แต่เป็นบันทึกของเส้นทางที่หลากหลายมาบรรจบกันที่หนึ่ง: นิตยสาร",
     heroImage: "/3.The beginging.webp",
@@ -203,6 +209,7 @@ Now or Never 1st จึงไม่ได้เป็นเพียงการ
     title: "The Journey Under the Waves",
     titleTh: "การเดินทางใต้ผืนน้ำ",
     date: "November 2024",
+    datePublished: "2024-11-01",
     description: "It all started around month 6 or 8 of 2024. By that time, cannabis had been legal for almost two years. Then, suddenly, news started circulating that it might be outlawed again.",
     descriptionTh: "มันเริ่มต้นขึ้นในช่วงเดือน 7-8 ของปี 2567 ในตอนนั้นกัญชาเปิดเสรีในไทยมาประมาณเกือบ 2 ปี และเกิดกระแสของกัญชาที่จะกำลังจะกลับไปผิดกฎหมายอีกครั้งนึง",
     heroImage: "/2.Journey under the waves.webp",
@@ -231,6 +238,7 @@ That experience opened my eyes. I came across so many stories, facts, and perspe
     title: "The Green Awakening",
     titleTh: "การตื่นรู้สีเขียว",
     date: "November 2024",
+    datePublished: "2024-11-01",
     description: "The interviewing journey really opened me up to various perspectives. Each lesson I learned taught me about tenacity and resilience. It allowed me to reflect on conflicts in life—whether they stem from society, the law, or other factors.",
     descriptionTh: "การเดินทางไปสัมภาษณ์พี่ ๆ หลายท่าน เหมือนเป็นการเปิดประตูสู่ความเข้าใจในมิติใหม่ ๆ ให้กับผม ทุกมุมมองที่ได้รับล้วนเป็นบทเรียนแห่งความอดทน สะท้อนถึงการต่อสู้ที่ไม่เคยยอมแพ้ต่ออุปสรรค",
     heroImage: "/1.The Green awakening.webp",

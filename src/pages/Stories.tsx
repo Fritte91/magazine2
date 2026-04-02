@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom"
 import { articles } from "../data/articles"
 import { useI18n } from "../i18n/i18nContext"
+import { useMetaTags } from "../hooks/useMetaTags"
 
 export default function Stories() {
   const { language } = useI18n()
+
+  useMetaTags(
+    "Behind The Production - Now or Never Magazine",
+    "A collection of stories documenting our journey in creating Now Or Never Magazine. Explore the creative process behind Thailand's premier cannabis culture publication.",
+    "/Cover.webp",
+    "website"
+  )
+
   return (
     <div className="pt-28 md:pt-32 pb-16 md:pb-20 lg:pb-28 relative overflow-hidden" style={{ backgroundColor: "#0a0a0a", minHeight: "100vh" }}>
       {/* Premium dark background with subtle gradient */}
