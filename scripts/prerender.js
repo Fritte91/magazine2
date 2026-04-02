@@ -2,7 +2,7 @@ import { createServer } from "http"
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs"
 import { join, dirname, extname } from "path"
 import puppeteer from "puppeteer"
-import chromium from "@sparticuz/chromium-min"
+import chromium from "@sparticuz/chromium"
 
 const DIST_DIR = join(process.cwd(), "dist")
 const PORT = 4173
