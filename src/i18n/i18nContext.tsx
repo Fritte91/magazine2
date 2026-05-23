@@ -16,11 +16,23 @@ const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
 const translations: Record<Language, Translations> = { en, th }
 
-export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>(() => {
+const getDefaultLanguage = (): Language => {
+  // During prerender (Puppeteer sets navigator.webdriver), use English so the
+  // SEO-structured English content is baked into the prerendered HTML.
+  if (typeof navigator !== "undefined" && navigator.webdriver) {
+    return "en"
+  }
+  try {
     const saved = localStorage.getItem("language")
-    return (saved as Language) || "th"
-  })
+    if (saved === "en" || saved === "th") return saved
+  } catch {
+    // localStorage unavailable; fall through to default
+  }
+  return "th"
+}
+
+export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [language, setLanguage] = useState<Language>(getDefaultLanguage)
 
   const setLanguageSafe = (lang: Language) => {
     setLanguage(lang)

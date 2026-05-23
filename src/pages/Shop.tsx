@@ -11,7 +11,7 @@ export default function Shop() {
   const preOrderDate = formatPreOrderDate(language)
 
   useMetaTags(
-    "ซื้อ Now or Never Magazine — ฉบับพิเศษ ฿1420",
+    "Buy Now or Never Magazine — Limited Edition Print (฿1420)",
     t("shop.description"),
     "/Cover.webp",
     "product"

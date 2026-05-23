@@ -3,7 +3,7 @@ Allow: /
 Disallow: /checkout
 Disallow: /thank-you
 
-Sitemap: https://nowornevermagazine.com/sitemap.xml
+Sitemap: https://www.nowornevermagazine.com/sitemap.xml
 
 
 

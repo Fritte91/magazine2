@@ -180,8 +180,8 @@ export default function Article() {
               
               if (level === 3) {
                 return (
-                  <h3 
-                    key={idx} 
+                  <h3
+                    key={idx}
                     className="text-2xl md:text-3xl font-serif font-bold mt-10 mb-4 text-charcoal"
                   >
                     {text}
@@ -189,7 +189,27 @@ export default function Article() {
                 )
               }
             }
-            
+
+            // Bullet lists — paragraphs where every non-empty line starts with "- "
+            const lines = trimmed.split("\n").map((l) => l.trim()).filter((l) => l.length > 0)
+            if (lines.length > 0 && lines.every((line) => line.startsWith("- "))) {
+              return (
+                <ul
+                  key={idx}
+                  className="list-disc pl-6 md:pl-8 mb-6 md:mb-8 space-y-2 md:space-y-3"
+                >
+                  {lines.map((line, lineIdx) => (
+                    <li
+                      key={lineIdx}
+                      className="text-lg md:text-xl text-charcoal/90 leading-relaxed font-sans"
+                    >
+                      {line.replace(/^-\s+/, "")}
+                    </li>
+                  ))}
+                </ul>
+              )
+            }
+
             // Regular paragraphs
             if (trimmed) {
               return (

@@ -66,6 +66,10 @@ export default function StructuredData() {
         "headline": title,
         "description": description,
         "image": `https://www.nowornevermagazine.com${article.heroImage}`,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `https://www.nowornevermagazine.com/article/${article.slug}`
+        },
         "datePublished": article.datePublished,
         "dateModified": article.dateModified || article.datePublished,
         "author": {

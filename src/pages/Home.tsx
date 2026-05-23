@@ -10,8 +10,8 @@ import { useMetaTags } from "../hooks/useMetaTags"
 
 export default function Home() {
   useMetaTags(
-    "Now or Never Magazine — วัฒนธรรมกัญชาไทย สตอรี่ & ภาพถ่าย",
-    "Now or Never นิตยสารฉบับพิเศษ สำรวจวัฒนธรรมกัญชาไทยผ่านเรื่องราว บทสัมภาษณ์ และภาพถ่ายต้นฉบับ Limited edition Thai cannabis culture magazine.",
+    "Now or Never Magazine — Thai Cannabis Culture, Stories & Photography",
+    "Now or Never is a limited edition print magazine documenting Thailand's cannabis culture through authentic stories, expert interviews, and original photography. Issue 1 — only 420 copies printed.",
     "/Cover.webp",
     "website"
   )
