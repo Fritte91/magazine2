@@ -18,6 +18,16 @@ export default function Checkout() {
   )
 
   useEffect(() => {
+    const meta = document.createElement("meta")
+    meta.name = "robots"
+    meta.content = "noindex, nofollow"
+    document.head.appendChild(meta)
+    return () => {
+      document.head.removeChild(meta)
+    }
+  }, [])
+
+  useEffect(() => {
     if (!preOrderOpen) {
       // Redirect to shop page if pre-orders are not open yet
       navigate("/shop", { replace: true })

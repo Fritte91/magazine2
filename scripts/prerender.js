@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs"
 import { join, dirname, extname } from "path"
 import puppeteer from "puppeteer"
 import chromium from "@sparticuz/chromium"
+import { articles } from "../src/data/articles.ts"
 
 const DIST_DIR = join(process.cwd(), "dist")
 const PORT = 4173
@@ -14,12 +15,7 @@ const ROUTES = [
   "/checkout",
   "/thank-you",
   "/form",
-  "/article/1",
-  "/article/2",
-  "/article/3",
-  "/article/4",
-  "/article/5",
-  "/article/6",
+  ...articles.map((a) => `/article/${a.slug}`),
 ]
 
 const MIME_TYPES = {

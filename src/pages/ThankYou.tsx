@@ -16,6 +16,16 @@ export default function ThankYou() {
   )
 
   useEffect(() => {
+    const meta = document.createElement("meta")
+    meta.name = "robots"
+    meta.content = "noindex, nofollow"
+    document.head.appendChild(meta)
+    return () => {
+      document.head.removeChild(meta)
+    }
+  }, [])
+
+  useEffect(() => {
     // Try to get order data from sessionStorage first, then localStorage as fallback
     let formData = sessionStorage.getItem("lastFormData")
     let orderNumber = sessionStorage.getItem("lastOrderNumber")

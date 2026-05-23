@@ -12,8 +12,8 @@ export default function StructuredData() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Now or Never Magazine",
-    "url": "https://nowornevermagazine.com",
-    "logo": "https://nowornevermagazine.com/LOGO1.png",
+    "url": "https://www.nowornevermagazine.com",
+    "logo": "https://www.nowornevermagazine.com/LOGO1.png",
     "description": "A premium publication exploring Thai cannabis culture through authentic stories, expert insights, and beautiful photography.",
     "sameAs": [
       "https://www.instagram.com/nowornevermagazine/",
@@ -33,38 +33,52 @@ export default function StructuredData() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Now or Never Magazine",
-    "url": "https://nowornevermagazine.com",
+    "url": "https://www.nowornevermagazine.com",
     "inLanguage": language === "th" ? "th-TH" : "en-US"
   }
+
+  // Breadcrumb schema (assigned per route below)
+  let breadcrumbSchema = null
 
   // Article schema (for article pages)
   let articleSchema = null
   if (pathname.startsWith("/article/")) {
-    const articleId = pathname.split("/article/")[1]
-    const article = articles.find(a => a.id === articleId)
-    
+    const articleParam = pathname.split("/article/")[1]
+    const article = articles.find(a => a.slug === articleParam || a.id === articleParam)
+
     if (article) {
       const title = language === "th" && article.titleTh ? article.titleTh : article.title
       const description = language === "th" && article.descriptionTh ? article.descriptionTh : article.description
-      
+
+      breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.nowornevermagazine.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Stories", "item": "https://www.nowornevermagazine.com/stories" },
+          { "@type": "ListItem", "position": 3, "name": title }
+        ]
+      }
+
       articleSchema = {
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": title,
         "description": description,
-        "image": `https://nowornevermagazine.com${article.heroImage}`,
+        "image": `https://www.nowornevermagazine.com${article.heroImage}`,
         "datePublished": article.datePublished,
         "dateModified": article.dateModified || article.datePublished,
         "author": {
-          "@type": "Organization",
-          "name": "Now or Never Magazine"
+          "@type": "Person",
+          "name": "Phonotype_247",
+          "sameAs": "https://www.instagram.com/nowornevermagazine/"
         },
         "publisher": {
           "@type": "Organization",
           "name": "Now or Never Magazine",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://nowornevermagazine.com/LOGO1.png"
+            "url": "https://www.nowornevermagazine.com/LOGO1.png"
           }
         },
         "inLanguage": language === "th" ? "th-TH" : "en-US"
@@ -72,22 +86,57 @@ export default function StructuredData() {
     }
   }
 
+  // Stories list page breadcrumb + ItemList
+  let storiesItemListSchema = null
+  if (pathname === "/stories") {
+    breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.nowornevermagazine.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Stories" }
+      ]
+    }
+
+    storiesItemListSchema = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Stories from Now or Never Magazine",
+      "numberOfItems": articles.length,
+      "itemListElement": articles.map((a, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "url": `https://www.nowornevermagazine.com/article/${a.slug}`,
+        "name": language === "th" && a.titleTh ? a.titleTh : a.title
+      }))
+    }
+  }
+
   // Product schema (for shop page)
   let productSchema = null
   if (pathname === "/shop") {
+    breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.nowornevermagazine.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Shop" }
+      ]
+    }
+
     productSchema = {
       "@context": "https://schema.org",
       "@type": "Product",
       "name": "Now or Never Magazine - Issue 1",
       "description": "Limited edition premium magazine exploring Thai cannabis culture. Only 420 copies available.",
-      "image": "https://nowornevermagazine.com/Cover.webp",
+      "image": "https://www.nowornevermagazine.com/Cover.webp",
       "brand": {
         "@type": "Brand",
         "name": "Now or Never Magazine"
       },
       "offers": {
         "@type": "Offer",
-        "url": "https://nowornevermagazine.com/shop",
+        "url": "https://www.nowornevermagazine.com/shop",
         "priceCurrency": "THB",
         "price": "1420",
         "availability": "https://schema.org/LimitedAvailability",
@@ -100,7 +149,9 @@ export default function StructuredData() {
     organizationSchema,
     websiteSchema,
     articleSchema,
-    productSchema
+    productSchema,
+    breadcrumbSchema,
+    storiesItemListSchema
   ].filter(Boolean)
 
   return (

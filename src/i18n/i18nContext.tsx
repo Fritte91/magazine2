@@ -19,7 +19,7 @@ const translations: Record<Language, Translations> = { en, th }
 export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>(() => {
     const saved = localStorage.getItem("language")
-    return (saved as Language) || "en"
+    return (saved as Language) || "th"
   })
 
   const setLanguageSafe = (lang: Language) => {

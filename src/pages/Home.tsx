@@ -7,14 +7,11 @@ import LegendsSlider from "../components/LegendsSlider"
 import NewsletterForm from "../components/NewsletterForm"
 import BehindTheProductionSection from "../components/BehindTheProductionSection"
 import { useMetaTags } from "../hooks/useMetaTags"
-import { useI18n } from "../i18n/i18nContext"
 
 export default function Home() {
-  const { t } = useI18n()
-  
   useMetaTags(
-    t("hero.title"),
-    t("hero.description"),
+    "Now or Never Magazine — วัฒนธรรมกัญชาไทย สตอรี่ & ภาพถ่าย",
+    "Now or Never นิตยสารฉบับพิเศษ สำรวจวัฒนธรรมกัญชาไทยผ่านเรื่องราว บทสัมภาษณ์ และภาพถ่ายต้นฉบับ Limited edition Thai cannabis culture magazine.",
     "/Cover.webp",
     "website"
   )

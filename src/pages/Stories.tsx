@@ -7,7 +7,7 @@ export default function Stories() {
   const { language } = useI18n()
 
   useMetaTags(
-    "Behind The Production - Now or Never Magazine",
+    "Stories — Now or Never Magazine | Thai Cannabis Culture",
     "A collection of stories documenting our journey in creating Now Or Never Magazine. Explore the creative process behind Thailand's premier cannabis culture publication.",
     "/Cover.webp",
     "website"
@@ -57,7 +57,7 @@ export default function Stories() {
         {/* Page Title */}
         <div className="mb-12 md:mb-16 lg:mb-20 text-center">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-normal tracking-tight mb-4" style={{ color: "#F5F5F5" }}>
-            Behind The Production
+            Stories from Now or Never Magazine
           </h1>
           <p className="text-base md:text-lg text-white/80 max-w-2xl mx-auto">
             A collection of stories documenting our journey in creating Now Or Never Magazine
@@ -184,7 +184,7 @@ export default function Stories() {
 
                 {/* Read More Button */}
                 <Link
-                  to={`/article/${article.id}`}
+                  to={`/article/${article.slug}`}
                   className="group/btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-sans font-semibold text-base md:text-lg transition-all duration-300"
                   style={{
                     color: '#FFFFFF',

@@ -7,7 +7,7 @@ import { articles } from '../src/data/articles.ts'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const baseUrl = 'https://nowornevermagazine.com'
+const baseUrl = 'https://www.nowornevermagazine.com'
 const routes = [
   { path: '/', changefreq: 'weekly', priority: 1.0 },
   { path: '/shop', changefreq: 'monthly', priority: 0.9 },
@@ -15,10 +15,10 @@ const routes = [
 ]
 
 const articleRoutes = articles.map(article => ({
-  path: `/article/${article.id}`,
+  path: `/article/${article.slug}`,
   changefreq: 'monthly',
   priority: 0.8,
-  lastmod: new Date().toISOString().split('T')[0]
+  lastmod: article.dateModified || article.datePublished
 }))
 
 const allRoutes = [...routes, ...articleRoutes]

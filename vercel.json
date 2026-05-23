@@ -4,6 +4,26 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/article/1", "destination": "/article/now-or-never-1st-issue", "statusCode": 301 },
+    { "source": "/article/2", "destination": "/article/the-root-of-everything", "statusCode": 301 },
+    { "source": "/article/3", "destination": "/article/through-the-lens", "statusCode": 301 },
+    { "source": "/article/4", "destination": "/article/the-beginning", "statusCode": 301 },
+    { "source": "/article/5", "destination": "/article/the-journey-under-the-waves", "statusCode": 301 },
+    { "source": "/article/6", "destination": "/article/the-green-awakening", "statusCode": 301 }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
@@ -11,4 +31,3 @@
     }
   ]
 }
-

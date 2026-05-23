@@ -161,7 +161,13 @@ export default function IntroFlip({ onFlipComplete }: IntroFlipProps) {
             <div className="page-bend-layer" />
 
             <div className="cover-img-wrap">
-              <img src="/Cover.webp" className="cover-img" alt="Magazine cover" />
+              <img
+                src="/Cover.webp"
+                srcSet="/Cover-640.webp 640w, /Cover.webp 1280w"
+                sizes="(max-width: 768px) 640px, 1280px"
+                className="cover-img"
+                alt="Magazine cover"
+              />
             </div>
 
             <div className="swipe-text">{t("intro_flip.swipe_to_open")}</div>

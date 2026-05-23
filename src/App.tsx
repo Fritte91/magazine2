@@ -190,13 +190,21 @@ function App() {
                     </Suspense>
                   } 
                 />
-                <Route 
-                  path="/article/:id" 
+                <Route
+                  path="/article/:slug"
                   element={
                     <Suspense fallback={<LoadingSpinner />}>
                       <Article />
                     </Suspense>
-                  } 
+                  }
+                />
+                <Route
+                  path="/article/:id"
+                  element={
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <Article />
+                    </Suspense>
+                  }
                 />
               </Route>
             </Routes>

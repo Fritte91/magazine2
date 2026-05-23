@@ -14,8 +14,11 @@ export const useMetaTags = (
 ) => {
   const { language } = useI18n()
   const location = useLocation()
-  const baseUrl = 'https://nowornevermagazine.com'
-  const fullUrl = `${baseUrl}${location.pathname}`
+  const baseUrl = 'https://www.nowornevermagazine.com'
+  const normalizedPath = location.pathname === '/'
+    ? '/'
+    : location.pathname.replace(/\/+$/, '')
+  const fullUrl = `${baseUrl}${normalizedPath}`
 
   useEffect(() => {
     // Update document title
@@ -76,5 +79,5 @@ export const useMetaTags = (
       document.head.appendChild(canonical)
     }
     canonical.setAttribute('href', fullUrl)
-  }, [title, description, image, type, language, location.pathname, fullUrl])
+  }, [title, description, image, type, language, location.pathname])
 }

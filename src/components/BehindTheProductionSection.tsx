@@ -150,7 +150,7 @@ export default function BehindTheProductionSection() {
 
                 {/* Read More Button */}
                 <Link
-                  to={`/article/${article.id}`}
+                  to={`/article/${article.slug}`}
                   className="group/btn inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-sans font-semibold text-base md:text-lg transition-all duration-300"
                   style={{
                     color: '#FFFFFF',

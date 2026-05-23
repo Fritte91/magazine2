@@ -1,15 +1,28 @@
-import { useParams, Link } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import { useEffect } from "react"
-import { getArticleById, getOtherArticles } from "../data/articles"
+import { getArticleById, getArticleBySlug, getOtherArticles } from "../data/articles"
 import { useI18n } from "../i18n/i18nContext"
 import { useMetaTags } from "../hooks/useMetaTags"
 import { trackArticleView } from "../utils/analytics"
 
 export default function Article() {
-  const { id } = useParams<{ id: string }>()
+  const params = useParams<Record<string, string>>()
+  const param = params.slug || params.id || ""
+  const navigate = useNavigate()
   const { language } = useI18n()
-  const article = getArticleById(id || "1")
-  const relatedArticles = getOtherArticles(id || "1", 2)
+
+  const articleBySlug = getArticleBySlug(param)
+  const articleById = articleBySlug ? undefined : getArticleById(param)
+  const article = articleBySlug || articleById
+  const needsRedirect = !!articleById
+
+  useEffect(() => {
+    if (needsRedirect && article) {
+      navigate(`/article/${article.slug}`, { replace: true })
+    }
+  }, [needsRedirect, article, navigate])
+
+  const relatedArticles = getOtherArticles(article?.id || "1", 2)
   
   // Get localized content based on current language
   const getTitle = () => {
@@ -34,7 +47,7 @@ export default function Article() {
 
   // Set dynamic meta tags for SEO
   useMetaTags(
-    `${getTitle()} - Now or Never Magazine`,
+    `${getTitle()} — Now or Never Magazine`,
     getDescription(),
     article?.heroImage,
     "article"
@@ -45,7 +58,19 @@ export default function Article() {
     if (article) {
       trackArticleView(article.id, getTitle())
     }
-  }, [article?.id, getTitle()])
+  }, [article?.id, language])
+
+  // Inject noindex meta when the article doesn't exist (soft-404)
+  useEffect(() => {
+    if (article) return
+    const meta = document.createElement("meta")
+    meta.name = "robots"
+    meta.content = "noindex, nofollow"
+    document.head.appendChild(meta)
+    return () => {
+      document.head.removeChild(meta)
+    }
+  }, [article])
 
   if (!article) {
     return (
@@ -213,7 +238,7 @@ export default function Article() {
                 return (
                   <Link
                     key={relatedArticle.id}
-                    to={`/article/${relatedArticle.id}`}
+                    to={`/article/${relatedArticle.slug}`}
                     className="group relative rounded-2xl overflow-hidden transition-all duration-500 ease-out cursor-pointer"
                     style={{
                       background: gradientStyle,

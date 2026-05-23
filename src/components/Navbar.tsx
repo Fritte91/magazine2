@@ -101,17 +101,19 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
             )}
           </button>
-          <button
-            onClick={() => scrollToSection("stories")}
+          <a
+            href="/#stories"
+            onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); scrollToSection("stories") }}
             className="text-base font-sans font-semibold transition-all duration-200 relative text-charcoal hover:text-green-primary"
           >
             {t("nav.stories")}
-          </button>
-          <Link 
-            to="/shop" 
+          </a>
+          <a
+            href="/shop"
+            onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); navigate("/shop"); closeMenu() }}
             className={`text-base font-sans font-semibold transition-all duration-200 relative ${
-              isActive("/shop") 
-                ? "text-green-primary" 
+              isActive("/shop")
+                ? "text-green-primary"
                 : "text-charcoal hover:text-green-primary"
             }`}
           >
@@ -119,18 +121,20 @@ export default function Navbar() {
             {isActive("/shop") && (
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
             )}
-          </Link>
-          <button
-            onClick={() => scrollToSection("topics")}
+          </a>
+          <a
+            href="/#topics"
+            onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); scrollToSection("topics") }}
             className={`text-base font-sans font-semibold transition-all duration-200 relative text-charcoal hover:text-green-primary`}
           >
             {t("nav.about")}
-          </button>
-          <Link 
-            to="/stories" 
+          </a>
+          <a
+            href="/stories"
+            onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); navigate("/stories"); closeMenu() }}
             className={`text-base font-sans font-semibold transition-all duration-200 relative ${
-              isActive("/stories") 
-                ? "text-green-primary" 
+              isActive("/stories")
+                ? "text-green-primary"
                 : "text-charcoal hover:text-green-primary"
             }`}
           >
@@ -138,13 +142,14 @@ export default function Navbar() {
             {isActive("/stories") && (
               <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-primary"></span>
             )}
-          </Link>
-          <button
-            onClick={() => scrollToSection("about-author")}
+          </a>
+          <a
+            href="/#about-author"
+            onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); scrollToSection("about-author") }}
             className={`text-base font-sans font-semibold transition-all duration-200 relative text-charcoal hover:text-green-primary`}
           >
             {t("nav.author")}
-          </button>
+          </a>
         </div>
 
         {/* Desktop Language Toggle */}
@@ -190,15 +195,16 @@ export default function Navbar() {
             >
               {t("nav.home")}
             </button>
-            <button
-              onClick={() => scrollToSection("stories")}
+            <a
+              href="/#stories"
+              onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); scrollToSection("stories") }}
               className="px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left text-charcoal hover:text-green-primary hover:bg-gray-50"
             >
               {t("nav.stories")}
-            </button>
-            <Link
-              to="/shop"
-              onClick={closeMenu}
+            </a>
+            <a
+              href="/shop"
+              onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); navigate("/shop"); closeMenu() }}
               className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
                 isActive("/shop")
                   ? "text-green-primary bg-green-primary/10"
@@ -206,16 +212,17 @@ export default function Navbar() {
               }`}
             >
               {t("nav.shop")}
-            </Link>
-            <button
-              onClick={() => scrollToSection("topics")}
+            </a>
+            <a
+              href="/#topics"
+              onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); scrollToSection("topics") }}
               className="px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left text-charcoal hover:text-green-primary hover:bg-gray-50"
             >
               {t("nav.about")}
-            </button>
-            <Link
-              to="/stories"
-              onClick={closeMenu}
+            </a>
+            <a
+              href="/stories"
+              onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); navigate("/stories"); closeMenu() }}
               className={`px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 ${
                 isActive("/stories")
                   ? "text-green-primary bg-green-primary/10"
@@ -223,13 +230,14 @@ export default function Navbar() {
               }`}
             >
               {t("nav.blog")}
-            </Link>
-            <button
-              onClick={() => scrollToSection("about-author")}
+            </a>
+            <a
+              href="/#about-author"
+              onClick={(e) => { if (e.metaKey || e.ctrlKey || e.button === 1) return; e.preventDefault(); scrollToSection("about-author") }}
               className="px-4 py-3 rounded-lg text-base font-sans font-semibold transition-all duration-200 text-left text-charcoal hover:text-green-primary hover:bg-gray-50"
             >
               {t("nav.author")}
-            </button>
+            </a>
             {/* Language Toggle in Mobile Menu */}
             <div className="px-4 py-3">
               <LanguageToggle />
